@@ -16,7 +16,7 @@ const PRODUCTOS = [
             "180 x 45 x 75 cm",
         
         materiales:
-            "Madera maciza, espuma de alta densidad y tapizado premium.",
+            "Nogal macizo FSC®, herrajes de latón.",
 
         acabado:
             "Aceite natural ecológico",
@@ -55,10 +55,10 @@ const PRODUCTOS = [
         acabado:
             "Laca mate ecológica",
 
-        peso:
+        capacidad:
             "45 kg por estante",
 
-        capacidad:
+        modulares:
             "5 estantes ajustables",
 
         imagen:
