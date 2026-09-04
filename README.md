@@ -1,80 +1,90 @@
-# Hermanos Jota Furniture Store
+# Mueblería Hermanos Jota
 
-Sprint 2 frontend-only ecommerce project for Hermanos Jota, a furniture brand.
-The site simulates a shopping experience entirely in the browser; there is no
-backend, real checkout, payment processing, or message delivery service.
+Proyecto de comercio electrónico del Sprint 2 para la mueblería Hermanos Jota,
+desarrollado exclusivamente con tecnologías del lado del cliente. La experiencia
+de compra se simula en el navegador: no hay backend, cobros ni envío real de mensajes.
 
-## Features
+## Sitio desplegado
 
-- Home page with brand presentation and four dynamically loaded featured products.
-- Searchable catalog with 11 products and links to individual product pages.
-- Product details with images, descriptions, specifications, prices, and cart actions.
-- Simulated cart with a header counter, item removal, and browser persistence.
-- Contact form with client-side validation and an on-page success message.
-- Responsive layouts, semantic HTML, and simulated asynchronous catalog loading.
+[Visitar Mueblería Hermanos Jota en Netlify](https://muebleria-hermanosjota.netlify.app/)
 
-## Technologies
+El despliegue corresponde a la rama `main` del repositorio de
+[Lucas Tabacchi](https://github.com/LucasTabacchi/muebleria-hermanos-jota).
+En la última verificación, el enlace respondió HTTP 401 (acceso no autorizado).
+Antes de la entrega, se debe habilitar el acceso público en Netlify y comprobar
+el sitio en una ventana de incógnito.
 
-- HTML5, external CSS3 stylesheets, and Flexbox.
-- Vanilla JavaScript, DOM updates, events, and arrays of product objects.
-- Promises and `setTimeout` to simulate data loading.
-- `localStorage` for the simulated cart.
+## Funcionalidades
 
-No framework, package installation, or build step is required to run the site.
+- Inicio con presentación de la marca y cuatro productos destacados cargados dinámicamente.
+- Catálogo de 11 productos con búsqueda y enlaces a sus fichas individuales.
+- Detalle de producto con imagen, descripción, especificaciones, precio y botón para agregar al carrito.
+- Carrito simulado con contador, eliminación de productos y persistencia en el navegador.
+- Formulario de contacto con validación del lado del cliente y mensaje de éxito en pantalla.
+- Diseño adaptable, HTML semántico y simulación de carga asíncrona del catálogo.
 
-## Run locally
+## Tecnologías
 
-From the repository root, with Python 3 installed:
+- HTML5, CSS3 en una hoja de estilos externa y Flexbox.
+- JavaScript sin frameworks, manipulación del DOM, eventos y arreglos de objetos.
+- Promesas y `setTimeout` para simular la carga de datos.
+- `localStorage` para conservar el carrito simulado.
+
+El sitio no requiere instalar paquetes ni ejecutar un proceso de compilación.
+
+## Ejecución local
+
+Con Python 3 instalado, ejecutar desde la raíz del repositorio:
 
 ```sh
 python -m http.server 8000 --bind 127.0.0.1
 ```
 
-Open [the local site](http://127.0.0.1:8000) in a browser. Stop the server with
-`Ctrl+C`. Keep the same address and port when checking cart persistence.
+Abrir [el sitio local](http://127.0.0.1:8000) en el navegador. Para detener el
+servidor, presionar `Ctrl+C`. Al verificar la persistencia del carrito, mantener
+la misma dirección y el mismo puerto.
 
-## Repository structure
+## Estructura del repositorio
 
 ```text
-index.html             Home page
-productos.html         Product catalog
-producto.html          Product details (selected by URL parameter)
-contacto.html          Contact form
-carrito.html           Simulated cart
-css/styles.css         Shared styles and responsive layouts
-js/productos.js        Local catalog and price formatting
-js/                    Page behavior and cart logic
-img/                   Product and brand images
-tests/productos.test.cjs Catalog regression tests
+index.html               Página de inicio
+productos.html           Catálogo de productos
+producto.html            Detalle seleccionado mediante un parámetro de la URL
+contacto.html            Formulario de contacto
+carrito.html             Carrito simulado
+css/styles.css           Estilos compartidos y diseño adaptable
+js/productos.js          Catálogo local y formato de precios
+js/                      Comportamiento de las páginas y lógica del carrito
+img/                     Imágenes de productos
+logo.png                 Logotipo de la marca
+tests/productos.test.cjs  Pruebas de regresión del catálogo
 ```
 
-## Verification
+## Verificación
 
-Optional development tests require Node.js 18 or later, with no dependencies:
+Las pruebas de desarrollo requieren Node.js 18 o posterior, sin dependencias adicionales:
 
 ```sh
 node --test tests/productos.test.cjs
 ```
 
-Manual browser checks:
+Comprobaciones manuales en el navegador:
 
-1. At widths of 320, 375, 600, 768, and 1440 pixels, check every page for horizontal
-   overflow and confirm that all navigation links and the cart counter are visible.
-2. Check featured products, catalog search, and links to product details.
-3. Confirm that detail images show the whole product without cropping.
-4. Check Uspallata materials and Recoleta load capacity and adjustable shelves.
-5. Add products, navigate between pages, reload, and remove products from the cart.
-6. Submit invalid and valid contact data; confirm validation and simulated success.
+1. Revisar todas las páginas en anchos de 320, 375, 600, 768 y 1440 píxeles, sin
+   desbordamiento horizontal y con los enlaces de navegación y el contador visibles.
+2. Probar los destacados, el buscador y los enlaces al detalle de cada producto.
+3. Confirmar que las imágenes del detalle muestren el producto completo, sin recortes.
+4. Verificar los materiales del Aparador Uspallata y la capacidad de carga y los
+   estantes ajustables de la Biblioteca Recoleta.
+5. Agregar productos, cambiar de página, recargar y eliminar productos del carrito.
+6. Enviar datos inválidos y válidos en contacto, comprobando los errores y el éxito simulado.
 
-## Team
+## Equipo y pendientes de entrega
 
-The sprint requires five members. The complete five-member roster is awaiting
-confirmation and must be added before delivery. Each member must contribute real
-work recorded in the repository history; this documentation does not certify that
-the contribution requirement is already satisfied.
+La consigna requiere cinco integrantes. La lista completa de nombres está pendiente
+de confirmación y debe incorporarse antes de la entrega. Cada integrante debe
+realizar aportes reales registrados en el historial del repositorio.
 
-## Deployment status
-
-A verified public deployment URL is pending. Before delivery, publish the static
-site to a hosting service, add its URL here, and repeat the browser checks there.
-Deployment and complete team participation remain delivery tasks.
+También queda pendiente confirmar el acceso público al despliegue y repetir allí
+las comprobaciones del navegador. Este README no certifica que esos requisitos
+de entrega ya estén completos.
