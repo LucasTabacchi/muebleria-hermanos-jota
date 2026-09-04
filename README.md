@@ -62,15 +62,4 @@ Las pruebas de desarrollo requieren Node.js 18 o posterior, sin dependencias adi
 node --test tests/productos.test.cjs
 ```
 
-Comprobaciones manuales en el navegador:
-
-1. Revisar todas las páginas en anchos de 320, 375, 600, 768 y 1440 píxeles, sin
-   desbordamiento horizontal y con los enlaces de navegación y el contador visibles.
-2. Probar los destacados, el buscador y los enlaces al detalle de cada producto.
-3. Confirmar que las imágenes del detalle muestren el producto completo, sin recortes.
-4. Verificar los materiales del Aparador Uspallata y la capacidad de carga y los
-   estantes ajustables de la Biblioteca Recoleta.
-5. Agregar productos, cambiar de página, recargar y eliminar productos del carrito.
-6. Enviar datos inválidos y válidos en contacto, comprobando los errores y el éxito simulado.
-
 ## Equipo
