@@ -1,17 +1,12 @@
 # Mueblería Hermanos Jota
 
-Proyecto de comercio electrónico del Sprint 2 para la mueblería Hermanos Jota,
+Proyecto de comercio para la mueblería Hermanos Jota,
 desarrollado exclusivamente con tecnologías del lado del cliente. La experiencia
 de compra se simula en el navegador: no hay backend, cobros ni envío real de mensajes.
 
 ## Sitio desplegado
 
-[Visitar Mueblería Hermanos Jota en Netlify](https://muebleria-hermanosjota.netlify.app/)
-
-El despliegue corresponde a la rama `main` del repositorio de
-[Lucas Tabacchi](https://github.com/LucasTabacchi/muebleria-hermanos-jota).
-El acceso público se verificó el 3 de septiembre de 2026: la página de inicio
-respondió HTTP 200 y mostró el contenido del sitio sin requerir autenticación.
+[Visitar Mueblería Hermanos Jota](https://muebleria-hermanosjota.netlify.app/)
 
 ## Funcionalidades
 
@@ -78,12 +73,4 @@ Comprobaciones manuales en el navegador:
 5. Agregar productos, cambiar de página, recargar y eliminar productos del carrito.
 6. Enviar datos inválidos y válidos en contacto, comprobando los errores y el éxito simulado.
 
-## Equipo y pendientes de entrega
-
-La consigna requiere cinco integrantes. La lista completa de nombres está pendiente
-de confirmación y debe incorporarse antes de la entrega. Cada integrante debe
-realizar aportes reales registrados en el historial del repositorio.
-
-Queda pendiente repetir en el despliegue las comprobaciones funcionales del
-navegador. La verificación del acceso público no reemplaza estas pruebas ni
-certifica que todos los requisitos de entrega estén completos.
+## Equipo
