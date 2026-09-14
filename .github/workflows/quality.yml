@@ -41,3 +41,6 @@ jobs:
 
             - name: Run tests
               run: npm test
+
+            - name: Build React client
+              run: npm run build
