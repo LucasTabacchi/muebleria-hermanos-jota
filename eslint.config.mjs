@@ -3,7 +3,7 @@ import globals from "globals";
 
 export default [
     {
-        ignores: ["node_modules/**", "coverage/**", "dist/**"],
+        ignores: ["node_modules/**", "coverage/**", "dist/**", "client/build/**"],
     },
     {
         files: ["*.mjs"],
@@ -100,6 +100,41 @@ export default [
             ecmaVersion: "latest",
             sourceType: "commonjs",
             globals: globals.node,
+        },
+    },
+    {
+        files: ["backend/**/*.js"],
+        ...eslint.configs.recommended,
+        languageOptions: {
+            ecmaVersion: "latest",
+            sourceType: "commonjs",
+            globals: globals.node,
+        },
+    },
+    {
+        files: ["client/src/**/*.js"],
+        ...eslint.configs.recommended,
+        languageOptions: {
+            ecmaVersion: "latest",
+            sourceType: "module",
+            parserOptions: {
+                ecmaFeatures: {
+                    jsx: true,
+                },
+            },
+            globals: {
+                ...globals.browser,
+                process: "readonly",
+            },
+        },
+    },
+    {
+        files: ["client/src/**/*.test.js", "client/src/setupTests.js"],
+        languageOptions: {
+            globals: {
+                ...globals.jest,
+                global: "readonly",
+            },
         },
     },
 ];
