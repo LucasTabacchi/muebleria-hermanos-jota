@@ -1,109 +1,170 @@
 # Mueblería Hermanos Jota
 
-Proyecto de comercio para la mueblería Hermanos Jota,
-desarrollado exclusivamente con tecnologías del lado del cliente. La experiencia
-de compra se simula en el navegador: no hay backend, cobros ni envío real de mensajes.
+Ecommerce full stack para Mueblería Hermanos Jota. El cliente React conserva la
+identidad visual del sitio original y obtiene el catálogo desde una API REST local
+desarrollada con Node.js y Express.
 
-## Sitio desplegado
+> La versión React + Express se ejecuta localmente por ahora. El despliegue del
+> backend queda fuera del alcance actual.
 
-[Visitar Mueblería Hermanos Jota](https://muebleria-hermanosjota.netlify.app/)
+## Inicio rápido
 
-## Funcionalidades
+### Requisitos
 
-- Inicio con presentación de la marca y cuatro productos destacados cargados dinámicamente.
-- Catálogo de 11 productos con búsqueda y enlaces a sus fichas individuales.
-- Detalle de producto con imagen, descripción, especificaciones, precio y botón para agregar al carrito.
-- Carrito simulado con contador, eliminación de productos y persistencia en el navegador.
-- Formulario de contacto con validación del lado del cliente y mensaje de éxito en pantalla.
-- Diseño adaptable, HTML semántico y simulación de carga asíncrona del catálogo.
+- Node.js 22.22.1 o posterior.
+- npm 10 o posterior, incluido con Node.js.
+- Git para clonar el repositorio y utilizar los hooks de calidad.
 
-## Tecnologías
+### Instalación
 
-- HTML5, CSS3 en una hoja de estilos externa y Flexbox.
-- JavaScript sin frameworks, manipulación del DOM, eventos y arreglos de objetos.
-- Promesas y `setTimeout` para simular la carga de datos.
-- `localStorage` para conservar el carrito simulado.
-- ESLint y Prettier para mantener una base consistente de código.
-- Husky, lint-staged y commitlint para automatizar controles antes de cada commit.
-
-El sitio publicado no requiere un proceso de compilación. Las dependencias de Node.js
-se utilizan solamente durante el desarrollo para ejecutar pruebas y controles de calidad.
-
-## Ejecución local
-
-Con Python 3 instalado, ejecutar desde la raíz del repositorio:
-
-```sh
-python -m http.server 8000 --bind 127.0.0.1
-```
-
-Abrir [el sitio local](http://127.0.0.1:8000) en el navegador. Para detener el
-servidor, presionar `Ctrl+C`. Al verificar la persistencia del carrito, mantener
-la misma dirección y el mismo puerto.
-
-## Configuración de desarrollo
-
-Se requiere Node.js 22.22.1 o posterior únicamente para las herramientas de desarrollo.
-Después de clonar el repositorio, instalar
-las dependencias desde la raíz:
+Desde la raíz del repositorio:
 
 ```sh
 npm install
 ```
 
-La instalación ejecuta `husky` mediante el script `prepare` y deja activos los hooks
-locales de Git.
+La raíz utiliza **npm workspaces**, por lo que este único comando instala las
+dependencias de `/client` y `/backend`. También configura los hooks locales de Husky.
 
-## Calidad de código
-
-Los siguientes comandos permiten aplicar y verificar las reglas del proyecto:
+### Ejecución de la aplicación completa
 
 ```sh
-npm run lint          # Analiza el JavaScript con ESLint
-npm run format        # Formatea los archivos compatibles con Prettier
-npm test              # Ejecuta las pruebas automatizadas
+npm run dev
 ```
 
-Antes de cada commit, `lint-staged` corrige con ESLint y formatea con Prettier los
-archivos JavaScript que están preparados para confirmar. El hook `commit-msg`
-también valida que el mensaje siga Conventional Commits, por ejemplo:
+El comando inicia ambos procesos:
+
+- Cliente React: [http://localhost:3000](http://localhost:3000)
+- API Express: [http://localhost:3001](http://localhost:3001)
+
+Para detenerlos, presionar `Ctrl+C`.
+
+## Comandos disponibles
+
+| Comando                 | Función                                                                 |
+| ----------------------- | ----------------------------------------------------------------------- |
+| `npm run dev`           | Inicia cliente y backend en paralelo con recarga durante el desarrollo. |
+| `npm run dev:client`    | Inicia solamente el cliente React.                                      |
+| `npm run dev:backend`   | Inicia solamente la API con el modo `watch` de Node.js.                 |
+| `npm run start:client`  | Inicia solamente el cliente React.                                      |
+| `npm run start:backend` | Inicia solamente la API sin modo `watch`.                               |
+| `npm run lint`          | Analiza JavaScript y JSX con ESLint.                                    |
+| `npm test`              | Ejecuta todas las pruebas de backend y frontend sin modo interactivo.   |
+| `npm run test:backend`  | Ejecuta las pruebas de integración de la API.                           |
+| `npm run test:client`   | Ejecuta las pruebas del cliente React sin observación continua.         |
+| `npm run build`         | Genera la compilación de producción del cliente.                        |
+| `npm run format`        | Formatea los archivos compatibles con Prettier.                         |
+
+## Configuración
+
+El cliente utiliza la variable `REACT_APP_API_URL` para localizar el backend. El
+valor predeterminado es `http://localhost:3001` y está documentado en `.env.example`.
+
+Si necesitás modificarlo, copiá `.env.example` como `client/.env` antes de iniciar
+el cliente:
+
+```env
+REACT_APP_API_URL=http://localhost:3001
+```
+
+Los archivos `.env` locales no se versionan.
+
+## Arquitectura
 
 ```text
-feat: agregar filtro por categoría
-fix: corregir contador del carrito
-docs: actualizar instrucciones de instalación
+/
+├── client/                  Aplicación React creada con Create React App
+│   ├── public/              Recursos públicos e imágenes de la marca
+│   └── src/
+│       ├── components/      Navbar, Footer, tarjetas, listas, detalle y formulario
+│       ├── pages/           Vistas asociadas a las rutas de la aplicación
+│       ├── services/        Acceso centralizado a la API mediante fetch
+│       └── utils/           Formato de precios y rutas de imágenes
+├── backend/                 API REST con Node.js y Express
+│   ├── data/                Catálogo local de productos
+│   ├── middleware/          Registro, rutas no encontradas y errores
+│   ├── routes/              Rutas organizadas con express.Router
+│   └── tests/               Pruebas de integración con node:test y Supertest
+└── .github/workflows/       Verificación automática de calidad
 ```
 
-Los tipos permitidos son `feat`, `fix`, `docs`, `style`, `refactor`, `test`, `chore`,
-`perf`, `build` y `ci`. El encabezado del commit admite como máximo 100 caracteres.
+El frontend administra el carrito en `App` con `useState`, lo persiste en
+`localStorage` y pasa el contador al `Navbar` mediante props. Las vistas de catálogo y
+detalle consumen la API y muestran estados de carga, éxito y error.
 
-## Estructura del repositorio
+## API REST
 
-```text
-index.html               Página de inicio
-productos.html           Catálogo de productos
-producto.html            Detalle seleccionado mediante un parámetro de la URL
-contacto.html            Formulario de contacto
-carrito.html             Carrito simulado
-css/styles.css           Estilos compartidos y diseño adaptable
-js/productos.js          Catálogo local y formato de precios
-js/                      Comportamiento de las páginas y lógica del carrito
-img/                     Imágenes de productos
-logo.png                 Logotipo de la marca
-tests/productos.test.cjs  Pruebas de regresión del catálogo
-```
+| Método | Endpoint             | Resultado                                           |
+| ------ | -------------------- | --------------------------------------------------- |
+| `GET`  | `/api/productos`     | Devuelve el catálogo completo en formato JSON.      |
+| `GET`  | `/api/productos/:id` | Devuelve un producto o responde `404` si no existe. |
 
-## Verificación
+Ejemplos locales:
 
-Para ejecutar toda la verificación disponible:
+- [Catálogo completo](http://localhost:3001/api/productos)
+- [Producto con identificador 1](http://localhost:3001/api/productos/1)
+
+El backend incorpora `express.json()`, CORS, registro global de método y URL, y
+manejadores centralizados de rutas inexistentes y errores.
+
+## Decisiones técnicas
+
+- **Create React App:** se utiliza porque la consigna de los Sprints 3 y 4 lo exige
+  expresamente, aunque actualmente sea una herramienta obsoleta para proyectos nuevos.
+- **React Router 6.30.3:** se fijó esta versión porque es compatible con Jest 27,
+  incluido por Create React App 5; React Router 7 no se resuelve correctamente en ese
+  entorno de pruebas.
+- **Versiones de ESLint y TypeScript:** el workspace separa las versiones compatibles
+  con Create React App de las utilizadas por las herramientas de calidad de la raíz,
+  evitando conflictos entre dependencias heredadas y modernas.
+- **Catálogo en la API:** el cliente ya no mantiene productos locales; todas las vistas
+  los solicitan al backend mediante `fetch`.
+- **Ejecución local:** el despliegue del backend en Render se realizará en una etapa
+  posterior. Por ahora, cliente y API deben ejecutarse juntos en la computadora local.
+- **Migración incremental:** el frontend estático de la raíz se conserva como fallback
+  porque Netlify todavía publica esa carpeta. Esta convivencia es transitoria hasta
+  verificar la paridad y coordinar el despliegue conjunto de React y la API.
+
+## Pruebas y calidad
+
+Para reproducir localmente los controles obligatorios de GitHub Actions:
 
 ```sh
+npm ci
 npm run lint
 npm test
+npm run build
 ```
+
+La integración continua usa Node.js 22.22.1 y exige el check **ESLint and tests** antes
+de cada merge a `develop` o `main`. Además, Husky, lint-staged y commitlint controlan
+los archivos preparados y los mensajes de commit.
+
+## Flujo de ramas
+
+- `feature`: integración continua de nuevas funcionalidades.
+- `develop`: versión integrada y validada para la siguiente entrega.
+- `bugfix`: correcciones planificadas que todavía no llegan a producción.
+- `main`: versión estable.
+
+El recorrido habitual es `feature` → `develop` → `main`, siempre mediante pull request.
+Los pushes directos, force pushes y eliminaciones están protegidos en las ramas
+principales.
+
+## Sitio publicado
+
+La [versión estática del Sprint 2](https://muebleria-hermanosjota.netlify.app/) continúa
+disponible como fallback mientras Netlify publique la raíz. Este enlace todavía no
+representa la migración React + Express y se reemplazará cuando se coordine el
+despliegue del cliente junto con la API.
 
 ## Equipo
 
-Morales Carlos Ariel
-Tabacchi Lucas
-Kegalj Emiliano
+- Morales Carlos Ariel
+- Tabacchi Lucas
+- Kegalj Emiliano
+
+Actualmente el historial Git contiene commits verificables de Lucas Tabacchi. Para
+cumplir el requisito académico de participación de todos los integrantes, Carlos Ariel
+Morales y Emiliano Kegalj deben aportar commits propios desde sus cuentas; no se debe
+atribuir autoría de forma artificial.
