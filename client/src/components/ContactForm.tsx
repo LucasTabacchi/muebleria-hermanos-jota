@@ -2,8 +2,8 @@ import { useState } from "react";
 
 const VACIO = { nombre: "", email: "", mensaje: "" };
 
-function validar(valores) {
-    const errores = {};
+function validar(valores: { nombre: string; email: string; mensaje: string }): Record<string, string> {
+    const errores: Record<string, string> = {};
     if (valores.nombre.trim().length < 2) errores.nombre = "Ingresá un nombre válido.";
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(valores.email.trim())) {
         errores.email = "Ingresá un email válido.";
@@ -16,15 +16,15 @@ function validar(valores) {
 
 export default function ContactForm() {
     const [valores, setValores] = useState(VACIO);
-    const [errores, setErrores] = useState({});
+    const [errores, setErrores] = useState<Record<string, string>>({});
     const [exito, setExito] = useState("");
 
-    function cambiarCampo(evento) {
+    function cambiarCampo(evento: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) {
         const { name, value } = evento.target;
         setValores((actuales) => ({ ...actuales, [name]: value }));
     }
 
-    function enviar(evento) {
+    function enviar(evento: React.FormEvent<HTMLFormElement>) {
         evento.preventDefault();
         const nuevosErrores = validar(valores);
         setErrores(nuevosErrores);
@@ -85,7 +85,7 @@ export default function ContactForm() {
                 <textarea
                     id="mensaje"
                     name="mensaje"
-                    rows="6"
+                    rows={6}
                     placeholder="Contanos qué pieza o espacio tenés en mente"
                     value={valores.mensaje}
                     onChange={cambiarCampo}
@@ -106,3 +106,6 @@ export default function ContactForm() {
         </form>
     );
 }
+
+
+

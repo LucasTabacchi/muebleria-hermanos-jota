@@ -31,3 +31,4 @@ export default function ProductPage({ onAdd }) {
         </main>
     );
 }
+

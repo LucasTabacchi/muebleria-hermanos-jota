@@ -1,10 +1,10 @@
-const API_URL = (process.env.REACT_APP_API_URL || "http://localhost:3001").replace(/\/$/, "");
+const API_URL = (import.meta.env.VITE_API_URL || "http://localhost:3001").replace(/\/$/, "");
 
 async function solicitar(ruta) {
     const respuesta = await fetch(`${API_URL}${ruta}`);
 
     if (!respuesta.ok) {
-        const error = new Error("La API no pudo completar la solicitud.");
+        const error = Object.assign(new Error("La API no pudo completar la solicitud."), { status: respuesta.status });
         error.status = respuesta.status;
         throw error;
     }
@@ -19,3 +19,5 @@ export function obtenerProductos() {
 export function obtenerProducto(id) {
     return solicitar(`/api/productos/${id}`);
 }
+
+

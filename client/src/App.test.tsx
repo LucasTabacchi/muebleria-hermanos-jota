@@ -1,3 +1,4 @@
+import { vi } from "vitest";
 import { fireEvent, render, screen, waitFor, within } from "@testing-library/react";
 import { MemoryRouter } from "react-router-dom";
 import App from "./App";
@@ -46,8 +47,8 @@ function renderApp(path = "/") {
 
 beforeEach(() => {
     localStorage.clear();
-    jest.restoreAllMocks();
-    global.fetch = jest.fn();
+    vi.restoreAllMocks();
+    global.fetch = vi.fn();
 });
 
 afterEach(() => {
@@ -171,3 +172,7 @@ test("muestra una vista de ruta no encontrada", () => {
     renderApp("/una-ruta-inexistente");
     expect(screen.getByRole("heading", { name: "Página no encontrada" })).toBeInTheDocument();
 });
+
+
+
+
