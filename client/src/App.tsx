@@ -8,6 +8,7 @@ import HomePage from "./pages/HomePage";
 import NotFoundPage from "./pages/NotFoundPage";
 import ProductPage from "./pages/ProductPage";
 import ProductsPage from "./pages/ProductsPage";
+import type { ItemCarrito, Producto } from "./types";
 
 function carritoInicial() {
     try {
@@ -19,20 +20,20 @@ function carritoInicial() {
 }
 
 export default function App() {
-    const [cart, setCart] = useState(carritoInicial);
+    const [cart, setCart] = useState<ItemCarrito[]>(carritoInicial);
 
     useEffect(() => {
         localStorage.setItem("carrito", JSON.stringify(cart));
     }, [cart]);
 
-    function agregar(producto) {
+    function agregar(producto: Producto) {
         setCart((actual) => [
             ...actual,
             { id: producto.id, nombre: producto.nombre, precio: producto.precio },
         ]);
     }
 
-    function eliminar(indice) {
+    function eliminar(indice: number) {
         setCart((actual) => actual.filter((_, posicion) => posicion !== indice));
     }
 
@@ -56,3 +57,5 @@ export default function App() {
         </>
     );
 }
+
+

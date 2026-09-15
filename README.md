@@ -46,9 +46,9 @@ Para detenerlos, presionar `Ctrl+C`.
 | `npm run dev`           | Inicia cliente y backend en paralelo con recarga durante el desarrollo. |
 | `npm run dev:client`    | Inicia solamente el cliente React.                                      |
 | `npm run dev:backend`   | Inicia solamente la API con el modo `watch` de Node.js.                 |
-| `npm run start:client`  | Inicia solamente el cliente React.                                      |
+| `npm run start:client`  | Inicia solamente el cliente React con Vite.                             |
 | `npm run start:backend` | Inicia solamente la API sin modo `watch`.                               |
-| `npm run lint`          | Analiza JavaScript y JSX con ESLint.                                    |
+| `npm run lint`          | Analiza JavaScript/JSX con ESLint y TypeScript con tsc.                 |
 | `npm test`              | Ejecuta todas las pruebas de backend y frontend sin modo interactivo.   |
 | `npm run test:backend`  | Ejecuta las pruebas de integración de la API.                           |
 | `npm run test:client`   | Ejecuta las pruebas del cliente React sin observación continua.         |
@@ -57,14 +57,14 @@ Para detenerlos, presionar `Ctrl+C`.
 
 ## Configuración
 
-El cliente utiliza la variable `REACT_APP_API_URL` para localizar el backend. El
+El cliente utiliza la variable `VITE_API_URL` para localizar el backend. El
 valor predeterminado es `http://localhost:3001` y está documentado en `.env.example`.
 
 Si necesitás modificarlo, copiá `.env.example` como `client/.env` antes de iniciar
 el cliente:
 
 ```env
-REACT_APP_API_URL=http://localhost:3001
+VITE_API_URL=http://localhost:3001
 ```
 
 Los archivos `.env` locales no se versionan.
@@ -73,7 +73,7 @@ Los archivos `.env` locales no se versionan.
 
 ```text
 /
-├── client/                  Aplicación React creada con Create React App
+├── client/                  Aplicación React + TypeScript creada con Vite
 │   ├── public/              Recursos públicos e imágenes de la marca
 │   └── src/
 │       ├── components/      Navbar, Footer, tarjetas, listas, detalle y formulario
@@ -109,14 +109,12 @@ manejadores centralizados de rutas inexistentes y errores.
 
 ## Decisiones técnicas
 
-- **Create React App:** se utiliza porque la consigna de los Sprints 3 y 4 lo exige
-  expresamente, aunque actualmente sea una herramienta obsoleta para proyectos nuevos.
-- **React Router 6.30.3:** se fijó esta versión porque es compatible con Jest 27,
-  incluido por Create React App 5; React Router 7 no se resuelve correctamente en ese
-  entorno de pruebas.
-- **Versiones de ESLint y TypeScript:** el workspace separa las versiones compatibles
-  con Create React App de las utilizadas por las herramientas de calidad de la raíz,
-  evitando conflictos entre dependencias heredadas y modernas.
+- **Vite + React + TypeScript:** reemplaza Create React App para disponer de un flujo de
+  desarrollo y compilación moderno, tipado estático y builds rápidos.
+- **Vitest + Testing Library:** ejecutan las pruebas del cliente en el mismo ecosistema
+  ESM de Vite.
+- **React Router 6.30.3:** conserva las rutas existentes y mantiene compatibilidad con
+  la API utilizada por el cliente.
 - **Catálogo en la API:** el cliente ya no mantiene productos locales; todas las vistas
   los solicitan al backend mediante `fetch`.
 - **Ejecución local:** el despliegue del backend en Render se realizará en una etapa

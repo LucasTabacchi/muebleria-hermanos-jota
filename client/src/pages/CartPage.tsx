@@ -69,3 +69,4 @@ export default function CartPage({ cart, onRemove, onClear }) {
         </main>
     );
 }
+
