@@ -200,6 +200,7 @@ p {
     height: 52px;
     flex: 0 0 auto;
     object-fit: contain;
+    border-radius: 50%;
     filter: drop-shadow(0 2px 8px rgba(150, 72, 35, 0.12));
     transition: transform var(--transicion);
 }
