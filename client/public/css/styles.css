@@ -690,25 +690,30 @@ p {
     overflow: hidden;
     border: 1px solid var(--linea);
     border-radius: var(--radio);
-    background: rgba(255, 255, 255, 0.55);
-    transition: border-color var(--transicion), box-shadow var(--transicion), transform var(--transicion);
+    background: var(--blanco);
+    box-shadow: var(--sombra-subtil);
+    transition: border-color var(--transicion), box-shadow var(--transicion), transform var(--curva-antigravedad);
+    will-change: transform, box-shadow;
 }
 
 .producto-card:hover {
-    border-color: rgba(160, 82, 45, 0.5);
-    box-shadow: var(--sombra-suave);
-    transform: translateY(-6px);
+    border-color: rgba(150, 72, 35, 0.35);
+    box-shadow: var(--sombra-flotante);
+    transform: translateY(-8px);
 }
 
 .producto-imagen {
     width: 100%;
     aspect-ratio: 4 / 3;
-    object-fit: cover;
-    transition: transform 500ms ease;
+    object-fit: contain;
+    background: #F7F3EB;
+    padding: 18px;
+    transition: transform 500ms var(--curva-antigravedad);
+    will-change: transform;
 }
 
 .producto-card:hover .producto-imagen {
-    transform: scale(1.025);
+    transform: scale(1.06);
 }
 
 .producto-info {
@@ -717,6 +722,7 @@ p {
     flex-direction: column;
     align-items: flex-start;
     padding: 24px;
+    background: var(--blanco);
 }
 
 .producto-categoria {
@@ -729,37 +735,56 @@ p {
 }
 
 .producto-info h3 {
-    margin-bottom: 12px;
+    margin-bottom: 10px;
     font-size: 1.55rem;
+    color: var(--tinta);
+    letter-spacing: -0.01em;
 }
 
 .producto-descripcion {
     display: -webkit-box;
-    margin-bottom: 18px;
+    margin-bottom: 20px;
     overflow: hidden;
     color: var(--tinta-suave);
     font-size: 0.91rem;
+    line-height: 1.6;
     -webkit-box-orient: vertical;
-    -webkit-line-clamp: 4;
+    -webkit-line-clamp: 3;
 }
 
 .producto-precio {
     display: block;
     margin-top: auto;
-    margin-bottom: 17px;
+    margin-bottom: 18px;
     color: var(--tinta);
     font-family: "Playfair Display", Georgia, serif;
-    font-size: 1.38rem;
+    font-size: 1.45rem;
+    font-weight: 700;
+    letter-spacing: -0.01em;
 }
 
 .producto-enlace {
-    padding-bottom: 3px;
-    border-bottom: 1px solid var(--siena);
-    color: var(--siena);
-    font-size: 0.73rem;
-    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 20px;
+    border-radius: 999px;
+    background: var(--siena-luz);
+    border: 1px solid rgba(150, 72, 35, 0.2);
+    color: var(--siena-oscuro);
+    font-size: 0.74rem;
+    font-weight: 700;
     letter-spacing: 0.06em;
     text-transform: uppercase;
+    transition: all var(--transicion);
+}
+
+.producto-enlace:hover {
+    background: var(--siena);
+    border-color: var(--siena);
+    color: var(--blanco);
+    transform: translateX(4px);
+    box-shadow: 0 4px 14px rgba(150, 72, 35, 0.3);
 }
 
 .estado-carga {
@@ -770,8 +795,10 @@ p {
 /* FILOSOFÍA */
 
 .filosofia {
-    padding: 24px 0 82px;
+    padding: 70px 0 90px;
     background: var(--alabastro);
+    position: relative;
+    overflow: hidden;
 }
 
 .filosofia-contenido {
@@ -782,16 +809,19 @@ p {
 
 .filosofia-imagen {
     position: relative;
+    perspective: 1000px;
 }
 
 .filosofia-imagen::before {
     position: absolute;
-    top: -14px;
-    left: -14px;
+    top: -16px;
+    left: -16px;
     z-index: 0;
-    width: 46%;
-    height: 50%;
-    border: 1px solid var(--siena);
+    width: 60%;
+    height: 60%;
+    border: 1.5px solid var(--siena);
+    border-radius: var(--radio);
+    opacity: 0.6;
     content: "";
 }
 
@@ -801,21 +831,33 @@ p {
     width: 100%;
     aspect-ratio: 4 / 5;
     object-fit: cover;
+    border-radius: var(--radio);
+    box-shadow: var(--sombra-antigravedad);
+    transition: transform var(--transicion-lenta);
+}
+
+.filosofia-imagen:hover img {
+    transform: scale(1.02);
 }
 
 .filosofia-imagen span {
     position: absolute;
-    right: -1px;
-    bottom: -1px;
+    right: 16px;
+    bottom: 16px;
     z-index: 2;
-    max-width: 210px;
-    padding: 15px 18px;
-    background: var(--siena);
-    color: var(--blanco);
-    font-size: 0.65rem;
-    font-weight: 600;
-    letter-spacing: 0.11em;
+    max-width: 230px;
+    padding: 14px 18px;
+    background: rgba(28, 21, 18, 0.88);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border: 1px solid rgba(255, 255, 255, 0.16);
+    border-radius: var(--radio-pequeno);
+    color: var(--alabastro);
+    font-size: 0.66rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
     text-transform: uppercase;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
 }
 
 .filosofia-texto {
@@ -824,62 +866,87 @@ p {
     align-items: flex-start;
 }
 
-.filosofia-texto h2,
-.herencia h2,
-.visita h2 {
-    margin: 12px 0 24px;
-    font-size: clamp(2.35rem, 8vw, 4.7rem);
+.filosofia-texto h2 {
+    margin: 12px 0 20px;
+    font-size: clamp(2.35rem, 6vw, 3.8rem);
+    color: var(--tinta);
+    letter-spacing: -0.02em;
 }
 
 .filosofia-texto > p:not(.eyebrow) {
-    margin-bottom: 22px;
+    margin-bottom: 20px;
     color: var(--tinta-suave);
+    line-height: 1.7;
 }
 
 .filosofia-texto .texto-grande {
     color: var(--tinta);
     font-family: "Playfair Display", Georgia, serif;
-    font-size: 1.34rem;
+    font-size: 1.38rem;
     line-height: 1.45;
+    font-weight: 600;
+    font-style: italic;
+    border-left: 2px solid var(--siena);
+    padding-left: 18px;
+    margin-bottom: 24px;
 }
 
 .filosofia-texto .enlace-texto {
-    margin-top: 10px;
+    margin-top: 12px;
 }
 
 /* SUSTENTABILIDAD */
 
 .sustentabilidad {
-    background: var(--crema);
+    padding: 90px 0;
+    background: var(--crema-alt);
 }
 
 .beneficios-contenedor {
     display: flex;
     flex-direction: column;
-    gap: 18px;
+    gap: 24px;
 }
 
 .beneficio {
     flex: 1;
-    padding: 30px;
+    padding: 38px 32px;
     border-top: 3px solid var(--salvia);
+    border-radius: var(--radio);
     background: var(--blanco);
+    box-shadow: var(--sombra-subtil);
+    border: 1px solid var(--linea);
+    transition: transform var(--curva-antigravedad), box-shadow var(--curva-antigravedad), border-color var(--transicion);
+}
+
+.beneficio:hover {
+    transform: translateY(-8px);
+    box-shadow: var(--sombra-flotante);
+    border-color: rgba(111, 139, 90, 0.3);
 }
 
 .beneficio:nth-child(2) {
-    border-color: var(--oro);
+    border-top-color: var(--oro);
+}
+.beneficio:nth-child(2):hover {
+    border-color: rgba(197, 139, 36, 0.3);
 }
 
 .beneficio:nth-child(3) {
-    border-color: var(--rosa);
+    border-top-color: var(--rosa);
+}
+.beneficio:nth-child(3):hover {
+    border-color: rgba(186, 110, 97, 0.3);
 }
 
 .beneficio-numero {
     display: block;
-    margin-bottom: 38px;
+    margin-bottom: 30px;
     color: var(--salvia);
     font-family: "Playfair Display", Georgia, serif;
-    font-size: 1.2rem;
+    font-size: 1.6rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
 }
 
 .beneficio:nth-child(2) .beneficio-numero {
@@ -891,20 +958,22 @@ p {
 }
 
 .beneficio h3 {
-    margin-bottom: 13px;
-    font-size: 1.5rem;
+    margin-bottom: 12px;
+    font-size: 1.48rem;
+    color: var(--tinta);
 }
 
 .beneficio p {
     color: var(--tinta-suave);
-    font-size: 0.92rem;
+    font-size: 0.94rem;
+    line-height: 1.65;
 }
 
 /* HERENCIA VIVA */
 
 .herencia {
-    padding: 82px 0;
-    background: var(--tinta);
+    padding: 95px 0;
+    background: radial-gradient(circle at 20% 50%, #2A1D17 0%, #17110E 80%);
     color: var(--alabastro);
 }
 
@@ -920,57 +989,96 @@ p {
 
 .herencia h2 {
     color: var(--alabastro);
+    font-size: clamp(2.35rem, 6vw, 3.8rem);
+    letter-spacing: -0.02em;
+    margin: 12px 0 20px;
 }
 
 .herencia-intro > p:last-child {
     max-width: 580px;
-    color: rgba(245, 230, 211, 0.74);
+    color: rgba(246, 239, 229, 0.78);
+    font-size: 1.05rem;
+    line-height: 1.65;
 }
 
 .herencia-lista {
     display: flex;
     flex-direction: column;
+    gap: 12px;
 }
 
 .herencia-lista div {
     display: flex;
     flex-direction: column;
-    gap: 2px;
-    padding: 18px 0;
-    border-bottom: 1px solid rgba(245, 230, 211, 0.2);
+    gap: 4px;
+    padding: 20px 24px;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(246, 239, 229, 0.08);
+    border-radius: var(--radio-pequeno);
+    transition: background var(--transicion), transform var(--transicion), border-color var(--transicion);
+}
+
+.herencia-lista div:hover {
+    background: rgba(255, 255, 255, 0.07);
+    border-color: rgba(197, 139, 36, 0.28);
+    transform: translateX(4px);
 }
 
 .herencia-lista strong {
-    color: var(--alabastro);
+    color: var(--oro);
     font-family: "Playfair Display", Georgia, serif;
-    font-size: 1.45rem;
+    font-size: 1.55rem;
+    font-weight: 700;
 }
 
 .herencia-lista span {
-    color: rgba(245, 230, 211, 0.65);
-    font-size: 0.86rem;
+    color: rgba(246, 239, 229, 0.72);
+    font-size: 0.88rem;
 }
 
 /* VISITA */
 
 .visita {
-    padding: 78px 0;
-    background: var(--rosa);
-}
-
-.visita .eyebrow {
-    color: var(--tinta);
+    padding: 85px 0;
+    background: var(--crema);
 }
 
 .visita-contenido {
     display: flex;
     flex-direction: column;
-    gap: 28px;
+    gap: 32px;
+    padding: 56px 48px;
+    background: linear-gradient(135deg, #7A391A 0%, var(--siena) 60%, #B0552B 100%);
+    border-radius: var(--radio-grande);
+    box-shadow: var(--sombra-antigravedad);
+    color: var(--blanco);
+    position: relative;
+    overflow: hidden;
+}
+
+.visita-contenido::before {
+    position: absolute;
+    top: -80px;
+    right: -80px;
+    width: 260px;
+    height: 260px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.08);
+    content: "";
+    pointer-events: none;
+}
+
+.visita .eyebrow {
+    color: rgba(255, 255, 255, 0.85);
 }
 
 .visita h2 {
+    margin-top: 10px;
     margin-bottom: 0;
-    color: var(--tinta);
+    color: var(--blanco);
+    font-size: clamp(2rem, 5vw, 3.2rem);
+    letter-spacing: -0.02em;
+    max-width: 600px;
 }
 
 .visita-accion {
@@ -981,7 +1089,25 @@ p {
 }
 
 .visita-accion p {
-    color: rgba(46, 33, 28, 0.78);
+    color: rgba(255, 255, 255, 0.88);
+    font-size: 0.98rem;
+}
+
+.visita-accion .boton {
+    background: var(--blanco);
+    border-color: var(--blanco);
+    color: var(--siena-oscuro);
+    border-radius: 999px;
+    padding: 16px 32px;
+    font-size: 0.78rem;
+    font-weight: 700;
+    box-shadow: 0 10px 24px rgba(0, 0, 0, 0.2);
+}
+
+.visita-accion .boton:hover {
+    background: var(--alabastro-puro);
+    transform: translateY(-3px) scale(1.02);
+    box-shadow: 0 16px 32px rgba(0, 0, 0, 0.28);
 }
 
 /* ENCABEZADOS INTERIORES */
