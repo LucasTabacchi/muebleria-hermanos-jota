@@ -167,54 +167,69 @@ p {
     top: 0;
     z-index: 1000;
     border-bottom: 1px solid var(--linea);
-    background: rgba(252, 248, 242, 0.96);
-    backdrop-filter: blur(14px);
+    background: var(--vidrio-fondo);
+    backdrop-filter: blur(18px) saturate(160%);
+    -webkit-backdrop-filter: blur(18px) saturate(160%);
+    box-shadow: 0 4px 24px -4px rgba(28, 21, 18, 0.04);
+    transition: background var(--transicion), box-shadow var(--transicion);
 }
 
 .header-contenido {
     display: flex;
     flex-direction: column;
-    gap: 10px;
-    padding: 10px 0 12px;
+    gap: 12px;
+    padding: 12px 0 14px;
 }
 
 .logo {
     display: inline-flex;
     align-items: center;
     align-self: flex-start;
-    gap: 10px;
+    gap: 12px;
     min-width: 160px;
     color: var(--siena);
+    transition: transform var(--transicion);
+}
+
+.logo:hover {
+    transform: translateY(-1px);
 }
 
 .logo img {
-    width: 58px;
-    height: 58px;
+    width: 52px;
+    height: 52px;
     flex: 0 0 auto;
     object-fit: contain;
+    filter: drop-shadow(0 2px 8px rgba(150, 72, 35, 0.12));
+    transition: transform var(--transicion);
+}
+
+.logo:hover img {
+    transform: rotate(-3deg) scale(1.04);
 }
 
 .logo-texto {
     display: flex;
     flex-direction: column;
-    font-size: 0.61rem;
+    font-size: 0.64rem;
     font-weight: 600;
-    letter-spacing: 0.18em;
-    line-height: 1.1;
+    letter-spacing: 0.22em;
+    line-height: 1.15;
     text-transform: uppercase;
 }
 
 .logo-texto strong {
     font-family: "Playfair Display", Georgia, serif;
-    font-size: 1.38rem;
-    letter-spacing: 0.08em;
+    font-size: 1.42rem;
+    letter-spacing: 0.05em;
+    color: var(--tinta);
 }
 
 .nav {
     display: flex;
     flex-wrap: wrap;
     align-items: center;
-    gap: 8px;
+    gap: 6px;
     width: 100%;
     padding-bottom: 2px;
 }
@@ -222,56 +237,68 @@ p {
 .nav a {
     position: relative;
     flex: 0 0 auto;
-    padding: 8px 7px;
+    padding: 8px 14px;
+    border-radius: 999px;
     color: var(--tinta-suave);
-    font-size: 0.72rem;
+    font-size: 0.74rem;
     font-weight: 600;
-    letter-spacing: 0.075em;
+    letter-spacing: 0.06em;
     text-transform: uppercase;
-    transition: color var(--transicion);
+    transition: color var(--transicion), background-color var(--transicion), transform var(--transicion);
 }
 
-.nav a::after {
-    position: absolute;
-    right: 7px;
-    bottom: 2px;
-    left: 7px;
-    height: 1px;
-    background: var(--siena);
-    content: "";
-    transform: scaleX(0);
-    transform-origin: right;
-    transition: transform var(--transicion);
-}
-
-.nav a:hover,
-.nav a.activo {
+.nav a:hover {
     color: var(--siena);
+    background-color: rgba(150, 72, 35, 0.06);
 }
 
-.nav a:hover::after,
-.nav a.activo::after {
-    transform: scaleX(1);
-    transform-origin: left;
+.nav a.activo {
+    color: var(--siena-oscuro);
+    background-color: var(--siena-luz);
+    font-weight: 700;
 }
 
 .carrito-header {
     display: inline-flex;
     align-items: center;
-    gap: 7px;
+    gap: 8px;
+    padding: 6px 14px !important;
+    border: 1px solid rgba(150, 72, 35, 0.18);
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.75);
+    box-shadow: var(--sombra-subtil);
+    transition: transform var(--transicion), border-color var(--transicion), box-shadow var(--transicion) !important;
+}
+
+.carrito-header:hover {
+    border-color: var(--siena);
+    box-shadow: var(--sombra-suave);
+    transform: translateY(-2px);
+}
+
+.carrito-header.activo {
+    border-color: var(--siena);
+    background: var(--siena-luz);
 }
 
 .contador-carrito {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    min-width: 24px;
-    height: 24px;
+    min-width: 22px;
+    height: 22px;
     padding: 0 6px;
     border-radius: 999px;
     background: var(--siena);
     color: var(--blanco);
     font-size: 0.7rem;
+    font-weight: 700;
+    box-shadow: 0 2px 6px rgba(150, 72, 35, 0.3);
+    transition: transform var(--curva-resorte);
+}
+
+.carrito-header:hover .contador-carrito {
+    transform: scale(1.12);
 }
 
 /* BOTONES Y ENLACES */

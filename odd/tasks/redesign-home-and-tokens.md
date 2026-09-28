@@ -13,7 +13,7 @@ Implementar un rediseño de alta gama para Hermanos Jota combinando principios d
 ## Tareas
 
 - [x] TASK-1: Configurar tipografía en `client/index.html` y modernizar tokens del sistema de diseño en `client/public/css/styles.css` (paleta, elevaciones multicapa, glassmorphism y curvas de movimiento).
-- [ ] TASK-2: Rediseñar el Header/Navbar con comportamiento flotante, desenfoque de fondo sutil y microinteracciones de navegación.
+- [x] TASK-2: Rediseñar el Header/Navbar con comportamiento flotante, desenfoque de fondo sutil y microinteracciones de navegación.
 - [ ] TASK-3: Rediseñar la sección Hero de la Home enfocada en conversión (CRO), composición editorial y profundidad espacial de imagen.
 - [ ] TASK-4: Rediseñar las secciones de la Home (Destacados con hover antigravedad en `ProductCard`, Filosofía del taller, tarjetas de Sustentabilidad y métricas de Herencia Viva).
 - [ ] TASK-5: Refinar el Footer con grilla arquitectónica y verificar la suite completa de Vitest (`npm test`), build (`npm run build`) y lint (`npm run lint`).
