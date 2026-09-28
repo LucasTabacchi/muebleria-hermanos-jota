@@ -43,6 +43,9 @@ export default function ContactPage() {
                             </div>
                             <div className="dato-contacto">
                                 <strong>Contacto directo</strong>
+                                <a href="mailto:info@hermanosjota.com.ar">
+                                    info@hermanosjota.com.ar
+                                </a>
                                 <a href="mailto:ventas@hermanosjota.com.ar">
                                     ventas@hermanosjota.com.ar
                                 </a>

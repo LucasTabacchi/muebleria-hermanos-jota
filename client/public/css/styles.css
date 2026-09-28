@@ -4,16 +4,16 @@
 ========================================================= */
 
 :root {
-    --siena: #964823;
+    --siena: #A0522D;
     --siena-oscuro: #6E3214;
-    --siena-luz: #FAF0E8;
-    --salvia: #6F8B5A;
+    --siena-luz: #F5E6D3;
+    --salvia: #87A96B;
     --salvia-suave: #EDF3E8;
-    --alabastro: #F6EFE5;
-    --alabastro-puro: #FBF8F3;
-    --oro: #C58B24;
-    --oro-luz: rgba(197, 139, 36, 0.12);
-    --rosa: #BA6E61;
+    --alabastro: #F5E6D3;
+    --alabastro-puro: #F5E6D3;
+    --oro: #D4A437;
+    --oro-luz: rgba(212, 164, 55, 0.12);
+    --rosa: #C47A6D;
     --tinta: #1C1512;
     --tinta-suave: #63534B;
     --tinta-mutada: #94837A;
@@ -59,7 +59,7 @@ html {
 body {
     background: var(--crema);
     color: var(--tinta);
-    font-family: "Plus Jakarta Sans", "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
     font-size: 1rem;
     line-height: 1.68;
     text-rendering: optimizeLegibility;
@@ -188,11 +188,6 @@ p {
     gap: 12px;
     min-width: 160px;
     color: var(--siena);
-    transition: transform var(--transicion);
-}
-
-.logo:hover {
-    transform: translateY(-1px);
 }
 
 .logo img {
@@ -201,12 +196,7 @@ p {
     flex: 0 0 auto;
     object-fit: contain;
     border-radius: 50%;
-    filter: drop-shadow(0 2px 8px rgba(150, 72, 35, 0.12));
-    transition: transform var(--transicion);
-}
-
-.logo:hover img {
-    transform: rotate(-3deg) scale(1.04);
+    filter: drop-shadow(0 2px 8px rgba(160, 82, 45, 0.12));
 }
 
 .logo-texto {
@@ -250,7 +240,7 @@ p {
 
 .nav a:hover {
     color: var(--siena);
-    background-color: rgba(150, 72, 35, 0.06);
+    background-color: rgba(160, 82, 45, 0.06);
 }
 
 .nav a.activo {
@@ -264,7 +254,7 @@ p {
     align-items: center;
     gap: 8px;
     padding: 6px 14px !important;
-    border: 1px solid rgba(150, 72, 35, 0.18);
+    border: 1px solid rgba(160, 82, 45, 0.18);
     border-radius: 999px;
     background: rgba(255, 255, 255, 0.75);
     box-shadow: var(--sombra-subtil);
@@ -294,7 +284,7 @@ p {
     color: var(--blanco);
     font-size: 0.7rem;
     font-weight: 700;
-    box-shadow: 0 2px 6px rgba(150, 72, 35, 0.3);
+    box-shadow: 0 2px 6px rgba(160, 82, 45, 0.3);
     transition: transform var(--curva-resorte);
 }
 
@@ -385,7 +375,7 @@ p {
     display: flex;
     min-height: 720px;
     overflow: hidden;
-    background: radial-gradient(circle at 80% 30%, rgba(150, 72, 35, 0.28) 0%, rgba(28, 21, 18, 0.98) 60%),
+    background: radial-gradient(circle at 80% 30%, rgba(160, 82, 45, 0.28) 0%, rgba(28, 21, 18, 0.98) 60%),
                 linear-gradient(135deg, #1C1512 0%, #2A1D17 50%, #150F0D 100%);
     color: var(--blanco);
 }
@@ -422,8 +412,8 @@ p {
     gap: 10px;
     padding: 6px 14px;
     border-radius: 999px;
-    background: rgba(246, 239, 229, 0.08);
-    border: 1px solid rgba(246, 239, 229, 0.16);
+    background: rgba(245, 230, 211, 0.08);
+    border: 1px solid rgba(245, 230, 211, 0.16);
     backdrop-filter: blur(8px);
     -webkit-backdrop-filter: blur(8px);
     margin-bottom: 24px;
@@ -457,7 +447,7 @@ p {
 
 .hero-bajada {
     max-width: 540px;
-    color: rgba(246, 239, 229, 0.85);
+    color: rgba(245, 230, 211, 0.85);
     font-size: 1.08rem;
     font-weight: 300;
     line-height: 1.65;
@@ -478,15 +468,15 @@ p {
     padding: 16px 30px !important;
     border-radius: 999px !important;
     font-size: 0.78rem !important;
-    box-shadow: 0 12px 28px -6px rgba(150, 72, 35, 0.5) !important;
+    box-shadow: 0 12px 28px -6px rgba(160, 82, 45, 0.5) !important;
     transition: transform var(--curva-antigravedad), box-shadow var(--curva-antigravedad), background-color var(--transicion) !important;
 }
 
 .boton-primario-hero:hover {
-    background: #A84E25 !important;
-    border-color: #A84E25 !important;
+    background: var(--siena-oscuro) !important;
+    border-color: var(--siena-oscuro) !important;
     transform: translateY(-3px) scale(1.02) !important;
-    box-shadow: 0 20px 38px -6px rgba(150, 72, 35, 0.6) !important;
+    box-shadow: 0 20px 38px -6px rgba(160, 82, 45, 0.6) !important;
 }
 
 .hero .boton:not(.boton-primario-hero) {
@@ -504,7 +494,7 @@ p {
 
 .enlace-claro {
     color: var(--alabastro);
-    border-bottom: 1px solid rgba(246, 239, 229, 0.4);
+    border-bottom: 1px solid rgba(245, 230, 211, 0.4);
     padding-bottom: 4px;
     font-size: 0.78rem;
     font-weight: 600;
@@ -523,7 +513,7 @@ p {
     gap: 16px;
     margin-top: 42px;
     padding-top: 28px;
-    border-top: 1px solid rgba(246, 239, 229, 0.12);
+    border-top: 1px solid rgba(245, 230, 211, 0.12);
 }
 
 .credencial-item strong {
@@ -536,7 +526,7 @@ p {
 
 .credencial-item span {
     display: block;
-    color: rgba(246, 239, 229, 0.62);
+    color: rgba(245, 230, 211, 0.62);
     font-size: 0.74rem;
     margin-top: 2px;
 }
@@ -556,7 +546,7 @@ p {
     max-width: 480px;
     padding: 34px 28px 48px;
     border-radius: var(--radio-grande);
-    background: radial-gradient(circle at 50% 30%, rgba(150, 72, 35, 0.22) 0%, rgba(22, 16, 14, 0.8) 80%);
+    background: radial-gradient(circle at 50% 30%, rgba(160, 82, 45, 0.22) 0%, rgba(22, 16, 14, 0.8) 80%);
     border: 1px solid rgba(255, 255, 255, 0.14);
     box-shadow: var(--sombra-antigravedad);
     transform: rotateY(-6deg) rotateX(4deg);
@@ -617,7 +607,7 @@ p {
 }
 
 .etiqueta-sub {
-    color: rgba(246, 239, 229, 0.7);
+    color: rgba(245, 230, 211, 0.7);
     font-size: 0.73rem;
 }
 
@@ -698,7 +688,7 @@ p {
 }
 
 .producto-card:hover {
-    border-color: rgba(150, 72, 35, 0.35);
+    border-color: rgba(160, 82, 45, 0.35);
     box-shadow: var(--sombra-flotante);
     transform: translateY(-8px);
 }
@@ -707,7 +697,7 @@ p {
     width: 100%;
     aspect-ratio: 4 / 3;
     object-fit: contain;
-    background: #F7F3EB;
+    background: var(--alabastro);
     padding: 18px;
     transition: transform 500ms var(--curva-antigravedad);
     will-change: transform;
@@ -771,7 +761,7 @@ p {
     padding: 10px 20px;
     border-radius: 999px;
     background: var(--siena-luz);
-    border: 1px solid rgba(150, 72, 35, 0.2);
+    border: 1px solid rgba(160, 82, 45, 0.2);
     color: var(--siena-oscuro);
     font-size: 0.74rem;
     font-weight: 700;
@@ -785,7 +775,7 @@ p {
     border-color: var(--siena);
     color: var(--blanco);
     transform: translateX(4px);
-    box-shadow: 0 4px 14px rgba(150, 72, 35, 0.3);
+    box-shadow: 0 4px 14px rgba(160, 82, 45, 0.3);
 }
 
 .estado-carga {
@@ -810,43 +800,51 @@ p {
 
 .filosofia-imagen {
     position: relative;
-    perspective: 1000px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 14px;
 }
 
-
 .filosofia-imagen img {
-    position: relative;
-    z-index: 1;
     width: 100%;
-    aspect-ratio: 4 / 5;
+    aspect-ratio: 4 / 3;
     object-fit: cover;
+    object-position: center 68%;
+    background: var(--blanco-puro);
+    border: 1px solid var(--borde-suave);
     border-radius: var(--radio);
     box-shadow: var(--sombra-antigravedad);
     transition: transform var(--transicion-lenta);
 }
 
 .filosofia-imagen:hover img {
-    transform: scale(1.02);
+    transform: scale(1.015);
 }
 
 .filosofia-imagen span {
-    position: absolute;
-    right: 16px;
-    bottom: 16px;
-    z-index: 2;
-    max-width: 230px;
-    padding: 14px 18px;
-    background: rgba(28, 21, 18, 0.88);
-    backdrop-filter: blur(14px);
-    -webkit-backdrop-filter: blur(14px);
-    border: 1px solid rgba(255, 255, 255, 0.16);
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 18px;
+    background: var(--tinta);
+    border: 1px solid rgba(255, 255, 255, 0.12);
     border-radius: var(--radio-pequeno);
     color: var(--alabastro);
-    font-size: 0.66rem;
+    font-size: 0.68rem;
     font-weight: 700;
     letter-spacing: 0.12em;
     text-transform: uppercase;
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+    box-shadow: var(--sombra-suave);
+}
+
+.filosofia-imagen span::before {
+    content: "";
+    display: inline-block;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--siena);
 }
 
 .filosofia-texto {
@@ -911,21 +909,21 @@ p {
 .beneficio:hover {
     transform: translateY(-8px);
     box-shadow: var(--sombra-flotante);
-    border-color: rgba(111, 139, 90, 0.3);
+    border-color: rgba(135, 169, 107, 0.3);
 }
 
 .beneficio:nth-child(2) {
     border-top-color: var(--oro);
 }
 .beneficio:nth-child(2):hover {
-    border-color: rgba(197, 139, 36, 0.3);
+    border-color: rgba(212, 164, 55, 0.3);
 }
 
 .beneficio:nth-child(3) {
     border-top-color: var(--rosa);
 }
 .beneficio:nth-child(3):hover {
-    border-color: rgba(186, 110, 97, 0.3);
+    border-color: rgba(196, 122, 109, 0.3);
 }
 
 .beneficio-numero {
@@ -985,7 +983,7 @@ p {
 
 .herencia-intro > p:last-child {
     max-width: 580px;
-    color: rgba(246, 239, 229, 0.78);
+    color: rgba(245, 230, 211, 0.78);
     font-size: 1.05rem;
     line-height: 1.65;
 }
@@ -1002,14 +1000,14 @@ p {
     gap: 4px;
     padding: 20px 24px;
     background: rgba(255, 255, 255, 0.03);
-    border: 1px solid rgba(246, 239, 229, 0.08);
+    border: 1px solid rgba(245, 230, 211, 0.08);
     border-radius: var(--radio-pequeno);
     transition: background var(--transicion), transform var(--transicion), border-color var(--transicion);
 }
 
 .herencia-lista div:hover {
     background: rgba(255, 255, 255, 0.07);
-    border-color: rgba(197, 139, 36, 0.28);
+    border-color: rgba(212, 164, 55, 0.28);
     transform: translateX(4px);
 }
 
@@ -1021,7 +1019,7 @@ p {
 }
 
 .herencia-lista span {
-    color: rgba(246, 239, 229, 0.72);
+    color: rgba(245, 230, 211, 0.72);
     font-size: 0.88rem;
 }
 
@@ -1540,8 +1538,8 @@ p {
 
 .footer {
     padding-top: 76px;
-    background: #140E0C;
-    border-top: 1px solid rgba(246, 239, 229, 0.08);
+    background: var(--tinta);
+    border-top: 1px solid rgba(245, 230, 211, 0.08);
     color: var(--alabastro);
 }
 
@@ -1577,7 +1575,7 @@ p {
 .footer h3 {
     margin-bottom: 10px;
     color: var(--oro);
-    font-family: "Plus Jakarta Sans", system-ui, sans-serif;
+    font-family: "Inter", system-ui, sans-serif;
     font-size: 0.72rem;
     font-weight: 700;
     letter-spacing: 0.16em;
@@ -1936,5 +1934,65 @@ p {
     *::after {
         scroll-behavior: auto !important;
         transition-duration: 0.01ms !important;
+    }
+}
+
+
+/* Manual de marca: tipografía, marca y CTA */
+:root {
+    --espacio-proteccion-logo: 52px;
+}
+
+body h1,
+body h2 {
+    font-family: "Playfair Display", Georgia, serif;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+}
+
+body {
+    font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+.boton,
+.producto-enlace,
+.enlace-texto,
+.enlace-claro {
+    font-family: "Inter", system-ui, sans-serif;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+}
+
+.logo,
+.logo:hover,
+.logo img,
+.logo:hover img {
+    transform: none;
+    transition: none;
+}
+
+.header-contenido {
+    gap: var(--espacio-proteccion-logo);
+}
+
+.footer .logo {
+    margin-bottom: var(--espacio-proteccion-logo);
+}
+
+.footer .logo img {
+    background: transparent;
+    padding: 0;
+    border-radius: 0;
+    filter: brightness(0) saturate(100%) invert(91%) sepia(20%) saturate(514%) hue-rotate(340deg) brightness(101%) contrast(92%);
+}
+
+.footer .logo-texto,
+.footer .logo-texto strong {
+    color: var(--alabastro);
+}
+
+@media (min-width: 600px) {
+    .header-contenido {
+        gap: 24px;
     }
 }
