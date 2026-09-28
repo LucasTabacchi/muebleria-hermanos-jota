@@ -172,3 +172,9 @@ test("muestra una vista de ruta no encontrada", () => {
     renderApp("/una-ruta-inexistente");
     expect(screen.getByRole("heading", { name: "Página no encontrada" })).toBeInTheDocument();
 });
+
+test("resetea el scroll al inicio de la página en la navegación", () => {
+    window.scrollTo = vi.fn();
+    renderApp("/contacto");
+    expect(window.scrollTo).toHaveBeenCalledWith({ top: 0, left: 0, behavior: "instant" });
+});
