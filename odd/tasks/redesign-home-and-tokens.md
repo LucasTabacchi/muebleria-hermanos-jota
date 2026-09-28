@@ -16,9 +16,10 @@ Implementar un rediseño de alta gama para Hermanos Jota combinando principios d
 - [x] TASK-2: Rediseñar el Header/Navbar con comportamiento flotante, desenfoque de fondo sutil y microinteracciones de navegación.
 - [x] TASK-3: Rediseñar la sección Hero de la Home enfocada en conversión (CRO), composición editorial y profundidad espacial de imagen.
 - [x] TASK-4: Rediseñar las secciones de la Home (Destacados con hover antigravedad en `ProductCard`, Filosofía del taller, tarjetas de Sustentabilidad y métricas de Herencia Viva).
-- [ ] TASK-5: Refinar el Footer con grilla arquitectónica y verificar la suite completa de Vitest (`npm test`), build (`npm run build`) y lint (`npm run lint`).
+- [x] TASK-5: Refinar el Footer con grilla arquitectónica y verificar la suite completa de Vitest (`npm test`), build (`npm run build`) y lint (`npm run lint`).
 
 ## Verificación
-- Vitest: `npm test` en `client/`
-- Build: `npm run build` en `client/`
-- Lint: `npm run lint` en `client/`
+- Vitest (`client`): OK (9 tests pasados sin regresiones)
+- Build (`client`): OK (`vite build` exitoso sin errores)
+- Lint (`client`): OK (`eslint .` sin advertencias)
+- Backend tests: OK (13 tests pasados)

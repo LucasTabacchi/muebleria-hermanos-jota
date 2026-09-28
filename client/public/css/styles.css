@@ -1550,66 +1550,86 @@ p {
 /* FOOTER */
 
 .footer {
-    padding-top: 64px;
-    background: #241A16;
+    padding-top: 76px;
+    background: #140E0C;
+    border-top: 1px solid rgba(246, 239, 229, 0.08);
     color: var(--alabastro);
 }
 
 .footer-contenido {
     display: flex;
     flex-direction: column;
-    gap: 36px;
-    padding-bottom: 48px;
+    gap: 40px;
+    padding-bottom: 56px;
 }
 
 .footer-contenido > div {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    gap: 7px;
+    gap: 9px;
 }
 
 .footer .logo {
-    margin-bottom: 9px;
+    margin-bottom: 12px;
     color: var(--alabastro);
 }
 
 .footer .logo img {
     border-radius: 50%;
     background: var(--alabastro);
+    padding: 2px;
+}
+
+.footer .logo-texto strong {
+    color: var(--alabastro);
 }
 
 .footer h3 {
-    margin-bottom: 7px;
+    margin-bottom: 10px;
     color: var(--oro);
-    font-family: "Inter", system-ui, sans-serif;
-    font-size: 0.7rem;
-    letter-spacing: 0.13em;
+    font-family: "Plus Jakarta Sans", system-ui, sans-serif;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.16em;
     text-transform: uppercase;
 }
 
 .footer p,
 .footer a:not(.logo) {
-    color: rgba(245, 230, 211, 0.7);
-    font-size: 0.84rem;
+    color: rgba(245, 230, 211, 0.72);
+    font-size: 0.88rem;
+    line-height: 1.6;
+    transition: color var(--transicion), transform var(--transicion);
 }
 
 .footer a:not(.logo):hover {
-    color: var(--alabastro);
+    color: var(--blanco);
+    transform: translateX(3px);
 }
 
 .footer-marca p {
-    max-width: 280px;
+    max-width: 300px;
+    font-size: 0.92rem;
+    color: rgba(245, 230, 211, 0.65);
 }
 
 .footer-copy {
     display: flex;
     flex-direction: column;
-    gap: 8px;
-    padding: 19px 0 24px;
-    border-top: 1px solid rgba(245, 230, 211, 0.14);
-    color: rgba(245, 230, 211, 0.52);
-    font-size: 0.7rem;
+    gap: 10px;
+    padding: 24px 0 30px;
+    border-top: 1px solid rgba(245, 230, 211, 0.1);
+    color: rgba(245, 230, 211, 0.5);
+    font-size: 0.76rem;
+}
+
+.footer-copy a {
+    transition: color var(--transicion);
+}
+
+.footer-copy a:hover {
+    color: var(--oro);
 }
 
 /* TABLET */
