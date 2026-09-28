@@ -39,3 +39,21 @@ La auditoría verificó que el storefront activo usa una paleta y tipografía di
 
 ## Próximo paso
 - Revisar el commit de la corrección y decidir si se publica.
+## Corrección de regresiones detectadas
+
+### Causa raíz
+- El cliente usaba la URL absoluta `http://localhost:3001`; al iniciar solo Vite no existía API y las vistas mostraban el fallback.
+- El PNG del logo tiene fondo blanco opaco; el filtro del footer coloreaba todo el bitmap y producía un círculo sólido.
+
+### Tareas nuevas
+- [x] TASK-3: Configurar un proxy de desarrollo Vite y usar endpoint relativo para que el catálogo funcione con el arranque de raíz. Ruta: delegated; evidencia: `client/vite.config.js` reenvía `/api` a `http://localhost:3001`; `productosApi.jsx` usa `/api/productos` por defecto y conserva `VITE_API_URL` como override explícito. Smoke test: `GET http://localhost:3003/api/productos` devolvió 11 productos.
+- [x] TASK-4: Incorporar una variante de logo Alabastro transparente y usarla en el footer; añadir pruebas focalizadas. Ruta: delegated; evidencia: `client/public/logo-alabastro.svg` usa solo trazos y rellenos `#F5E6D3` sin fondo; `Footer.jsx` lo referencia y CSS elimina el filtro. `npm run test --workspace=client` pasó 11/11, incluyendo la aserción de la variante del footer.
+
+### Criterios adicionales
+- Con `npm run dev` desde la raíz, portada y catálogo cargan productos sin fallback.
+- El footer presenta el logotipo completo en Alabastro, sin círculo de fondo.
+
+### Verificación de correcciones
+- `npm run lint --workspace=client`: OK.
+- `npm run build --workspace=client`: OK.
+- `npm run dev` y smoke test HTTP: el proxy devolvió 11 productos; la portada respondió 200.

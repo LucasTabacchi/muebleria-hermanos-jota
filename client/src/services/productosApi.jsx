@@ -1,4 +1,6 @@
-const API_URL = (import.meta.env.VITE_API_URL || "http://localhost:3001").replace(/\/$/, "");
+// In development, Vite forwards this relative path to the local API. Keeping the
+// default relative also lets deployed environments serve client and API together.
+const API_URL = (import.meta.env.VITE_API_URL || "").replace(/\/$/, "");
 
 async function solicitar(ruta) {
     const respuesta = await fetch(`${API_URL}${ruta}`);

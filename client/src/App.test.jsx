@@ -63,7 +63,14 @@ test("muestra la carga y luego el catálogo obtenido desde la API", async () => 
     expect(screen.getByRole("status")).toHaveTextContent("Cargando catálogo...");
     expect(await screen.findByText("Aparador Uspallata")).toBeInTheDocument();
     expect(screen.getByText("Biblioteca Recoleta")).toBeInTheDocument();
-    expect(global.fetch).toHaveBeenCalledWith("http://localhost:3001/api/productos");
+    expect(global.fetch).toHaveBeenCalledWith("/api/productos");
+});
+
+test("usa la variante Alabastro transparente del logo en el footer", () => {
+    renderApp("/contacto");
+
+    const footer = screen.getByRole("contentinfo");
+    expect(footer.querySelector(".logo img")).toHaveAttribute("src", "/logo-alabastro.svg");
 });
 
 test("filtra el catálogo con un evento de React", async () => {

@@ -6,7 +6,7 @@ export default function Footer() {
             <div className="contenedor footer-contenido">
                 <div className="footer-marca">
                     <Link to="/" className="logo logo-invertido" aria-label="Hermanos Jota, inicio">
-                        <img src="/logo.png" alt="" width="72" height="72" />
+                        <img src="/logo-alabastro.svg" alt="" width="72" height="72" />
                         <span className="logo-texto">
                             <span>Hermanos</span>
                             <strong>Jota</strong>

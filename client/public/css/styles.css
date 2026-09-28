@@ -1983,7 +1983,7 @@ body {
     background: transparent;
     padding: 0;
     border-radius: 0;
-    filter: brightness(0) saturate(100%) invert(91%) sepia(20%) saturate(514%) hue-rotate(340deg) brightness(101%) contrast(92%);
+    filter: none;
 }
 
 .footer .logo-texto,
