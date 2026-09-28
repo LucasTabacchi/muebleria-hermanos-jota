@@ -1,10 +1,7 @@
 import { Link } from "react-router-dom";
 import { formatearPrecio, rutaImagen } from "../utils/formato";
-import type { Producto } from "../types";
 
-interface ProductCardProps { producto: Producto; linkText?: string }
-
-export default function ProductCard({ producto, linkText = "Ver detalle →" }: ProductCardProps) {
+export default function ProductCard({ producto, linkText = "Ver detalle →" }) {
     return (
         <article className="producto-card">
             <img
@@ -26,5 +23,3 @@ export default function ProductCard({ producto, linkText = "Ver detalle →" }: 
         </article>
     );
 }
-
-

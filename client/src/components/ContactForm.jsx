@@ -2,8 +2,8 @@ import { useState } from "react";
 
 const VACIO = { nombre: "", email: "", mensaje: "" };
 
-function validar(valores: { nombre: string; email: string; mensaje: string }): Record<string, string> {
-    const errores: Record<string, string> = {};
+function validar(valores) {
+    const errores = {};
     if (valores.nombre.trim().length < 2) errores.nombre = "Ingresá un nombre válido.";
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(valores.email.trim())) {
         errores.email = "Ingresá un email válido.";
@@ -16,15 +16,15 @@ function validar(valores: { nombre: string; email: string; mensaje: string }): R
 
 export default function ContactForm() {
     const [valores, setValores] = useState(VACIO);
-    const [errores, setErrores] = useState<Record<string, string>>({});
+    const [errores, setErrores] = useState({});
     const [exito, setExito] = useState("");
 
-    function cambiarCampo(evento: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) {
+    function cambiarCampo(evento) {
         const { name, value } = evento.target;
         setValores((actuales) => ({ ...actuales, [name]: value }));
     }
 
-    function enviar(evento: React.FormEvent<HTMLFormElement>) {
+    function enviar(evento) {
         evento.preventDefault();
         const nuevosErrores = validar(valores);
         setErrores(nuevosErrores);
@@ -106,6 +106,3 @@ export default function ContactForm() {
         </form>
     );
 }
-
-
-

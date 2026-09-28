@@ -4,7 +4,9 @@ async function solicitar(ruta) {
     const respuesta = await fetch(`${API_URL}${ruta}`);
 
     if (!respuesta.ok) {
-        const error = Object.assign(new Error("La API no pudo completar la solicitud."), { status: respuesta.status });
+        const error = Object.assign(new Error("La API no pudo completar la solicitud."), {
+            status: respuesta.status,
+        });
         error.status = respuesta.status;
         throw error;
     }
@@ -19,5 +21,3 @@ export function obtenerProductos() {
 export function obtenerProducto(id) {
     return solicitar(`/api/productos/${id}`);
 }
-
-

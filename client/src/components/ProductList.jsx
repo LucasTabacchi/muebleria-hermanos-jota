@@ -1,7 +1,6 @@
 import ProductCard from "./ProductCard";
-import type { Producto } from "../types";
 
-export default function ProductList({ productos, linkText = "Ver detalle →" }: { productos: Producto[]; linkText?: string }) {
+export default function ProductList({ productos, linkText = "Ver detalle →" }) {
     if (productos.length === 0) {
         return <p>No encontramos productos con ese nombre.</p>;
     }
@@ -14,6 +13,3 @@ export default function ProductList({ productos, linkText = "Ver detalle →" }:
         </div>
     );
 }
-
-
-

@@ -10,4 +10,3 @@ export function rutaImagen(imagen) {
     if (!imagen) return "";
     return imagen.startsWith("/") ? imagen : `/${imagen}`;
 }
-

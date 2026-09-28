@@ -64,7 +64,7 @@ export default function ProductDetail({ onAdd }) {
     }
 
     const { producto } = estado;
-    const datos = Object.entries(producto).filter(([clave]) => !CAMPOS_BASE.has(clave)) as [string, string][];
+    const datos = Object.entries(producto).filter(([clave]) => !CAMPOS_BASE.has(clave));
 
     function agregar() {
         onAdd(producto);
@@ -101,6 +101,3 @@ export default function ProductDetail({ onAdd }) {
         </>
     );
 }
-
-
-

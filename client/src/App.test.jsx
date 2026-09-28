@@ -172,7 +172,3 @@ test("muestra una vista de ruta no encontrada", () => {
     renderApp("/una-ruta-inexistente");
     expect(screen.getByRole("heading", { name: "Página no encontrada" })).toBeInTheDocument();
 });
-
-
-
-
