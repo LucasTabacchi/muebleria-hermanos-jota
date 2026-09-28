@@ -813,18 +813,6 @@ p {
     perspective: 1000px;
 }
 
-.filosofia-imagen::before {
-    position: absolute;
-    top: -16px;
-    left: -16px;
-    z-index: 0;
-    width: 60%;
-    height: 60%;
-    border: 1.5px solid var(--siena);
-    border-radius: var(--radio);
-    opacity: 0.6;
-    content: "";
-}
 
 .filosofia-imagen img {
     position: relative;
