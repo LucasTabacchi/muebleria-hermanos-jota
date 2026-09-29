@@ -614,8 +614,7 @@ p {
 }
 
 .filosofia-texto h2,
-.herencia h2,
-.visita h2 {
+.herencia h2 {
     margin: 12px 0 24px;
     font-size: clamp(2.35rem, 8vw, 4.7rem);
 }
