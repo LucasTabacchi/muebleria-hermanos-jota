@@ -48,10 +48,10 @@ Para detenerlos, presionar `Ctrl+C`.
 | `npm run dev:backend`   | Inicia solamente la API con el modo `watch` de Node.js.                 |
 | `npm run start:client`  | Inicia solamente el cliente React con Vite.                             |
 | `npm run start:backend` | Inicia solamente la API sin modo `watch`.                               |
-| `npm run lint`          | Analiza JavaScript/JSX con ESLint y TypeScript con tsc.                 |
+| `npm run lint`          | Analiza JavaScript y JSX con ESLint.                                    |
 | `npm test`              | Ejecuta todas las pruebas de backend y frontend sin modo interactivo.   |
 | `npm run test:backend`  | Ejecuta las pruebas de integración de la API.                           |
-| `npm run test:client`   | Ejecuta las pruebas del cliente React sin observación continua.         |
+| `npm run test:client`   | Ejecuta las pruebas del cliente React con Vitest.                       |
 | `npm run build`         | Genera la compilación de producción del cliente.                        |
 | `npm run format`        | Formatea los archivos compatibles con Prettier.                         |
 
@@ -73,13 +73,13 @@ Los archivos `.env` locales no se versionan.
 
 ```text
 /
-├── client/                  Aplicación React + TypeScript creada con Vite
-│   ├── public/              Recursos públicos e imágenes de la marca
+├── client/                  Aplicación React (SPA) creada con Vite
+│   ├── public/              Recursos públicos e imágenes de la marca (/img, logos, favicon)
 │   └── src/
 │       ├── components/      Navbar, Footer, tarjetas, listas, detalle y formulario
 │       ├── pages/           Vistas asociadas a las rutas de la aplicación
 │       ├── services/        Acceso centralizado a la API mediante fetch
-│       └── utils/           Formato de precios y rutas de imágenes
+│       └── utils/           Formato de precios y utilidades
 ├── backend/                 API REST con Node.js y Express
 │   ├── data/                Catálogo local de productos
 │   ├── middleware/          Registro, rutas no encontradas y errores
@@ -109,19 +109,16 @@ manejadores centralizados de rutas inexistentes y errores.
 
 ## Decisiones técnicas
 
-- **Vite + React + TypeScript:** reemplaza Create React App para disponer de un flujo de
-  desarrollo y compilación moderno, tipado estático y builds rápidos.
+- **Vite + React:** reemplaza Create React App para disponer de un flujo de
+  desarrollo moderno, recarga instantánea (HMR) y compilaciones optimizadas.
 - **Vitest + Testing Library:** ejecutan las pruebas del cliente en el mismo ecosistema
   ESM de Vite.
-- **React Router 6.30.3:** conserva las rutas existentes y mantiene compatibilidad con
-  la API utilizada por el cliente.
+- **React Router 6.30.3:** gestiona las rutas del cliente (Inicio, Catálogo, Detalle,
+  Contacto y Carrito) como una Single Page Application (SPA).
 - **Catálogo en la API:** el cliente ya no mantiene productos locales; todas las vistas
   los solicitan al backend mediante `fetch`.
 - **Ejecución local:** el despliegue del backend en Render se realizará en una etapa
-  posterior. Por ahora, cliente y API deben ejecutarse juntos en la computadora local.
-- **Migración incremental:** el frontend estático de la raíz se conserva como fallback
-  porque Netlify todavía publica esa carpeta. Esta convivencia es transitoria hasta
-  verificar la paridad y coordinar el despliegue conjunto de React y la API.
+  posterior. Por ahora, cliente y API se ejecutan en conjunto en el entorno local.
 
 ## Pruebas y calidad
 
@@ -151,18 +148,10 @@ principales.
 
 ## Sitio publicado
 
-La [versión estática del Sprint 2](https://muebleria-hermanosjota.netlify.app/) continúa
-disponible como fallback mientras Netlify publique la raíz. Este enlace todavía no
-representa la migración React + Express y se reemplazará cuando se coordine el
-despliegue del cliente junto con la API.
+La versión previa estática estuvo desplegada en Netlify. Tras completar la migración de los Sprints 3 y 4 a la arquitectura cliente-servidor (React + Express), el proyecto se ejecuta localmente y queda listo para coordinar el nuevo despliegue del cliente y la API.
 
 ## Equipo
 
 - Morales Carlos Ariel
 - Tabacchi Lucas
 - Kegalj Emiliano
-
-Actualmente el historial Git contiene commits verificables de Lucas Tabacchi. Para
-cumplir el requisito académico de participación de todos los integrantes, Carlos Ariel
-Morales y Emiliano Kegalj deben aportar commits propios desde sus cuentas; no se debe
-atribuir autoría de forma artificial.
