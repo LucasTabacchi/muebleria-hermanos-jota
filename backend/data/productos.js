@@ -36,13 +36,13 @@ const PRODUCTOS = [
         precio: 699000,
 
         descripcion:
-            "Sistema modular de estantes abierto que combina estructura de acero Sage Green y repisas en roble claro. Perfecta para colecciones y objetos de diseño, su diseño versátil se adapta a cualquier espacio contemporáneo con elegancia funcional.",
+            "Sistema modular de estantes abierto que combina estructura de acero Verde Salvia y repisas en roble claro. Perfecta para colecciones y objetos de diseño, su diseño versátil se adapta a cualquier espacio contemporáneo con elegancia funcional.",
 
         medidas: "100 x 35 x 200 cm",
 
         materiales: "Estructura de acero, estantes de roble.",
 
-        acabado: "Laca mate ecológica",
+        acabado: "Aceite de lino y cera de abejas",
 
         capacidad: "45 kg por estante",
 
@@ -63,13 +63,13 @@ const PRODUCTOS = [
         precio: 489000,
 
         descripcion:
-            "Butaca tapizada en bouclé Dusty Rose con base de madera de guatambú. El respaldo curvo abraza el cuerpo y ofrece máximo confort, mientras que su diseño orgánico aporta calidez y sofisticación a cualquier ambiente contemporáneo.",
+            "Butaca tapizada en bouclé Rosa Polvoriento con base en madera nativa de caldén. El respaldo curvo abraza el cuerpo y ofrece máximo confort, mientras que su diseño orgánico aporta calidez y sofisticación a cualquier ambiente contemporáneo.",
 
         medidas: "80 x 75 x 85 cm",
 
-        materiales: "Guatambú macizo, tela bouclé.",
+        materiales: "Caldén nativo y guatambú macizo, tela bouclé.",
 
-        acabado: "Cera vegetal, tapizado premium.",
+        acabado: "Cera de abejas de origen local certificado.",
 
         tapizado: "Repelente al agua y manchas.",
 
@@ -88,13 +88,13 @@ const PRODUCTOS = [
         precio: 1890000,
 
         descripcion:
-            "Sillón lounge en cuero cognac con base giratoria en acero Burnt Sienna. Inspirado en la estética brasilera moderna de los 60, combina comodidad excepcional con un diseño icónico que trasciende tendencias y épocas.",
+            "Sillón lounge en cuero cognac con base giratoria en acero Siena Tostado. Inspirado en la estética brasilera moderna de los 60, combina comodidad excepcional con un diseño icónico que trasciende tendencias y épocas.",
 
         medidas: "90 x 85 x 95 cm",
 
-        materiales: "Cuero curtido vegetal, acero pintado.",
+        materiales: "Cuero curtido vegetal, acero pintado en polvo bajo COV.",
 
-        acabado: "Cuero anilina premium.",
+        acabado: "Cera de abejas y aceite de lino natural.",
 
         rotación: "360° silenciosa y suave.",
 
@@ -115,13 +115,13 @@ const PRODUCTOS = [
         precio: 1390000,
 
         descripcion:
-            "Mesa de centro con sobre circular de mármol Patagonia y base de tres patas en madera de nogal. Su diseño minimalista se convierte en el punto focal perfecto para cualquier sala de estar contemporánea, combinando la frialdad del mármol con la calidez de la madera.",
+            "Mesa de centro con sobre circular de mármol Patagonia y base de tres patas en madera nativa de algarrobo. Su diseño minimalista se convierte en el punto focal perfecto para cualquier sala de estar contemporánea, combinando la nobleza del mármol con la calidez de la madera.",
 
         medidas: "90 x 90 x 45 cm",
 
-        materiales: "Sobre de mármol Patagonia, patas de nogal.",
+        materiales: "Sobre de mármol Patagonia, patas de algarrobo nativo.",
 
-        acabado: "Mármol pulido, aceite natural en madera.",
+        acabado: "Mármol pulido, aceite de lino prensado en frío.",
 
         peso: "42 kg",
 
@@ -146,9 +146,9 @@ const PRODUCTOS = [
 
         medidas: "45 x 35 x 60 cm",
 
-        materiales: "Roble macizo FSCO, herrajes soft-close.",
+        materiales: "Roble macizo FSC®, herrajes soft-close.",
 
-        acabado: "Barniz mate de poliuretano.",
+        acabado: "Aceite de lino y cera de abejas.",
 
         almacenamiento: "1 cajón + repisa inferior",
 
@@ -169,13 +169,13 @@ const PRODUCTOS = [
         precio: 1190000,
 
         descripcion:
-            "Sofá de tres cuerpos tapizado en lino Warm Alabaster con patas cónicas de madera. Los cojines combinan espuma de alta resiliencia con plumón reciclado, ofreciendo comodidad duradera y sostenible para el hogar moderno.",
+            "Sofá de tres cuerpos tapizado en lino Alabastro Cálido con patas cónicas de madera nativa. Los cojines combinan espuma de alta resiliencia con plumón reciclado, ofreciendo comodidad duradera y sostenible para el hogar moderno.",
 
         medidas: "220 x 90 x 80 cm",
 
-        estructura: "Madera de eucalipto certificada FSCO.",
+        estructura: "Madera nativa de quebracho y eucalipto certificada FSC®.",
 
-        tapizado: "Lino 100% natural premium.",
+        tapizado: "Lino 100% natural.",
 
         relleno: "Espuma HR + plumón reciclado.",
 
@@ -196,13 +196,13 @@ const PRODUCTOS = [
         precio: 1890000,
 
         descripcion:
-            "Mesa extensible de roble macizo con tablero biselado y sistema de apertura suave. Su diseño robusto y elegante se adapta perfectamente a reuniones íntimas o grandes celebraciones familiares, extendiéndose de 6 a 10 comensales.",
+            "Mesa extensible de roble macizo y detalles en algarrobo nativo con tablero biselado y sistema de apertura suave. Su diseño robusto y elegante se adapta perfectamente a reuniones íntimas o grandes celebraciones familiares, extendiéndose de 6 a 10 comensales.",
 
         medidas: "160-240 x 90 x 75 cm",
 
-        materiales: "Roble macizo FSCO. mecanismo alemán.",
+        materiales: "Roble macizo y algarrobo nativo FSC®, mecanismo de extensión.",
 
-        acabado: "Aceite-cera natural.",
+        acabado: "Aceite de lino prensado en frío y cera de abejas.",
 
         capacidad: "6-10 comensales",
 
@@ -223,13 +223,13 @@ const PRODUCTOS = [
         precio: 649000,
 
         descripcion:
-            "Set de cuatro sillas apilables en contrachapado moldeado de nogal y estructura tubular pintada en Sage Green. Su diseño ergonómico y materiales de calidad garantizan comodidad y durabilidad en el uso diario, perfectas para comedores contemporáneos.",
+            "Set de cuatro sillas apilables en contrachapado moldeado de nogal y estructura tubular pintada en Verde Salvia. Su diseño ergonómico y materiales de calidad garantizan comodidad y durabilidad en el uso diario, perfectas para comedores contemporáneos.",
 
         medidas: "45 x 52 x 80 cm (cada una)",
 
-        materiales: "Contrachapado nogal, tubo de acero.",
+        materiales: "Contrachapado nogal FSC®, tubo de acero reciclable.",
 
-        acabado: "Laca mate, pintura epoxi.",
+        acabado: "Aceite de lino, tintes vegetales y pintura de bajo COV.",
 
         apilables: "Hasta 6 sillas",
 
@@ -256,7 +256,7 @@ const PRODUCTOS = [
 
         materiales: "Bambú laminado, herrajes ocultos",
 
-        acabado: "Laca mate resistente.",
+        acabado: "Aceite de lino natural resistente de bajo COV.",
 
         almacenamiento: "1 cajón con organizador.",
 
@@ -281,9 +281,9 @@ const PRODUCTOS = [
 
         medidas: "60 x 60 x 90-100 cm",
 
-        materiales: "Malla técnica, tapizado premium.",
+        materiales: "Malla técnica, tapizado en textil reciclado.",
 
-        acabado: "Base cromada, tapizado premium.",
+        acabado: "Estructura de acero con acabado de bajo COV, tapizado textil.",
 
         regulación: "Altura + inclinación respaldo.",
 
