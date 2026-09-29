@@ -26,7 +26,7 @@ La auditoría reveló violaciones al manual: sombra y bordes agregados en el log
 
 ## Tareas
 - [x] TASK-1: Reglas de Logo y variantes limpia en Header y Footer. Eliminar sombras y bordes circulares en `.logo img`. Remover el fondo circular del footer para que `logo-alabastro.svg` respire limpio sobre fondo oscuro. Ajustar tamaño y área de protección.
-- [ ] TASK-2: Tipografía exacta y Tokens cromáticos. Aplicar mayúsculas, espaciado 0.1em y Siena Tostado en títulos principales; altura de línea 1.6 en cuerpo; Inter Medium (500) y 0.08em en botones; regla de leyendas (Inter Light 300, 9pt, 0.02em); fondo Alabastro Cálido donde corresponde.
+- [x] TASK-2: Tipografía exacta y Tokens cromáticos. Aplicar mayúsculas, espaciado 0.1em y Siena Tostado en títulos principales; altura de línea 1.6 en cuerpo; Inter Medium (500) y 0.08em en botones; regla de leyendas (Inter Light 300, 9pt, 0.02em); fondo Alabastro Cálido donde corresponde.
 - [ ] TASK-3: Catálogo, Voz de marca, Maderas nativas y Acabados ecológicos. Traducir colores a español normado (Verde Salvia, Rosa Polvoriento, Siena Tostado, Alabastro Cálido); incorporar maderas nativas argentinas (algarrobo, caldén, quebracho); reemplazar acabados sintéticos por acabados naturales de bajo COV; corregir erratas "FSCO" por "FSC®".
 - [ ] TASK-4: Contacto, Canal de WhatsApp y Datos del Showroom. Agregar canal WhatsApp explícito con enlace a wa.me; dirección completa; garantía 10 años en estructura y 5 años en acabados; sitio web oficial visible.
 - [ ] TASK-5: Verificación integral, Pruebas, Linters y Build. Ejecutar suite de pruebas completa (backend y cliente), linter y build de producción.
@@ -39,4 +39,5 @@ La auditoría reveló violaciones al manual: sombra y bordes agregados en el log
 - Tests (backend y client), lint y build finalizan con éxito.
 
 ## Progreso y evidencia
-- TASK-1 completada: se eliminaron sombras y bordes agregados del logo en header; se removieron fondos circulares y padding en footer para que el logo Alabastro se muestre limpio sobre fondo oscuro. Tests: 24/24 pasan.
+- TASK-1 completada: se eliminaron sombras y bordes agregados del logo en header; se removieron fondos circulares y padding en footer para que el logo Alabastro se muestre limpio sobre fondo oscuro. Tests: 24/24 pasan. Commit: `af98664`.
+- TASK-2 completada: títulos h1 con color Siena Tostado, mayúsculas y espaciado 0.1em; line-height 1.6 en body; botones con peso 500 (Inter Medium), mayúsculas y 0.08em; reglas de leyendas añadidas (Inter Light 300, 9pt, 0.02em). Tests: 24/24 pasan.
