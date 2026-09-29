@@ -29,7 +29,7 @@ La auditoría reveló violaciones al manual: sombra y bordes agregados en el log
 - [x] TASK-2: Tipografía exacta y Tokens cromáticos. Aplicar mayúsculas, espaciado 0.1em y Siena Tostado en títulos principales; altura de línea 1.6 en cuerpo; Inter Medium (500) y 0.08em en botones; regla de leyendas (Inter Light 300, 9pt, 0.02em); fondo Alabastro Cálido donde corresponde.
 - [x] TASK-3: Catálogo, Voz de marca, Maderas nativas y Acabados ecológicos. Traducir colores a español normado (Verde Salvia, Rosa Polvoriento, Siena Tostado, Alabastro Cálido); incorporar maderas nativas argentinas (algarrobo, caldén, quebracho); reemplazar acabados sintéticos por acabados naturales de bajo COV; corregir erratas "FSCO" por "FSC®".
 - [x] TASK-4: Contacto, Canal de WhatsApp y Datos del Showroom. Agregar canal WhatsApp explícito con enlace a wa.me; dirección completa; garantía 10 años en estructura y 5 años en acabados; sitio web oficial visible.
-- [ ] TASK-5: Verificación integral, Pruebas, Linters y Build. Ejecutar suite de pruebas completa (backend y cliente), linter y build de producción.
+- [x] TASK-5: Verificación integral, Pruebas, Linters y Build. Ejecutar suite de pruebas completa (backend y cliente), linter y build de producción.
 
 ## Criterios de aceptación
 - Logo sin filtros de sombra ni bordes agregados; variante invertida del footer sin círculo de fondo.
@@ -42,4 +42,5 @@ La auditoría reveló violaciones al manual: sombra y bordes agregados en el log
 - TASK-1 completada: se eliminaron sombras y bordes agregados del logo en header; se removieron fondos circulares y padding en footer para que el logo Alabastro se muestre limpio sobre fondo oscuro. Tests: 24/24 pasan. Commit: `af98664`.
 - TASK-2 completada: títulos h1 con color Siena Tostado, mayúsculas y espaciado 0.1em; line-height 1.6 en body; botones con peso 500 (Inter Medium), mayúsculas y 0.08em; reglas de leyendas añadidas (Inter Light 300, 9pt, 0.02em). Tests: 24/24 pasan. Commit: `a22c463`.
 - TASK-3 completada: catálogo en backend y frontend alineado a español normado con Verde Salvia, Rosa Polvoriento, Siena Tostado, Alabastro Cálido; incorporadas maderas nativas (algarrobo, caldén, quebracho); eliminados poliuretano y epoxi por acabados ecológicos y bajo COV; corregidas erratas FSCO a FSC®. Tests: 26/26 pasan. Commit: `e94ba4d`.
-- TASK-4 completada: integrados canal WhatsApp oficial (wa.me), dirección completa de la Casa Taller, enlace al sitio web oficial y especificación de 10 años en estructura y 5 años en acabados en portadas, detalle y contacto. Tests: 24/24 pasan.
+- TASK-4 completada: integrados canal WhatsApp oficial (wa.me), dirección completa de la Casa Taller, enlace al sitio web oficial y especificación de 10 años en estructura y 5 años en acabados en portadas, detalle y contacto. Tests: 24/24 pasan. Commit: `c5567b1`.
+- TASK-5 completada: suite completa de pruebas pasando (13/13 backend, 11/11 cliente, 2/2 cjs root), ESLint limpio (0 advertencias/errores), `npm run build` exitoso y servidor activo en puerto 3002 respondiendo HTTP 200 con catálogo sincronizado.
