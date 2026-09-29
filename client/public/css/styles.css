@@ -191,12 +191,10 @@ p {
 }
 
 .logo img {
-    width: 52px;
-    height: 52px;
+    width: 54px;
+    height: 54px;
     flex: 0 0 auto;
     object-fit: contain;
-    border-radius: 50%;
-    filter: drop-shadow(0 2px 8px rgba(160, 82, 45, 0.12));
 }
 
 .logo-texto {
@@ -1563,9 +1561,10 @@ p {
 }
 
 .footer .logo img {
-    border-radius: 50%;
-    background: var(--alabastro);
-    padding: 2px;
+    background: transparent;
+    padding: 0;
+    border-radius: 0;
+    filter: none;
 }
 
 .footer .logo-texto strong {
