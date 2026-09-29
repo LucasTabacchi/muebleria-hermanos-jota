@@ -743,23 +743,54 @@ p {
 /* VISITA */
 
 .visita {
-    padding: 78px 0;
-    background: var(--rosa);
-}
-
-.visita .eyebrow {
-    color: var(--tinta);
+    padding: 85px 0;
+    background: var(--crema);
 }
 
 .visita-contenido {
     display: flex;
     flex-direction: column;
-    gap: 28px;
+    gap: 32px;
+    padding: 56px 48px;
+    background: linear-gradient(135deg, #7A391A 0%, var(--siena) 60%, #B0552B 100%);
+    border-radius: var(--radio-grande);
+    box-shadow: 0 16px 40px -10px rgba(122, 57, 26, 0.28), 0 6px 16px rgba(0, 0, 0, 0.06);
+    color: var(--blanco);
+    position: relative;
+    overflow: hidden;
+}
+
+.visita-contenido::before {
+    position: absolute;
+    top: -80px;
+    right: -80px;
+    width: 260px;
+    height: 260px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.12) 0%, rgba(255, 255, 255, 0.03) 70%, transparent 100%);
+    content: "";
+    pointer-events: none;
+}
+
+.visita .eyebrow {
+    color: rgba(255, 255, 255, 0.85);
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
 }
 
 .visita h2 {
+    margin-top: 10px;
     margin-bottom: 0;
-    color: var(--tinta);
+    color: var(--blanco);
+    font-family: "Playfair Display", Georgia, serif;
+    font-size: clamp(2rem, 4.5vw, 3.2rem);
+    font-weight: 700;
+    line-height: 1.1;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    max-width: 600px;
 }
 
 .visita-accion {
@@ -770,7 +801,29 @@ p {
 }
 
 .visita-accion p {
-    color: rgba(46, 33, 28, 0.78);
+    color: rgba(255, 255, 255, 0.88);
+    font-size: 0.95rem;
+}
+
+.visita-accion .boton {
+    background: var(--blanco);
+    border-color: var(--blanco);
+    color: var(--siena-oscuro);
+    border-radius: 999px;
+    padding: 16px 34px;
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    box-shadow: 0 10px 24px rgba(0, 0, 0, 0.2);
+    transition: transform var(--transicion), box-shadow var(--transicion), background var(--transicion);
+}
+
+.visita-accion .boton:hover {
+    background: var(--blanco);
+    color: var(--siena-oscuro);
+    transform: translateY(-3px) scale(1.02);
+    box-shadow: 0 16px 32px rgba(0, 0, 0, 0.28);
 }
 
 /* ENCABEZADOS INTERIORES */
@@ -1492,7 +1545,7 @@ p {
 
     .visita-contenido {
         flex-direction: row;
-        align-items: flex-end;
+        align-items: center;
         justify-content: space-between;
         gap: 70px;
     }
