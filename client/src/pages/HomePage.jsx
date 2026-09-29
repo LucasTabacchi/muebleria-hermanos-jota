@@ -28,54 +28,19 @@ export default function HomePage() {
             <section className="hero">
                 <div className="contenedor hero-contenido">
                     <div className="hero-texto">
-                        <div className="hero-badge">
-                            <span className="hero-badge-punto"></span>
-                            <span className="hero-etiqueta">
-                                Diseño argentino · Oficio contemporáneo
-                            </span>
-                        </div>
+                        <p className="hero-etiqueta">Diseño argentino · Oficio contemporáneo</p>
                         <h1>Muebles que alimentan el alma.</h1>
-                        <p className="hero-bajada">
+                        <p>
                             Piezas atemporales creadas con manos expertas, materiales nobles y una
                             mirada responsable hacia el futuro.
                         </p>
                         <div className="hero-acciones">
-                            <Link to="/productos" className="boton boton-primario-hero">
+                            <Link to="/productos" className="boton">
                                 Explorar la colección
                             </Link>
                             <a href="#filosofia" className="enlace-claro">
                                 Conocé nuestra filosofía <span aria-hidden="true">↓</span>
                             </a>
-                        </div>
-                        <div className="hero-credenciales">
-                            <div className="credencial-item">
-                                <strong>Madera FSC®</strong>
-                                <span>Bosques nativos</span>
-                            </div>
-                            <div className="credencial-item">
-                                <strong>10 años</strong>
-                                <span>Garantía estructural</span>
-                            </div>
-                            <div className="credencial-item">
-                                <strong>Casa Taller</strong>
-                                <span>San Cristóbal, CABA</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="hero-visual" aria-hidden="true">
-                        <div className="hero-tarjeta-flotante">
-                            <img
-                                src="/img/Sillón Copacabana.png"
-                                alt=""
-                                className="hero-imagen-flotante"
-                            />
-                            <div className="hero-etiqueta-flotante">
-                                <span className="etiqueta-rubro">Destacado</span>
-                                <strong className="etiqueta-titulo">Sillón Copacabana</strong>
-                                <span className="etiqueta-sub">
-                                    Petiribí macizo · Tapizado lino
-                                </span>
-                            </div>
                         </div>
                     </div>
                 </div>
