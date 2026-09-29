@@ -16,7 +16,7 @@ export default function ProductPage({ onAdd }) {
                 <div className="contenedor confianza-lista">
                     <div>
                         <strong>10 años</strong>
-                        <span>de garantía en estructura</span>
+                        <span>de garantía en estructura, 5 años en acabados</span>
                     </div>
                     <div>
                         <strong>Materiales trazables</strong>

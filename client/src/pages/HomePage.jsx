@@ -201,7 +201,7 @@ export default function HomePage() {
                     <div className="herencia-lista">
                         <div>
                             <strong>10 años</strong>
-                            <span>de garantía en estructura</span>
+                            <span>de garantía en estructura, 5 años en acabados</span>
                         </div>
                         <div>
                             <strong>Restauración</strong>

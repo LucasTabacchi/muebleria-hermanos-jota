@@ -26,7 +26,10 @@ export default function Footer() {
                     <p>Av. San Juan 2847</p>
                     <p>San Cristóbal, CABA</p>
                     <a href="mailto:info@hermanosjota.com.ar">info@hermanosjota.com.ar</a>
-                    <a href="tel:+541145678900">+54 11 4567-8900</a>
+                    <a href="https://wa.me/5491145678900" target="_blank" rel="noopener noreferrer">
+                        WhatsApp: +54 11 4567-8900
+                    </a>
+                    <a href="tel:+541145678900">Tel: +54 11 4567-8900</a>
                 </div>
                 <div>
                     <h3>Horarios</h3>
@@ -44,6 +47,9 @@ export default function Footer() {
             </div>
             <div className="contenedor footer-copy">
                 <span>© 2026 Hermanos Jota. Todos los derechos reservados.</span>
+                <a href="https://www.hermanosjota.com.ar" target="_blank" rel="noopener noreferrer">
+                    www.hermanosjota.com.ar
+                </a>
                 <a
                     href="https://www.instagram.com/hermanosjota_ba"
                     target="_blank"

@@ -28,9 +28,13 @@ export default function ContactPage() {
                             <div className="dato-contacto">
                                 <strong>Showroom y taller</strong>
                                 <span>
+                                    Hermanos Jota — Casa Taller
+                                    <br />
                                     Av. San Juan 2847
                                     <br />
-                                    C1232AAB · San Cristóbal, CABA
+                                    C1232AAB — Barrio de San Cristóbal
+                                    <br />
+                                    Ciudad Autónoma de Buenos Aires, Argentina
                                 </span>
                             </div>
                             <div className="dato-contacto">
@@ -42,14 +46,28 @@ export default function ContactPage() {
                                 </span>
                             </div>
                             <div className="dato-contacto">
-                                <strong>Contacto directo</strong>
+                                <strong>Contacto digital</strong>
+                                <a
+                                    href="https://www.hermanosjota.com.ar"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                >
+                                    www.hermanosjota.com.ar
+                                </a>
                                 <a href="mailto:info@hermanosjota.com.ar">
                                     info@hermanosjota.com.ar
                                 </a>
                                 <a href="mailto:ventas@hermanosjota.com.ar">
                                     ventas@hermanosjota.com.ar
                                 </a>
-                                <a href="tel:+541145678900">+54 11 4567-8900</a>
+                                <a
+                                    href="https://wa.me/5491145678900"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                >
+                                    WhatsApp: +54 11 4567-8900
+                                </a>
+                                <a href="tel:+541145678900">Tel: +54 11 4567-8900</a>
                             </div>
                             <div className="dato-contacto">
                                 <strong>Instagram</strong>
