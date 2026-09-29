@@ -37,7 +37,7 @@ export default function ContactForm() {
     }
 
     return (
-        <form className="formulario" noValidate onSubmit={enviar}>
+        <form id="formulario-contacto" className="formulario" noValidate onSubmit={enviar}>
             <div className="formulario-encabezado">
                 <p className="eyebrow">Escribinos</p>
                 <h2>¿Cómo podemos ayudarte?</h2>

@@ -185,3 +185,11 @@ test("resetea el scroll al inicio de la página en la navegación", () => {
     renderApp("/contacto");
     expect(window.scrollTo).toHaveBeenCalledWith({ top: 0, left: 0, behavior: "instant" });
 });
+
+test("el botón Planificar mi visita redirige directamente al formulario de contacto", async () => {
+    global.fetch.mockReturnValueOnce(respuestaJson(productos));
+    renderApp("/");
+    const botonVisita = screen.getByRole("link", { name: "Planificar mi visita" });
+    expect(botonVisita).toHaveAttribute("href", "/contacto#formulario-contacto");
+    await screen.findByText("Aparador Uspallata");
+});

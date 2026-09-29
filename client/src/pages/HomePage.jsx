@@ -227,7 +227,7 @@ export default function HomePage() {
                     </div>
                     <div className="visita-accion">
                         <p>Av. San Juan 2847, Ciudad Autónoma de Buenos Aires</p>
-                        <Link to="/contacto" className="boton">
+                        <Link to="/contacto#formulario-contacto" className="boton">
                             Planificar mi visita
                         </Link>
                     </div>

@@ -17,10 +17,20 @@ export default function ScrollToTop() {
             }
         } else {
             const id = hash.replace("#", "");
-            const elemento = document.getElementById(id);
-            if (elemento) {
-                elemento.scrollIntoView({ behavior: "smooth" });
-            }
+            const scrollAlElemento = () => {
+                const elemento = document.getElementById(id);
+                if (elemento) {
+                    try {
+                        elemento.scrollIntoView({ behavior: "smooth" });
+                    } catch {
+                        // Safe fallback for testing environments
+                    }
+                }
+            };
+
+            scrollAlElemento();
+            const timer = setTimeout(scrollAlElemento, 80);
+            return () => clearTimeout(timer);
         }
     }, [pathname, hash]);
 

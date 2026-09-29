@@ -1374,6 +1374,7 @@ p {
     border-top: 4px solid var(--siena);
     background: var(--blanco);
     box-shadow: var(--sombra-suave);
+    scroll-margin-top: 130px;
 }
 
 .formulario-encabezado {
