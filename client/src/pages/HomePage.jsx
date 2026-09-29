@@ -126,7 +126,6 @@ export default function HomePage() {
                     </div>
                     <div className="beneficios-contenedor">
                         <article className="beneficio">
-                            <span className="beneficio-numero">01</span>
                             <h3>Maderas responsables</h3>
                             <p>
                                 Madera certificada FSC de bosques argentinos, con prioridad para
@@ -134,7 +133,6 @@ export default function HomePage() {
                             </p>
                         </article>
                         <article className="beneficio">
-                            <span className="beneficio-numero">02</span>
                             <h3>Acabados naturales</h3>
                             <p>
                                 Aceite de lino, cera de abejas y tintes vegetales de bajo COV que
@@ -142,7 +140,6 @@ export default function HomePage() {
                             </p>
                         </article>
                         <article className="beneficio">
-                            <span className="beneficio-numero">03</span>
                             <h3>Diseño circular</h3>
                             <p>
                                 Un mínimo de 30% de materiales recuperados o reciclados y cero

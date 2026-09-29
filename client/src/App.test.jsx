@@ -87,6 +87,73 @@ test("filtra el catálogo con un evento de React", async () => {
     expect(screen.getByText("1 resultado")).toBeInTheDocument();
 });
 
+test("filtra el catálogo por categoría", async () => {
+    global.fetch.mockReturnValueOnce(respuestaJson(productos));
+    renderApp("/productos");
+    await screen.findByText("Aparador Uspallata");
+
+    fireEvent.change(screen.getByLabelText("Categoría"), {
+        target: { value: "Muebles" },
+    });
+
+    expect(screen.getByText("Aparador Uspallata")).toBeInTheDocument();
+    expect(screen.queryByText("Biblioteca Recoleta")).not.toBeInTheDocument();
+    expect(screen.getByText("1 resultado")).toBeInTheDocument();
+});
+
+test("filtra el catálogo por material", async () => {
+    global.fetch.mockReturnValueOnce(respuestaJson(productos));
+    renderApp("/productos");
+    await screen.findByText("Aparador Uspallata");
+
+    fireEvent.change(screen.getByLabelText("Material"), {
+        target: { value: "madera" },
+    });
+
+    expect(screen.getByText("Aparador Uspallata")).toBeInTheDocument();
+    expect(screen.queryByText("Biblioteca Recoleta")).not.toBeInTheDocument();
+    expect(screen.getByText("1 resultado")).toBeInTheDocument();
+});
+
+test("ordena los productos por precio menor y mayor", async () => {
+    global.fetch.mockReturnValueOnce(respuestaJson(productos));
+    renderApp("/productos");
+    await screen.findByText("Aparador Uspallata");
+
+    fireEvent.change(screen.getByLabelText("Ordenar por precio"), {
+        target: { value: "precio-menor" },
+    });
+
+    const titulosMenor = screen.getAllByRole("heading", { level: 3 });
+    expect(titulosMenor[0]).toHaveTextContent("Biblioteca Recoleta");
+    expect(titulosMenor[1]).toHaveTextContent("Aparador Uspallata");
+
+    fireEvent.change(screen.getByLabelText("Ordenar por precio"), {
+        target: { value: "precio-mayor" },
+    });
+
+    const titulosMayor = screen.getAllByRole("heading", { level: 3 });
+    expect(titulosMayor[0]).toHaveTextContent("Aparador Uspallata");
+    expect(titulosMayor[1]).toHaveTextContent("Biblioteca Recoleta");
+});
+
+test("limpia los filtros activos y restablece la lista completa", async () => {
+    global.fetch.mockReturnValueOnce(respuestaJson(productos));
+    renderApp("/productos");
+    await screen.findByText("Aparador Uspallata");
+
+    fireEvent.change(screen.getByLabelText("Categoría"), {
+        target: { value: "Bibliotecas" },
+    });
+    expect(screen.queryByText("Aparador Uspallata")).not.toBeInTheDocument();
+
+    fireEvent.click(screen.getByRole("button", { name: "Limpiar filtros" }));
+
+    expect(screen.getByText("Aparador Uspallata")).toBeInTheDocument();
+    expect(screen.getByText("Biblioteca Recoleta")).toBeInTheDocument();
+    expect(screen.getByText("2 productos disponibles")).toBeInTheDocument();
+});
+
 test("muestra un error accionable y reintenta cargar el catálogo", async () => {
     global.fetch
         .mockRejectedValueOnce(new Error("sin conexión"))
