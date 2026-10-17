@@ -1,154 +1,111 @@
 # Mueblería Hermanos Jota
 
-Ecommerce full stack para Mueblería Hermanos Jota. El cliente React conserva la
-identidad visual del sitio original y obtiene el catálogo desde una API REST local
-desarrollada con Node.js y Express.
+Ecommerce full stack con cliente React y API REST Express. La API persiste el catálogo de productos en MongoDB mediante Mongoose.
 
-> La versión React + Express se ejecuta localmente por ahora. El despliegue del
-> backend queda fuera del alcance actual.
-
-## Inicio rápido
-
-### Requisitos
+## Requisitos
 
 - Node.js 22.22.1 o posterior.
-- npm 10 o posterior, incluido con Node.js.
-- Git para clonar el repositorio y utilizar los hooks de calidad.
+- npm 10 o posterior.
+- Una instancia MongoDB local o una URI de MongoDB Atlas.
 
-### Instalación
-
-Desde la raíz del repositorio:
+## Instalación y ejecución local
 
 ```sh
 npm install
 ```
 
-La raíz utiliza **npm workspaces**, por lo que este único comando instala las
-dependencias de `/client` y `/backend`. También configura los hooks locales de Husky.
+1. Copiá `backend/.env.example` como `backend/.env` y completá `MONGODB_URI`.
+2. Copiá `.env.example` como `client/.env` si necesitás cambiar la URL de la API.
+3. Cargá el catálogo inicial una única vez (el comando es idempotente):
 
-### Ejecución de la aplicación completa
+```sh
+node backend/scripts/seed.js
+```
+
+4. Iniciá ambos procesos:
 
 ```sh
 npm run dev
 ```
 
-El comando inicia ambos procesos:
-
 - Cliente React: [http://localhost:3000](http://localhost:3000)
 - API Express: [http://localhost:3001](http://localhost:3001)
 
-Para detenerlos, presionar `Ctrl+C`.
+El backend **no inicia** si falta `MONGODB_URI` o no puede conectarse a MongoDB. Los archivos `.env` están ignorados por Git: nunca se versionan credenciales.
 
-## Comandos disponibles
+## Variables de entorno
 
-| Comando                 | Función                                                                 |
-| ----------------------- | ----------------------------------------------------------------------- |
-| `npm run dev`           | Inicia cliente y backend en paralelo con recarga durante el desarrollo. |
-| `npm run dev:client`    | Inicia solamente el cliente React.                                      |
-| `npm run dev:backend`   | Inicia solamente la API con el modo `watch` de Node.js.                 |
-| `npm run start:client`  | Inicia solamente el cliente React con Vite.                             |
-| `npm run start:backend` | Inicia solamente la API sin modo `watch`.                               |
-| `npm run lint`          | Analiza JavaScript y JSX con ESLint.                                    |
-| `npm test`              | Ejecuta todas las pruebas de backend y frontend sin modo interactivo.   |
-| `npm run test:backend`  | Ejecuta las pruebas de integración de la API.                           |
-| `npm run test:client`   | Ejecuta las pruebas del cliente React con Vitest.                       |
-| `npm run build`         | Genera la compilación de producción del cliente.                        |
-| `npm run format`        | Formatea los archivos compatibles con Prettier.                         |
+### Backend: `backend/.env`
 
-## Configuración
+```env
+MONGODB_URI=mongodb://127.0.0.1:27017/muebleria-hermanos-jota
+PORT=3001
+```
 
-El cliente utiliza la variable `VITE_API_URL` para localizar el backend. El
-valor predeterminado es `http://localhost:3001` y está documentado en `.env.example`.
-
-Si necesitás modificarlo, copiá `.env.example` como `client/.env` antes de iniciar
-el cliente:
+### Cliente: `client/.env`
 
 ```env
 VITE_API_URL=http://localhost:3001
 ```
 
-Los archivos `.env` locales no se versionan.
+## Cargar el catálogo inicial
+
+`backend/scripts/seed.js` transforma `backend/data/productos.js` y hace *upsert* por `nombre`; puede ejecutarse las veces necesarias sin duplicar productos. Conserva cada ruta de imagen legacy en `imagenUrl` y comienza con `stock: 0`, ya que el catálogo original no contiene inventario.
+
+```sh
+node backend/scripts/seed.js
+```
+
+El seed no se ejecuta al levantar la API.
+
+## API REST
+
+| Método | Endpoint | Resultado |
+| --- | --- | --- |
+| `GET` | `/api/productos` | Devuelve todos los productos. |
+| `GET` | `/api/productos/:id` | Devuelve un producto por ObjectId. |
+| `POST` | `/api/productos` | Crea un producto y responde `201`. |
+| `PUT` | `/api/productos/:id` | Actualiza un producto y devuelve el documento nuevo. |
+| `DELETE` | `/api/productos/:id` | Elimina un producto y responde `204`. |
+
+Campos obligatorios al crear: `nombre`, `precio`, `imagenUrl`. Los campos definidos por el sprint son `nombre`, `descripcion`, `precio`, `stock` e `imagenUrl`. Un id inválido o datos inválidos responden `400`; un producto inexistente responde `404`.
+
+### Contrato para el frontend
+
+- El identificador de navegación es `id` (alias serializado de MongoDB `_id`). Usar `id`, no el id numérico del catálogo legacy.
+- Las respuestas incluyen **ambos** `imagenUrl` e `imagen` para compatibilidad. Las nuevas pantallas deben preferir `imagenUrl`; `imagen` permanece durante la transición.
+- Las imágenes del seed conservan rutas relativas como `img/aparador Uspallata.png`, servidas por el cliente desde sus recursos públicos.
+- El frontend debe construir las solicitudes con `VITE_API_URL` y no hardcodear `localhost`.
+
+## Despliegue: handoff frontend/backend
+
+1. Desplegar la API (por ejemplo, Render) con `MONGODB_URI` y `PORT` definidos como secretos del proveedor. Ejecutar el seed explícitamente contra la base de datos elegida; no incluir credenciales en el repositorio.
+2. Configurar la URL pública de la API en el hosting del frontend (Vercel/Netlify): `VITE_API_URL=https://tu-api.example.com` y reconstruir el cliente.
+3. Antes de producción, actualizar la lista de orígenes permitidos de CORS en `backend/app.js`: el valor actual permite solamente `http://localhost:3000`. Incluir allí el dominio HTTPS real del frontend, sin usar `*`.
+4. Verificar desde el dominio publicado `GET /api/productos`, creación, actualización y eliminación de un producto de prueba.
+
+La conexión remota y el despliegue requieren autorización explícita: esta guía no ejecuta operaciones sobre Atlas, Render, Vercel ni Netlify.
+
+## Comandos de calidad
+
+| Comando | Función |
+| --- | --- |
+| `npm run lint` | Ejecuta ESLint. |
+| `npm test` | Ejecuta pruebas backend y frontend. |
+| `npm run test:backend` | Ejecuta pruebas de integración de la API con MongoDB en memoria. |
+| `npm run build` | Genera el build del cliente. |
 
 ## Arquitectura
 
 ```text
-/
-├── client/                  Aplicación React (SPA) creada con Vite
-│   ├── public/              Recursos públicos e imágenes de la marca (/img, logos, favicon)
-│   └── src/
-│       ├── components/      Navbar, Footer, tarjetas, listas, detalle y formulario
-│       ├── pages/           Vistas asociadas a las rutas de la aplicación
-│       ├── services/        Acceso centralizado a la API mediante fetch
-│       └── utils/           Formato de precios y utilidades
-├── backend/                 API REST con Node.js y Express
-│   ├── data/                Catálogo local de productos
-│   ├── middleware/          Registro, rutas no encontradas y errores
-│   ├── routes/              Rutas organizadas con express.Router
-│   └── tests/               Pruebas de integración con node:test y Supertest
-└── .github/workflows/       Verificación automática de calidad
+React client → Express API → MongoDB
 ```
 
-El frontend administra el carrito en `App` con `useState`, lo persiste en
-`localStorage` y pasa el contador al `Navbar` mediante props. Las vistas de catálogo y
-detalle consumen la API y muestran estados de carga, éxito y error.
-
-## API REST
-
-| Método | Endpoint             | Resultado                                           |
-| ------ | -------------------- | --------------------------------------------------- |
-| `GET`  | `/api/productos`     | Devuelve el catálogo completo en formato JSON.      |
-| `GET`  | `/api/productos/:id` | Devuelve un producto o responde `404` si no existe. |
-
-Ejemplos locales:
-
-- [Catálogo completo](http://localhost:3001/api/productos)
-- [Producto con identificador 1](http://localhost:3001/api/productos/1)
-
-El backend incorpora `express.json()`, CORS, registro global de método y URL, y
-manejadores centralizados de rutas inexistentes y errores.
-
-## Decisiones técnicas
-
-- **Vite + React:** reemplaza Create React App para disponer de un flujo de
-  desarrollo moderno, recarga instantánea (HMR) y compilaciones optimizadas.
-- **Vitest + Testing Library:** ejecutan las pruebas del cliente en el mismo ecosistema
-  ESM de Vite.
-- **React Router 6.30.3:** gestiona las rutas del cliente (Inicio, Catálogo, Detalle,
-  Contacto y Carrito) como una Single Page Application (SPA).
-- **Catálogo en la API:** el cliente ya no mantiene productos locales; todas las vistas
-  los solicitan al backend mediante `fetch`.
-- **Ejecución local:** el despliegue del backend en Render se realizará en una etapa
-  posterior. Por ahora, cliente y API se ejecutan en conjunto en el entorno local.
-
-## Pruebas y calidad
-
-Para reproducir localmente los controles obligatorios de GitHub Actions:
-
-```sh
-npm ci
-npm run lint
-npm test
-npm run build
-```
-
-La integración continua usa Node.js 22.22.1 y exige el check **ESLint and tests** antes
-de cada merge a `develop` o `main`. Además, Husky, lint-staged y commitlint controlan
-los archivos preparados y los mensajes de commit.
-
-## Flujo de ramas
-
-- `feature`: integración continua de nuevas funcionalidades.
-- `develop`: versión integrada y validada para la siguiente entrega.
-- `bugfix`: correcciones planificadas que todavía no llegan a producción.
-- `main`: versión estable.
-
-El recorrido habitual es `feature` → `develop` → `main`, siempre mediante pull request.
-Los pushes directos, force pushes y eliminaciones están protegidos en las ramas
-principales.
-
-## Sitio publicado
-
-La versión previa estática estuvo desplegada en Netlify. Tras completar la migración de los Sprints 3 y 4 a la arquitectura cliente-servidor (React + Express), el proyecto se ejecuta localmente y queda listo para coordinar el nuevo despliegue del cliente y la API.
+- `client/`: interfaz React y consumo HTTP.
+- `backend/models/Product.js`: esquema Mongoose.
+- `backend/routes/productos.js`: CRUD de productos.
+- `backend/config/database.js`: conexión Mongo reutilizable.
+- `backend/scripts/seed.js`: inicialización idempotente del catálogo.
 
 ## Equipo
 
