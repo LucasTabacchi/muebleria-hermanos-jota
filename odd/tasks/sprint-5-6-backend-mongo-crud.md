@@ -40,3 +40,7 @@ El backend actual usa un arreglo en memoria y solo expone lecturas. Los Sprints 
 
 ## Próximo paso
 - Integrar la URL pública de la API y el origen CORS del frontend únicamente al desplegar, con autorización remota explícita.
+## Verificación final
+- 
+pm test --workspace=backend: 16/16 pruebas pasadas después de B3.
+- Estado del árbol: se preservó sin incluir proyecto-iagen-hermanos-jota.docx (archivo ajeno no versionado).
