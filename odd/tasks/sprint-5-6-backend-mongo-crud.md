@@ -28,7 +28,7 @@ El backend actual usa un arreglo en memoria y solo expone lecturas. Los Sprints 
 
 ## Tareas
 - [x] B1: Añadir dependencias, conexión Mongo reutilizable, modelo Product y harness aislado de pruebas Mongo. Ruta: delegated; trigger writer. Evidencia: `backend/config/database.js`, `backend/models/Product.js`, `backend/tests/api.test.js` y lockfile regenerado; `npm test --workspace=backend` (15/15) y `npx eslint backend --no-error-on-unmatched-pattern` pasan.
-- [ ] B2: Reemplazar rutas de lectura por CRUD Mongoose, validación y mapeo de errores de base de datos. Ruta: delegated; trigger writer.
+- [x] B2: Reemplazar rutas de lectura por CRUD Mongoose, validación y mapeo de errores de base de datos. Ruta: delegated; trigger writer. Evidencia: `backend/routes/productos.js`, `backend/middleware/errorHandler.js` y `backend/tests/api.test.js`; `npm test --workspace=backend` (15/15) y `npx eslint backend --no-error-on-unmatched-pattern` pasan. Commit `26e615f`.
 - [ ] B3: Añadir seed idempotente, `.env.example` y documentación de ejecución/despliegue; verificar CRUD completo. Ruta: delegated; trigger writer.
 
 ## Criterios de aceptación
@@ -38,5 +38,6 @@ El backend actual usa un arreglo en memoria y solo expone lecturas. Los Sprints 
 - El catálogo GET preserva los campos que consume el frontend actual.
 - Tests backend, lint y smoke local pasan.
 
-## Próximo paso
-- Implementar B1 con pruebas aisladas antes de las rutas CRUD.
+## Próximo paso`r`n- Implementar B3: seed idempotente, ejemplos de entorno y documentación de ejecución/despliegue.
+
+

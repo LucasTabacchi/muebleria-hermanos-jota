@@ -7,6 +7,14 @@ function errorHandler(error, req, res, next) {
         return res.status(400).json({ error: "JSON inválido." });
     }
 
+    if (error.name === "ValidationError") {
+        return res.status(400).json({ error: "Los datos del producto no son válidos." });
+    }
+
+    if (error.name === "CastError") {
+        return res.status(400).json({ error: "El ID del producto no es válido." });
+    }
+
     const status = error.status ?? 500;
     const message = status === 500 ? "Ocurrió un error interno." : error.message;
 
