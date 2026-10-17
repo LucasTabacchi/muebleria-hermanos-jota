@@ -57,17 +57,34 @@ Para detenerlos, presionar `Ctrl+C`.
 
 ## Configuración
 
-El cliente utiliza la variable `VITE_API_URL` para localizar el backend. El
-valor predeterminado es `http://localhost:3001` y está documentado en `.env.example`.
-
-Si necesitás modificarlo, copiá `.env.example` como `client/.env` antes de iniciar
-el cliente:
+El backend requiere MongoDB. Copiá `backend/.env.example` como `backend/.env` y definí:
 
 ```env
-VITE_API_URL=http://localhost:3001
+MONGODB_URI=mongodb://127.0.0.1:27017/muebleria-hermanos-jota
+PORT=3001
 ```
 
-Los archivos `.env` locales no se versionan.
+Copiá `.env.example` como `client/.env` solo si necesitás cambiar `VITE_API_URL`. Los archivos `.env` no se versionan. El backend no inicia si falta `MONGODB_URI` o si no logra conectarse.
+
+### Catálogo inicial
+
+Para cargar o sincronizar el catálogo, ejecutá una vez (el proceso es idempotente):
+
+```sh
+node backend/scripts/seed.js
+```
+
+### API REST
+
+| Método | Endpoint | Resultado |
+| --- | --- | --- |
+| `GET` | `/api/productos` | Lista los productos. |
+| `GET` | `/api/productos/:id` | Devuelve un producto por ObjectId. |
+| `POST` | `/api/productos` | Crea un producto y responde 201. |
+| `PUT` | `/api/productos/:id` | Actualiza un producto. |
+| `DELETE` | `/api/productos/:id` | Elimina un producto y responde 204. |
+
+Las respuestas incluyen `id`, `imagenUrl` e `imagen` para mantener la compatibilidad durante la transición del frontend.
 
 ## Arquitectura
 
