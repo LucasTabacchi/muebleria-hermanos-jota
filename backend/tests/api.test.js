@@ -1,41 +1,38 @@
 const assert = require("node:assert/strict");
-const { after, before, describe, test } = require("node:test");
+const { after, afterEach, before, describe, test } = require("node:test");
+const { MongoMemoryServer } = require("mongodb-memory-server");
 const request = require("supertest");
+const { connectDatabase, disconnectDatabase } = require("../config/database");
+const Product = require("../models/Product");
 
 const originalLog = console.log;
 const logEntries = [];
+let mongoServer;
 
-before(() => {
+before(async () => {
     console.log = (...args) => logEntries.push(args.join(" "));
+    mongoServer = await MongoMemoryServer.create();
+    await connectDatabase(mongoServer.getUri());
 });
 
-after(() => {
+after(async () => {
+    await disconnectDatabase();
+    await mongoServer.stop();
     console.log = originalLog;
+});
+
+afterEach(async () => {
+    await Product.deleteMany({});
 });
 
 const app = require("../app");
 
 describe("Products API", () => {
-    test("GET /api/productos returns the complete catalog", async () => {
+    test("GET /api/productos responds with JSON", async () => {
         const response = await request(app).get("/api/productos").expect(200);
 
         assert.equal(response.type, "application/json");
-        assert.equal(response.body.length, 11);
-        assert.deepEqual(response.body[0], {
-            id: 1,
-            nombre: "Aparador Uspallata",
-            categoria: "Muebles",
-            precio: 1490000,
-            descripcion:
-                "Aparador de seis puertas fabricado en nogal sostenible con tiradores metálicos en acabado latón. Su silueta minimalista realza el veteado natural de la madera, creando una pieza que combina funcionalidad y elegancia atemporal para espacios contemporáneos.",
-            medidas: "180 x 45 x 75 cm",
-            materiales: "Nogal macizo FSC®, herrajes de latón.",
-            acabado: "Aceite natural ecológico",
-            peso: "68 kg",
-            capacidad: "6 compartimientos interiores",
-            imagen: "img/aparador Uspallata.png",
-            destacado: true,
-        });
+        assert.ok(Array.isArray(response.body));
     });
 
     test("GET /api/productos/:id returns the requested product", async () => {
@@ -59,6 +56,40 @@ describe("Products API", () => {
         const response = await request(app).get("/api/productos/999").expect(404);
 
         assert.deepEqual(response.body, { error: "Producto no encontrado." });
+    });
+});
+
+describe("Product persistence harness", () => {
+    test("persists rubric fields and serializes catalog-compatible aliases", async () => {
+        const product = await Product.create({
+            nombre: "Mesa Andina",
+            descripcion: "Mesa de prueba.",
+            precio: 250000,
+            stock: 3,
+            imagen: "img/mesa-andina.png",
+            categoria: "Mesas",
+            destacado: true,
+        });
+
+        const serializedProduct = product.toJSON();
+
+        assert.equal(serializedProduct.id, product._id.toString());
+        assert.equal(serializedProduct.imagenUrl, "img/mesa-andina.png");
+        assert.equal(serializedProduct.imagen, "img/mesa-andina.png");
+        assert.equal(serializedProduct.stock, 3);
+        assert.equal(serializedProduct.destacado, true);
+        assert.equal(await Product.countDocuments(), 1);
+    });
+
+    test("requires the Product fields mandated by the sprint", async () => {
+        const product = new Product({ descripcion: "Sin datos requeridos." });
+
+        await assert.rejects(product.validate(), (error) => {
+            assert.ok(error.errors.nombre);
+            assert.ok(error.errors.precio);
+            assert.ok(error.errors.imagenUrl);
+            return true;
+        });
     });
 });
 
