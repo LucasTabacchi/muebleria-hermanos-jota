@@ -1,5 +1,4 @@
 const PRODUCTOS = [
-
     {
         id: 1,
 
@@ -11,28 +10,21 @@ const PRODUCTOS = [
 
         descripcion:
             "Aparador de seis puertas fabricado en nogal sostenible con tiradores metálicos en acabado latón. Su silueta minimalista realza el veteado natural de la madera, creando una pieza que combina funcionalidad y elegancia atemporal para espacios contemporáneos.",
-        
-        medidas: 
-            "180 x 45 x 75 cm",
-        
-        materiales:
-            "Nogal macizo FSC®, herrajes de latón.",
 
-        acabado:
-            "Aceite natural ecológico",
+        medidas: "180 x 45 x 75 cm",
 
-        peso:
-            "68 kg",
+        materiales: "Nogal macizo FSC®, herrajes de latón.",
 
-        capacidad:
-            "6 compartimientos interiores",
+        acabado: "Aceite natural ecológico",
 
-        imagen:
-            "img/aparador Uspallata.png",
+        peso: "68 kg",
 
-        destacado: true
+        capacidad: "6 compartimientos interiores",
+
+        imagen: "img/aparador Uspallata.png",
+
+        destacado: true,
     },
-
 
     {
         id: 2,
@@ -44,29 +36,22 @@ const PRODUCTOS = [
         precio: 699000,
 
         descripcion:
-            "Sistema modular de estantes abierto que combina estructura de acero Sage Green y repisas en roble claro. Perfecta para colecciones y objetos de diseño, su diseño versátil se adapta a cualquier espacio contemporáneo con elegancia funcional.",
-        
-        medidas: 
-            "100 x 35 x 200 cm",
-        
-        materiales:
-            "Estructura de acero, estantes de roble.",
+            "Sistema modular de estantes abierto que combina estructura de acero Verde Salvia y repisas en roble claro. Perfecta para colecciones y objetos de diseño, su diseño versátil se adapta a cualquier espacio contemporáneo con elegancia funcional.",
 
-        acabado:
-            "Laca mate ecológica",
+        medidas: "100 x 35 x 200 cm",
 
-        capacidad:
-            "45 kg por estante",
+        materiales: "Estructura de acero, estantes de roble.",
 
-        modulares:
-            "5 estantes ajustables",
+        acabado: "Aceite de lino y cera de abejas",
 
-        imagen:
-            "img/biblioteca Recoleta.png",
+        capacidad: "45 kg por estante",
 
-        destacado: true
+        modulares: "5 estantes ajustables",
+
+        imagen: "img/biblioteca Recoleta.png",
+
+        destacado: true,
     },
-
 
     {
         id: 3,
@@ -78,27 +63,20 @@ const PRODUCTOS = [
         precio: 489000,
 
         descripcion:
-            "Butaca tapizada en bouclé Dusty Rose con base de madera de guatambú. El respaldo curvo abraza el cuerpo y ofrece máximo confort, mientras que su diseño orgánico aporta calidez y sofisticación a cualquier ambiente contemporáneo.",
-        
-        medidas: 
-            "80 x 75 x 85 cm",
-        
-        materiales:
-            "Guatambú macizo, tela bouclé.",
+            "Butaca tapizada en bouclé Rosa Polvoriento con base en madera nativa de caldén. El respaldo curvo abraza el cuerpo y ofrece máximo confort, mientras que su diseño orgánico aporta calidez y sofisticación a cualquier ambiente contemporáneo.",
 
-        acabado:
-            "Cera vegetal, tapizado premium.",
+        medidas: "80 x 75 x 85 cm",
 
+        materiales: "Caldén nativo y guatambú macizo, tela bouclé.",
 
-        tapizado:
-            "Repelente al agua y manchas.",
+        acabado: "Cera de abejas de origen local certificado.",
 
-        imagen:
-            "img/butaca Mendoza.png",
+        tapizado: "Repelente al agua y manchas.",
 
-        destacado: true
+        imagen: "img/butaca Mendoza.png",
+
+        destacado: true,
     },
-
 
     {
         id: 4,
@@ -110,29 +88,22 @@ const PRODUCTOS = [
         precio: 1890000,
 
         descripcion:
-            "Sillón lounge en cuero cognac con base giratoria en acero Burnt Sienna. Inspirado en la estética brasilera moderna de los 60, combina comodidad excepcional con un diseño icónico que trasciende tendencias y épocas.",
-        
-        medidas: 
-            "90 x 85 x 95 cm",
-        
-        materiales:
-            "Cuero curtido vegetal, acero pintado.",
+            "Sillón lounge en cuero cognac con base giratoria en acero Siena Tostado. Inspirado en la estética brasilera moderna de los 60, combina comodidad excepcional con un diseño icónico que trasciende tendencias y épocas.",
 
-        acabado:
-            "Cuero anilina premium.",
+        medidas: "90 x 85 x 95 cm",
 
-        rotación:
-            "360° silenciosa y suave.",
+        materiales: "Cuero curtido vegetal, acero pintado en polvo bajo COV.",
 
-        Garantía:
-            "10 años en estructura.",
+        acabado: "Cera de abejas y aceite de lino natural.",
 
-        imagen:
-            "img/Sillón Copacabana.png",
+        rotación: "360° silenciosa y suave.",
 
-        destacado: true
+        Garantía: "10 años en estructura.",
+
+        imagen: "img/Sillón Copacabana.png",
+
+        destacado: true,
     },
-
 
     {
         id: 5,
@@ -144,29 +115,22 @@ const PRODUCTOS = [
         precio: 1390000,
 
         descripcion:
-            "Mesa de centro con sobre circular de mármol Patagonia y base de tres patas en madera de nogal. Su diseño minimalista se convierte en el punto focal perfecto para cualquier sala de estar contemporánea, combinando la frialdad del mármol con la calidez de la madera.",
-        
-        medidas: 
-            "90 x 90 x 45 cm",
-        
-        materiales:
-            "Sobre de mármol Patagonia, patas de nogal.",
+            "Mesa de centro con sobre circular de mármol Patagonia y base de tres patas en madera nativa de algarrobo. Su diseño minimalista se convierte en el punto focal perfecto para cualquier sala de estar contemporánea, combinando la nobleza del mármol con la calidez de la madera.",
 
-        acabado:
-            "Mármol pulido, aceite natural en madera.",
+        medidas: "90 x 90 x 45 cm",
 
-        peso:
-            "42 kg",
+        materiales: "Sobre de mármol Patagonia, patas de algarrobo nativo.",
 
-        capacidad:
-            "25 kg distribuidos",
+        acabado: "Mármol pulido, aceite de lino prensado en frío.",
 
-        imagen:
-            "img/Mesa de Centro Araucaria.png",
+        peso: "42 kg",
 
-        destacado: false
+        capacidad: "25 kg distribuidos",
+
+        imagen: "img/Mesa de Centro Araucaria.png",
+
+        destacado: false,
     },
-
 
     {
         id: 6,
@@ -179,28 +143,21 @@ const PRODUCTOS = [
 
         descripcion:
             "Mesa de noche con cajón oculto y repisa inferior en roble certificado FSC®. Su diseño limpio y funcional permite convivir con diferentes estilos de dormitorio, ofreciendo almacenamiento discreto y elegante para objetos personales.",
-        
-        medidas: 
-            "45 x 35 x 60 cm",
-        
-        materiales:
-            "Roble macizo FSCO, herrajes soft-close.",
 
-        acabado:
-            "Barniz mate de poliuretano.",
+        medidas: "45 x 35 x 60 cm",
 
-        almacenamiento:
-            "1 cajón + repisa inferior",
+        materiales: "Roble macizo FSC®, herrajes soft-close.",
 
-        Caracteristicas:
-            "Cajón con cierre suave.",
+        acabado: "Aceite de lino y cera de abejas.",
 
-        imagen:
-            "img/Mesa de Noche Aconcagua.png",
+        almacenamiento: "1 cajón + repisa inferior",
 
-        destacado: false
+        Caracteristicas: "Cajón con cierre suave.",
+
+        imagen: "img/Mesa de Noche Aconcagua.png",
+
+        destacado: false,
     },
-
 
     {
         id: 7,
@@ -212,29 +169,22 @@ const PRODUCTOS = [
         precio: 1190000,
 
         descripcion:
-            "Sofá de tres cuerpos tapizado en lino Warm Alabaster con patas cónicas de madera. Los cojines combinan espuma de alta resiliencia con plumón reciclado, ofreciendo comodidad duradera y sostenible para el hogar moderno.",
-        
-        medidas: 
-            "220 x 90 x 80 cm",
-        
-        estructura:
-            "Madera de eucalipto certificada FSCO.",
+            "Sofá de tres cuerpos tapizado en lino Alabastro Cálido con patas cónicas de madera nativa. Los cojines combinan espuma de alta resiliencia con plumón reciclado, ofreciendo comodidad duradera y sostenible para el hogar moderno.",
 
-        tapizado:
-            "Lino 100% natural premium.",
+        medidas: "220 x 90 x 80 cm",
 
-        relleno:
-            "Espuma HR + plumón reciclado.",
+        estructura: "Madera nativa de quebracho y eucalipto certificada FSC®.",
 
-        sostenibilidad:
-            "Materiales 100% reciclables.",
+        tapizado: "Lino 100% natural.",
 
-        imagen:
-            "img/Sofá Patagonia.png",
+        relleno: "Espuma HR + plumón reciclado.",
 
-        destacado: false
+        sostenibilidad: "Materiales 100% reciclables.",
+
+        imagen: "img/Sofá Patagonia.png",
+
+        destacado: false,
     },
-
 
     {
         id: 8,
@@ -246,27 +196,21 @@ const PRODUCTOS = [
         precio: 1890000,
 
         descripcion:
-            "Mesa extensible de roble macizo con tablero biselado y sistema de apertura suave. Su diseño robusto y elegante se adapta perfectamente a reuniones íntimas o grandes celebraciones familiares, extendiéndose de 6 a 10 comensales.",
-        
-        medidas: 
-            "160-240 x 90 x 75 cm",
-        
-        materiales:
-            "Roble macizo FSCO. mecanismo alemán.",
+            "Mesa extensible de roble macizo y detalles en algarrobo nativo con tablero biselado y sistema de apertura suave. Su diseño robusto y elegante se adapta perfectamente a reuniones íntimas o grandes celebraciones familiares, extendiéndose de 6 a 10 comensales.",
 
-        acabado:
-            "Aceite-cera natural.",
+        medidas: "160-240 x 90 x 75 cm",
 
-        capacidad:
-            "6-10 comensales",
+        materiales: "Roble macizo y algarrobo nativo FSC®, mecanismo de extensión.",
 
-        extensión:
-            "Sistema de mariposa central.",
+        acabado: "Aceite de lino prensado en frío y cera de abejas.",
 
-        imagen:
-            "img/Mesa Comedor Pampa.png",
+        capacidad: "6-10 comensales",
 
-        destacado: false
+        extensión: "Sistema de mariposa central.",
+
+        imagen: "img/Mesa Comedor Pampa.png",
+
+        destacado: false,
     },
 
     {
@@ -279,27 +223,21 @@ const PRODUCTOS = [
         precio: 649000,
 
         descripcion:
-            "Set de cuatro sillas apilables en contrachapado moldeado de nogal y estructura tubular pintada en Sage Green. Su diseño ergonómico y materiales de calidad garantizan comodidad y durabilidad en el uso diario, perfectas para comedores contemporáneos.",
-        
-        medidas: 
-            "45 x 52 x 80 cm (cada una)",
-        
-        materiales:
-            "Contrachapado nogal, tubo de acero.",
+            "Set de cuatro sillas apilables en contrachapado moldeado de nogal y estructura tubular pintada en Verde Salvia. Su diseño ergonómico y materiales de calidad garantizan comodidad y durabilidad en el uso diario, perfectas para comedores contemporáneos.",
 
-        acabado:
-            "Laca mate, pintura epoxi.",
+        medidas: "45 x 52 x 80 cm (cada una)",
 
-        apilables:
-            "Hasta 6 sillas",
+        materiales: "Contrachapado nogal FSC®, tubo de acero reciclable.",
 
-        incluye:
-            "Set de 4 sillas",
+        acabado: "Aceite de lino, tintes vegetales y pintura de bajo COV.",
 
-        imagen:
-            "img/Sillas Córdoba.png",
+        apilables: "Hasta 6 sillas",
 
-        destacado: false
+        incluye: "Set de 4 sillas",
+
+        imagen: "img/Sillas Córdoba.png",
+
+        destacado: false,
     },
 
     {
@@ -313,26 +251,20 @@ const PRODUCTOS = [
 
         descripcion:
             "Escritorio compacto con cajón organizado y tapa pasacables integrada en bambú laminado. Ideal para espacios de trabajo en casa, combina funcionalidad moderna con estética minimalista y sostenible, perfecto para el trabajo remoto.",
-        
-        medidas: 
-            "120 x 60 x 75 cm",
-        
-        materiales:
-            "Bambú laminado, herrajes ocultos",
 
-        acabado:
-            "Laca mate resistente.",
+        medidas: "120 x 60 x 75 cm",
 
-        almacenamiento:
-            "1 cajón con organizador.",
+        materiales: "Bambú laminado, herrajes ocultos",
 
-        cables:
-            "Pasacables integrado.",
+        acabado: "Aceite de lino natural resistente de bajo COV.",
 
-        imagen:
-            "img/Escritorio Costa.png",
+        almacenamiento: "1 cajón con organizador.",
 
-        destacado: true
+        cables: "Pasacables integrado.",
+
+        imagen: "img/Escritorio Costa.png",
+
+        destacado: true,
     },
 
     {
@@ -346,30 +278,22 @@ const PRODUCTOS = [
 
         descripcion:
             "Silla ergonómica regulable en altura con respaldo de malla transpirable y asiento tapizado en tejido reciclado. Diseñada para largas jornadas de trabajo con máximo confort y apoyo lumbar, ideal para oficinas en casa y espacios de coworking.",
-        
-        medidas: 
-            "60 x 60 x 90-100 cm",
-        
-        materiales:
-            "Malla técnica, tapizado premium.",
 
-        acabado:
-            "Base cromada, tapizado premium.",
+        medidas: "60 x 60 x 90-100 cm",
 
-        regulación:
-            "Altura + inclinación respaldo.",
+        materiales: "Malla técnica, tapizado en textil reciclado.",
 
-        certificación:
-            "Ergonomía europea EN 1335.",
+        acabado: "Estructura de acero con acabado de bajo COV, tapizado textil.",
 
-        imagen:
-            "img/Silla de Trabajo Belgrano.png",
+        regulación: "Altura + inclinación respaldo.",
 
-        destacado: false
-    }
+        certificación: "Ergonomía europea EN 1335.",
 
+        imagen: "img/Silla de Trabajo Belgrano.png",
+
+        destacado: false,
+    },
 ];
-
 
 /*
     Simula una petición a un servidor.
@@ -379,33 +303,21 @@ const PRODUCTOS = [
 */
 
 function obtenerProductos() {
-
     return new Promise((resolve) => {
-
         setTimeout(() => {
-
             resolve(PRODUCTOS);
-
         }, 700);
-
     });
-
 }
-
 
 /*
     Formatea precios como pesos argentinos.
 */
 
 function formatearPrecio(precio) {
-
-    return new Intl.NumberFormat(
-        "es-AR",
-        {
-            style: "currency",
-            currency: "ARS",
-            maximumFractionDigits: 0
-        }
-    ).format(precio);
-
+    return new Intl.NumberFormat("es-AR", {
+        style: "currency",
+        currency: "ARS",
+        maximumFractionDigits: 0,
+    }).format(precio);
 }

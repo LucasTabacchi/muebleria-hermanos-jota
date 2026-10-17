@@ -8,3 +8,7 @@ build/
 *.log
 .DS_Store
 Thumbs.db
+odd/
+docs/
+manual-de-marca-hermanos-jota.md
+
