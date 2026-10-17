@@ -70,8 +70,8 @@ describe("Products API", () => {
 
     for (const method of ["get", "put", "delete"]) {
         test(`${method.toUpperCase()} rejects an invalid Mongo ObjectId`, async () => {
-            const response = await request(app)
-                [method]("/api/productos/no-es-un-id")
+            const api = request(app);
+            const response = await api[method]("/api/productos/no-es-un-id")
                 .send(productData)
                 .expect(400);
             assert.deepEqual(response.body, { error: "El ID del producto no es válido." });
@@ -80,8 +80,8 @@ describe("Products API", () => {
 
     for (const method of ["get", "put", "delete"]) {
         test(`${method.toUpperCase()} returns 404 for a valid but missing product id`, async () => {
-            const response = await request(app)
-                [method]("/api/productos/507f1f77bcf86cd799439011")
+            const api = request(app);
+            const response = await api[method]("/api/productos/507f1f77bcf86cd799439011")
                 .send(productData)
                 .expect(404);
             assert.deepEqual(response.body, { error: "Producto no encontrado." });
