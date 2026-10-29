@@ -19,7 +19,7 @@
         "test:backend": "npm test --workspace=backend",
         "test:client": "npm test --workspace=client",
         "build": "npm run build --workspace=client",
-        "prepare": "husky"
+        "prepare": "node -e \"if (!process.env.CI) require('child_process').execSync('npx husky', { stdio: 'inherit' })\""
     },
     "engines": {
         "node": ">=22.22.1"
