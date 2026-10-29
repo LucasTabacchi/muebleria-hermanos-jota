@@ -88,6 +88,16 @@ describe("Products API", () => {
         });
     }
 
+    test("POST /api/productos accepts the required course payload without imagenUrl", async () => {
+        const response = await request(app)
+            .post("/api/productos")
+            .send({ nombre: "Cómoda", precio: 300000 })
+            .expect(201);
+
+        assert.equal(response.body.nombre, "Cómoda");
+        assert.equal(response.body.precio, 300000);
+        assert.equal(response.body.imagenUrl, undefined);
+    });
     test("POST returns a safe 400 for Mongoose validation errors", async () => {
         const response = await request(app)
             .post("/api/productos")
