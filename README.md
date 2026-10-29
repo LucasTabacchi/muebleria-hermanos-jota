@@ -1,11 +1,8 @@
 # Mueblería Hermanos Jota
 
-Ecommerce full stack para Mueblería Hermanos Jota. El cliente React conserva la
-identidad visual del sitio original y obtiene el catálogo desde una API REST local
-desarrollada con Node.js y Express.
+Ecommerce full stack para Mueblería Hermanos Jota. El cliente React conserva la identidad visual del sitio y obtiene el catálogo desde una API REST desarrollada con Node.js, Express y MongoDB Atlas.
 
-> La versión React + Express se ejecuta localmente por ahora. El despliegue del
-> backend queda fuera del alcance actual.
+El frontend se publica en Netlify y el backend se ejecuta en Render.
 
 ## Inicio rápido
 
@@ -71,7 +68,7 @@ Copiá `.env.example` como `client/.env` solo si necesitás cambiar `VITE_API_UR
 Para cargar o sincronizar el catálogo, ejecutá una vez (el proceso es idempotente):
 
 ```sh
-node backend/scripts/seed.js
+npm run seed --workspace=backend
 ```
 
 ### API REST
@@ -91,7 +88,7 @@ Las respuestas incluyen `id`, `imagenUrl` e `imagen` para mantener la compatibil
 ```text
 /
 ├── client/                  Aplicación React (SPA) creada con Vite
-│   ├── public/              Recursos públicos e imágenes de la marca (/img, logos, favicon)
+│   ├── public/              Recursos públicos, imágenes de la marca y _redirects para Netlify
 │   └── src/
 │       ├── components/      Navbar, Footer, tarjetas, listas, detalle y formulario
 │       ├── pages/           Vistas asociadas a las rutas de la aplicación
@@ -134,8 +131,7 @@ manejadores centralizados de rutas inexistentes y errores.
   Contacto y Carrito) como una Single Page Application (SPA).
 - **Catálogo en la API:** el cliente ya no mantiene productos locales; todas las vistas
   los solicitan al backend mediante `fetch`.
-- **Ejecución local:** el despliegue del backend en Render se realizará en una etapa
-  posterior. Por ahora, cliente y API se ejecutan en conjunto en el entorno local.
+- **Despliegue:** Netlify compila `client/` y publica `client/dist`; Render expone la API conectada a MongoDB Atlas.
 
 ## Pruebas y calidad
 
@@ -165,8 +161,28 @@ principales.
 
 ## Sitio publicado
 
-La versión previa estática estuvo desplegada en Netlify. Tras completar la migración de los Sprints 3 y 4 a la arquitectura cliente-servidor (React + Express), el proyecto se ejecuta localmente y queda listo para coordinar el nuevo despliegue del cliente y la API.
+- Frontend: [muebleria-hermanosjota.netlify.app](https://muebleria-hermanosjota.netlify.app/)
+- Backend: [muebleria-hermanos-jota-ifva.onrender.com](https://muebleria-hermanos-jota-ifva.onrender.com/api/productos)
 
+### Configuración de producción
+
+En Netlify se usa la rama `develop` con esta configuración:
+
+| Ajuste | Valor |
+| --- | --- |
+| Base directory | `client` |
+| Build command | `npm run build` |
+| Publish directory | `client/dist` |
+
+El archivo `client/public/_redirects` incluye `/* /index.html 200` para que las rutas de React Router funcionen también al abrirlas directamente.
+
+Para que el frontend consuma el backend desplegado, definí esta variable en Netlify antes de compilar:
+
+```env
+VITE_API_URL=https://muebleria-hermanos-jota-ifva.onrender.com
+```
+
+Además, el backend debe permitir como origen CORS `https://muebleria-hermanosjota.netlify.app`. La configuración actual de desarrollo solo permite `http://localhost:3000`.
 ## Equipo
 
 - Morales Carlos Ariel
