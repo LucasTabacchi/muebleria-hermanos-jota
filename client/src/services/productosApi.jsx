@@ -5,7 +5,7 @@ async function solicitar(ruta, opciones) {
     const respuesta = opciones ? await fetch(url, opciones) : await fetch(url);
     const cuerpo = await respuesta.json().catch(() => null);
 
-    if (!respuesta.ok) {
+    if (!respuesta.ok || cuerpo === null) {
         const error = Object.assign(
             new Error(cuerpo?.error || "La API no pudo completar la solicitud."),
             { status: respuesta.status }

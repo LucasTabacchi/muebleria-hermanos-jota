@@ -182,7 +182,7 @@ Para que el frontend consuma el backend desplegado, definí esta variable en Net
 VITE_API_URL=https://muebleria-hermanos-jota-ifva.onrender.com
 ```
 
-Además, el backend debe permitir como origen CORS `https://muebleria-hermanosjota.netlify.app`. La configuración actual de desarrollo solo permite `http://localhost:3000`.
+El backend permite por defecto el origen `https://muebleria-hermanosjota.netlify.app` y los puertos locales de Vite. Para permitir otro frontend, definí `FRONTEND_URL` en el entorno del backend.
 ## Equipo
 
 - Morales Carlos Ariel
