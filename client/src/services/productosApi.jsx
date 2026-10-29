@@ -1,19 +1,19 @@
-// In development, Vite forwards this relative path to the local API. Keeping the
-// default relative also lets deployed environments serve client and API together.
 const API_URL = (import.meta.env.VITE_API_URL || "").replace(/\/$/, "");
 
-async function solicitar(ruta) {
-    const respuesta = await fetch(`${API_URL}${ruta}`);
+async function solicitar(ruta, opciones) {
+    const url = `${API_URL}${ruta}`;
+    const respuesta = opciones ? await fetch(url, opciones) : await fetch(url);
+    const cuerpo = await respuesta.json().catch(() => null);
 
     if (!respuesta.ok) {
-        const error = Object.assign(new Error("La API no pudo completar la solicitud."), {
-            status: respuesta.status,
-        });
-        error.status = respuesta.status;
+        const error = Object.assign(
+            new Error(cuerpo?.error || "La API no pudo completar la solicitud."),
+            { status: respuesta.status }
+        );
         throw error;
     }
 
-    return respuesta.json();
+    return cuerpo;
 }
 
 export function obtenerProductos() {
@@ -22,4 +22,12 @@ export function obtenerProductos() {
 
 export function obtenerProducto(id) {
     return solicitar(`/api/productos/${id}`);
+}
+
+export function crearProducto(producto) {
+    return solicitar("/api/productos", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(producto),
+    });
 }
