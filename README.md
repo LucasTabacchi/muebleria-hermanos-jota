@@ -156,6 +156,8 @@ principales.
 
 [muebleria-hermanosjota.netlify.app](https://muebleria-hermanosjota.netlify.app/)
 
+## Integrantes
+
 - Morales Carlos Ariel
 - Tabacchi Lucas
 - Kegalj Emiliano
