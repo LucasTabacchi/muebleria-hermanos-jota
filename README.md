@@ -106,13 +106,6 @@ El frontend administra el carrito en `App` con `useState`, lo persiste en
 `localStorage` y pasa el contador al `Navbar` mediante props. Las vistas de catálogo y
 detalle consumen la API y muestran estados de carga, éxito y error.
 
-## API REST
-
-| Método | Endpoint             | Resultado                                           |
-| ------ | -------------------- | --------------------------------------------------- |
-| `GET`  | `/api/productos`     | Devuelve el catálogo completo en formato JSON.      |
-| `GET`  | `/api/productos/:id` | Devuelve un producto o responde `404` si no existe. |
-
 Ejemplos locales:
 
 - [Catálogo completo](http://localhost:3001/api/productos)
@@ -161,29 +154,7 @@ principales.
 
 ## Sitio publicado
 
-- Frontend: [muebleria-hermanosjota.netlify.app](https://muebleria-hermanosjota.netlify.app/)
-- Backend: [muebleria-hermanos-jota-ifva.onrender.com](https://muebleria-hermanos-jota-ifva.onrender.com/api/productos)
-
-### Configuración de producción
-
-En Netlify se usa la rama `develop` con esta configuración:
-
-| Ajuste | Valor |
-| --- | --- |
-| Base directory | `client` |
-| Build command | `npm run build` |
-| Publish directory | `client/dist` |
-
-El archivo `client/public/_redirects` incluye `/* /index.html 200` para que las rutas de React Router funcionen también al abrirlas directamente.
-
-Para que el frontend consuma el backend desplegado, definí esta variable en Netlify antes de compilar:
-
-```env
-VITE_API_URL=https://muebleria-hermanos-jota-ifva.onrender.com
-```
-
-El backend permite por defecto el origen `https://muebleria-hermanosjota.netlify.app` y los puertos locales de Vite. Para permitir otro frontend, definí `FRONTEND_URL` en el entorno del backend.
-## Equipo
+[muebleria-hermanosjota.netlify.app](https://muebleria-hermanosjota.netlify.app/)
 
 - Morales Carlos Ariel
 - Tabacchi Lucas
