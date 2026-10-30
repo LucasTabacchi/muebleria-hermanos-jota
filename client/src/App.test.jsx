@@ -261,33 +261,6 @@ test("el botón Planificar mi visita redirige directamente al formulario de cont
     await screen.findByText("Aparador Uspallata");
 });
 
-test("crea un producto desde la ruta de alta y navega a su detalle", async () => {
-    const productoCreado = {
-        id: "nuevo-1",
-        nombre: "Cómoda",
-        precio: 300000,
-        descripcion: "Cómoda artesanal.",
-        imagen: "img/comoda.png",
-    };
-    global.fetch
-        .mockReturnValueOnce(respuestaJson(productoCreado, { status: 201 }))
-        .mockReturnValueOnce(respuestaJson(productoCreado));
-
-    renderApp("/admin/crear-producto");
-
-    fireEvent.change(screen.getByLabelText("Nombre"), { target: { value: "Cómoda" } });
-    fireEvent.change(screen.getByLabelText("Precio"), { target: { value: "300000" } });
-    fireEvent.click(screen.getByRole("button", { name: "Crear producto" }));
-
-    await waitFor(() =>
-        expect(global.fetch).toHaveBeenCalledWith(
-            "/api/productos",
-            expect.objectContaining({ method: "POST" })
-        )
-    );
-    expect(await screen.findByRole("heading", { name: "Cómoda" })).toBeInTheDocument();
-});
-
 test("shows a recoverable error when the API returns a non-JSON payload", async () => {
     global.fetch.mockReturnValueOnce(
         Promise.resolve({ ok: true, status: 200, json: () => Promise.resolve(null) })

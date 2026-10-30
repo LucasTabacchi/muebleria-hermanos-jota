@@ -23,11 +23,3 @@ export function obtenerProductos() {
 export function obtenerProducto(id) {
     return solicitar(`/api/productos/${id}`);
 }
-
-export function crearProducto(producto) {
-    return solicitar("/api/productos", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(producto),
-    });
-}
