@@ -297,3 +297,24 @@ test("shows a recoverable error when the API returns a non-JSON payload", async 
 
     expect(await screen.findByText("No se pudo cargar el catálogo.")).toBeInTheDocument();
 });
+
+test("hides MongoDB metadata from the product detail", async () => {
+    const productoConMetadata = {
+        ...productos[0],
+        _id: "6ad40765e800c0b6c7b75f56",
+        __v: 0,
+        createdAt: "2026-10-17T23:40:20.482Z",
+        updatedAt: "2026-10-17T23:40:20.482Z",
+        imagenUrl: "img/aparador Uspallata.png",
+        acabado: "Aceite natural ecológico",
+    };
+    global.fetch.mockReturnValueOnce(respuestaJson(productoConMetadata));
+
+    renderApp("/productos/1");
+
+    expect(await screen.findByText("Aceite natural ecológico")).toBeInTheDocument();
+    expect(screen.queryByText("_id")).not.toBeInTheDocument();
+    expect(screen.queryByText("__v")).not.toBeInTheDocument();
+    expect(screen.queryByText("2026-10-17T23:40:20.482Z")).not.toBeInTheDocument();
+    expect(screen.queryByText("img/aparador Uspallata.png")).not.toBeInTheDocument();
+});
