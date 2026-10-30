@@ -4,12 +4,17 @@ import { obtenerProducto } from "../services/productosApi";
 import { formatearPrecio, rutaImagen } from "../utils/formato";
 
 const CAMPOS_BASE = new Set([
+    "_id",
+    "__v",
     "id",
     "nombre",
     "categoria",
     "precio",
     "descripcion",
     "imagen",
+    "imagenUrl",
+    "createdAt",
+    "updatedAt",
     "destacado",
 ]);
 
