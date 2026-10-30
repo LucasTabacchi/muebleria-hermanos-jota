@@ -287,3 +287,13 @@ test("crea un producto desde la ruta de alta y navega a su detalle", async () =>
     );
     expect(await screen.findByRole("heading", { name: "Cómoda" })).toBeInTheDocument();
 });
+
+test("shows a recoverable error when the API returns a non-JSON payload", async () => {
+    global.fetch.mockReturnValueOnce(
+        Promise.resolve({ ok: true, status: 200, json: () => Promise.resolve(null) })
+    );
+
+    renderApp("/productos");
+
+    expect(await screen.findByText("No se pudo cargar el catálogo.")).toBeInTheDocument();
+});

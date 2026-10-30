@@ -139,3 +139,14 @@ describe("Application middleware", () => {
         assert.deepEqual(response.body, { error: "JSON inválido." });
     });
 });
+
+test("allows requests from the deployed Netlify client", async () => {
+    const response = await request(app)
+        .get("/api/productos")
+        .set("Origin", "https://muebleria-hermanosjota.netlify.app")
+        .expect(200);
+    assert.equal(
+        response.headers["access-control-allow-origin"],
+        "https://muebleria-hermanosjota.netlify.app"
+    );
+});
