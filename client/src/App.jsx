@@ -4,6 +4,7 @@ import Footer from "./components/Footer";
 import Navbar from "./components/Navbar";
 import ScrollToTop from "./components/ScrollToTop";
 import CartPage from "./pages/CartPage";
+import CreateProductPage from "./pages/CreateProductPage";
 import ContactPage from "./pages/ContactPage";
 import HomePage from "./pages/HomePage";
 import NotFoundPage from "./pages/NotFoundPage";
@@ -46,6 +47,7 @@ export default function App() {
                 <Route path="/productos" element={<ProductsPage />} />
                 <Route path="/productos/:id" element={<ProductPage onAdd={agregar} />} />
                 <Route path="/contacto" element={<ContactPage />} />
+                <Route path="/admin/crear-producto" element={<CreateProductPage />} />
                 <Route
                     path="/carrito"
                     element={
