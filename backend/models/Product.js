@@ -7,7 +7,7 @@ const productSchema = new mongoose.Schema(
         precio: { type: Number, required: true, min: 0 },
         stock: { type: Number, default: 0, min: 0 },
         imagenUrl: { type: String, trim: true, alias: "imagen" },
-        categoria: { type: String, trim: true },
+        categoria: { type: mongoose.Schema.Types.ObjectId, ref: "Categoria" },
         medidas: { type: String, trim: true },
         materiales: { type: String, trim: true },
         acabado: { type: String, trim: true },

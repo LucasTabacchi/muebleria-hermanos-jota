@@ -1,0 +1,6 @@
+Registro de cambios fuera de la especificación
+
+- Fase 0: el test de contrato usa http://localhost:3001/api en lugar de http://localhost:3000/api porque este backend arranca por defecto en el puerto 3001.
+- Fase 0: AGENTS.md fue adaptado a la arquitectura real del proyecto (server.js + app.js, Mongoose 8.19 y dotenv).
+- Fase 4: el helper del contrato ahora tolera el cuerpo vacío de DELETE 204; la especificación mantiene ese 204, pero el helper original siempre intentaba parsear JSON y hacía fallar la limpieza del último test.
+- Fase 4: se adaptaron los fixtures de tests/api.test.js para crear Categoria y usar su ObjectId, ya que los fixtures previos enviaban categoría como texto y dejaron de ser válidos con el nuevo esquema requerido.
