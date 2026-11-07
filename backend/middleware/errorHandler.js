@@ -11,6 +11,10 @@ function errorHandler(error, req, res, next) {
         return res.status(400).json({ error: "Los datos del producto no son válidos." });
     }
 
+    if (error?.code === 11000) {
+        return res.status(409).json({ error: "La categoría ya existe." });
+    }
+
     if (error.name === "CastError") {
         return res.status(400).json({ error: "El ID del producto no es válido." });
     }
