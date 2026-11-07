@@ -39,8 +39,13 @@ jobs:
             - name: Run ESLint
               run: npm run lint
 
-            - name: Run tests
-              run: npm test
+            # The contract suite targets a manually started server and Atlas.
+            # CI instead runs the self-contained API suite backed by MongoMemoryServer.
+            - name: Run backend API tests
+              run: npm run test:api --workspace=backend
+
+            - name: Run React client tests
+              run: npm run test:client
 
             - name: Build React client
               run: npm run build
