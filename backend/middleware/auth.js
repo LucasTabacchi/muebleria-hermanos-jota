@@ -25,4 +25,12 @@ function verificarToken(req, res, next) {
     }
 }
 
-module.exports = { verificarToken };
+function soloAdmin(req, res, next) {
+    if (req.usuario?.rol !== "admin") {
+        return res.status(403).json({ error: "No tenés permiso para realizar esta acción." });
+    }
+
+    return next();
+}
+
+module.exports = { verificarToken, soloAdmin };
