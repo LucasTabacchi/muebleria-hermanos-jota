@@ -66,7 +66,7 @@ router.post("/login", async (req, res, next) => {
         const credencialesValidas = usuario && (await bcrypt.compare(password, usuario.password));
 
         if (!credencialesValidas) {
-            return res.status(401).json({ error: "Credenciales inválidas." });
+            return res.status(401).json({ error: "Credenciales inválidas" });
         }
 
         const token = jwt.sign({ id: usuario._id, rol: usuario.rol }, process.env.JWT_SECRET, {
