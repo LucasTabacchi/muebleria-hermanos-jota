@@ -18,7 +18,7 @@ function usuarioPublico(usuario) {
 }
 
 router.post("/registro", async (req, res, next) => {
-    const { nombre, email, password } = req.body;
+    const { nombre, email, password } = req.body ?? {};
 
     if (
         typeof nombre !== "string" ||
