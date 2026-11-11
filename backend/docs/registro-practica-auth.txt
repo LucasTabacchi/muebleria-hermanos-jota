@@ -1,0 +1,10 @@
+Registro de cambios fuera de la especificación
+
+- Fase 0: el contrato necesita `API_URL=http://localhost:3001` y una variable local `MONGO_URI` con la misma conexión que `MONGODB_URI`, porque este backend usa el puerto 3001 y esa segunda variable para su conexión habitual. No se modificó el test provisto.
+
+Preguntas para responder por el grupo, sin el agente
+
+1. Pendiente: ¿en qué archivo y línea se hashea la contraseña y por qué?
+2. Pendiente: decodificar un token y explicar su payload.
+3. Pendiente: explicar por qué login usa el mismo error para email y contraseña.
+4. Pendiente: explicar por qué hay que volver a iniciar sesión después de cambiar el rol.
