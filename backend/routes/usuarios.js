@@ -1,5 +1,6 @@
 const bcrypt = require("bcrypt");
 const express = require("express");
+const jwt = require("jsonwebtoken");
 const Usuario = require("../models/Usuario");
 
 const router = express.Router();
@@ -44,6 +45,36 @@ router.post("/registro", async (req, res, next) => {
             return res.status(409).json({ error: "El email ya existe." });
         }
 
+        return next(error);
+    }
+});
+
+router.post("/login", async (req, res, next) => {
+    const { email, password } = req.body ?? {};
+
+    if (
+        typeof email !== "string" ||
+        !email.trim() ||
+        typeof password !== "string" ||
+        !password.trim()
+    ) {
+        return res.status(400).json({ error: "Email y contraseña son obligatorios." });
+    }
+
+    try {
+        const usuario = await Usuario.findOne({ email: email.trim().toLowerCase() });
+        const credencialesValidas = usuario && (await bcrypt.compare(password, usuario.password));
+
+        if (!credencialesValidas) {
+            return res.status(401).json({ error: "Credenciales inválidas." });
+        }
+
+        const token = jwt.sign({ id: usuario._id, rol: usuario.rol }, process.env.JWT_SECRET, {
+            expiresIn: "1h",
+        });
+
+        return res.json({ token, usuario: usuarioPublico(usuario) });
+    } catch (error) {
         return next(error);
     }
 });
