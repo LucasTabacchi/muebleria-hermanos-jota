@@ -1,6 +1,7 @@
 const bcrypt = require("bcrypt");
 const express = require("express");
 const jwt = require("jsonwebtoken");
+const { verificarToken } = require("../middleware/auth");
 const Usuario = require("../models/Usuario");
 
 const router = express.Router();
@@ -74,6 +75,20 @@ router.post("/login", async (req, res, next) => {
         });
 
         return res.json({ token, usuario: usuarioPublico(usuario) });
+    } catch (error) {
+        return next(error);
+    }
+});
+
+router.get("/perfil", verificarToken, async (req, res, next) => {
+    try {
+        const usuario = await Usuario.findById(req.usuario.id);
+
+        if (!usuario) {
+            return res.status(401).json({ error: "No autorizado." });
+        }
+
+        return res.json(usuarioPublico(usuario));
     } catch (error) {
         return next(error);
     }
