@@ -1,9 +1,31 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useState } from "react";
+import { useAuth } from "../context/AuthContext";
 import { useCart } from "../context/CartContext";
+import { crearPedido } from "../services/pedidosApi";
 import { formatearPrecio } from "../utils/formato";
 
 export default function CartPage() {
     const { carrito, eliminar, vaciar, total } = useCart();
+    const { usuario, token, logout } = useAuth();
+    const navigate = useNavigate();
+    const [estado, setEstado] = useState({ tipo: "inicial", mensaje: "" });
+
+    async function finalizarCompra() {
+        setEstado({ tipo: "cargando", mensaje: "" });
+        try {
+            await crearPedido(carrito, token);
+            vaciar();
+            setEstado({ tipo: "exito", mensaje: "Tu pedido fue registrado correctamente." });
+        } catch (error) {
+            if (error.status === 401) {
+                logout();
+                navigate("/login", { state: { desde: "/carrito" } });
+                return;
+            }
+            setEstado({ tipo: "error", mensaje: error.message });
+        }
+    }
 
     return (
         <main id="contenido">
@@ -58,9 +80,30 @@ export default function CartPage() {
                             Esta es una experiencia de compra simulada. No se realizará ningún
                             cobro.
                         </p>
-                        <Link to="/contacto" className="boton">
-                            Consultar disponibilidad
-                        </Link>
+                        {usuario ? (
+                            <button
+                                className="boton"
+                                type="button"
+                                onClick={finalizarCompra}
+                                disabled={carrito.length === 0 || estado.tipo === "cargando"}
+                            >
+                                {estado.tipo === "cargando"
+                                    ? "Registrando pedido..."
+                                    : "Finalizar compra"}
+                            </button>
+                        ) : (
+                            <Link to="/login" state={{ desde: "/carrito" }} className="boton">
+                                Ingresar para finalizar compra
+                            </Link>
+                        )}
+                        {estado.mensaje && (
+                            <p
+                                className={estado.tipo === "error" ? "error" : "exito"}
+                                role={estado.tipo === "error" ? "alert" : "status"}
+                            >
+                                {estado.mensaje}
+                            </p>
+                        )}
                         <button className="boton boton-terciario" type="button" onClick={vaciar}>
                             Vaciar carrito
                         </button>

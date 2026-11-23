@@ -4,9 +4,9 @@ require("dotenv").config();
 
 let connectionPromise;
 
-async function connectDatabase(uri = process.env.MONGODB_URI) {
+async function connectDatabase(uri = process.env.MONGODB_URI || process.env.MONGO_URI) {
     if (!uri) {
-        throw new Error("MONGODB_URI es obligatoria para conectar a MongoDB.");
+        throw new Error("MONGODB_URI o MONGO_URI es obligatoria para conectar a MongoDB.");
     }
 
     if (mongoose.connection.readyState === 1) {

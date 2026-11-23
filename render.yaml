@@ -1,0 +1,13 @@
+services:
+  - type: web
+    name: muebleria-hermanos-jota-api
+    runtime: node
+    buildCommand: npm ci
+    startCommand: npm run start:backend
+    envVars:
+      - key: MONGODB_URI
+        sync: false
+      - key: JWT_SECRET
+        generateValue: true
+      - key: FRONTEND_URL
+        sync: false

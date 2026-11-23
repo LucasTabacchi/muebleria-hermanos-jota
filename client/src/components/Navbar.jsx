@@ -45,6 +45,9 @@ export default function Navbar() {
                                 <NavLink to="/perfil" className={claseActiva}>
                                     Mi perfil
                                 </NavLink>
+                                <NavLink to="/mis-pedidos" className={claseActiva}>
+                                    Mis pedidos
+                                </NavLink>
                                 <button
                                     type="button"
                                     className="boton boton-terciario"

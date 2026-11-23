@@ -1,160 +1,95 @@
 # Mueblería Hermanos Jota
 
-Ecommerce full stack para Mueblería Hermanos Jota. El cliente React conserva la identidad visual del sitio y obtiene el catálogo desde una API REST desarrollada con Node.js, Express y MongoDB Atlas.
+E-commerce MERN de mobiliario: catálogo, autenticación con JWT, carrito persistente y pedidos asociados al cliente autenticado.
 
-El frontend se publica en Netlify y el backend se ejecuta en Render.
+## Aplicación pública
 
-## Inicio rápido
-
-### Requisitos
-
-- Node.js 22.22.1 o posterior.
-- npm 10 o posterior, incluido con Node.js.
-- Git para clonar el repositorio y utilizar los hooks de calidad.
-
-### Instalación
-
-Desde la raíz del repositorio:
-
-```sh
-npm install
-```
-
-La raíz utiliza **npm workspaces**, por lo que este único comando instala las
-dependencias de `/client` y `/backend`. También configura los hooks locales de Husky.
-
-### Ejecución de la aplicación completa
-
-```sh
-npm run dev
-```
-
-El comando inicia ambos procesos:
-
-- Cliente React: [http://localhost:3000](http://localhost:3000)
-- API Express: [http://localhost:3001](http://localhost:3001)
-
-Para detenerlos, presionar `Ctrl+C`.
-
-## Comandos disponibles
-
-| Comando                 | Función                                                                 |
-| ----------------------- | ----------------------------------------------------------------------- |
-| `npm run dev`           | Inicia cliente y backend en paralelo con recarga durante el desarrollo. |
-| `npm run dev:client`    | Inicia solamente el cliente React.                                      |
-| `npm run dev:backend`   | Inicia solamente la API con el modo `watch` de Node.js.                 |
-| `npm run start:client`  | Inicia solamente el cliente React con Vite.                             |
-| `npm run start:backend` | Inicia solamente la API sin modo `watch`.                               |
-| `npm run lint`          | Analiza JavaScript y JSX con ESLint.                                    |
-| `npm test`              | Ejecuta todas las pruebas de backend y frontend sin modo interactivo.   |
-| `npm run test:backend`  | Ejecuta las pruebas de integración de la API.                           |
-| `npm run test:client`   | Ejecuta las pruebas del cliente React con Vitest.                       |
-| `npm run build`         | Genera la compilación de producción del cliente.                        |
-| `npm run format`        | Formatea los archivos compatibles con Prettier.                         |
-
-## Configuración
-
-El backend requiere MongoDB. Copiá `backend/.env.example` como `backend/.env` y definí:
-
-```env
-MONGODB_URI=mongodb://127.0.0.1:27017/muebleria-hermanos-jota
-PORT=3001
-```
-
-Copiá `.env.example` como `client/.env` solo si necesitás cambiar `VITE_API_URL`. Los archivos `.env` no se versionan. El backend no inicia si falta `MONGODB_URI` o si no logra conectarse.
-
-### Catálogo inicial
-
-Para cargar o sincronizar el catálogo, ejecutá una vez (el proceso es idempotente):
-
-```sh
-npm run seed --workspace=backend
-```
-
-### API REST
-
-| Método | Endpoint | Resultado |
-| --- | --- | --- |
-| `GET` | `/api/productos` | Lista los productos. |
-| `GET` | `/api/productos/:id` | Devuelve un producto por ObjectId. |
-| `POST` | `/api/productos` | Crea un producto y responde 201. |
-| `PUT` | `/api/productos/:id` | Actualiza un producto. |
-| `DELETE` | `/api/productos/:id` | Elimina un producto y responde 204. |
-
-Las respuestas incluyen `id`, `imagenUrl` e `imagen` para mantener la compatibilidad durante la transición del frontend.
+- Frontend: [muebleria-hermanosjota.netlify.app](https://muebleria-hermanosjota.netlify.app/)
+- Backend: se publica en Render desde `render.yaml`. Antes de publicar, copiá la URL pública de Render en `VITE_API_URL` de Netlify y la URL pública de Netlify en `FRONTEND_URL` de Render.
 
 ## Arquitectura
 
 ```text
-/
-├── client/                  Aplicación React (SPA) creada con Vite
-│   ├── public/              Recursos públicos, imágenes de la marca y _redirects para Netlify
-│   └── src/
-│       ├── components/      Navbar, Footer, tarjetas, listas, detalle y formulario
-│       ├── pages/           Vistas asociadas a las rutas de la aplicación
-│       ├── services/        Acceso centralizado a la API mediante fetch
-│       └── utils/           Formato de precios y utilidades
-├── backend/                 API REST con Node.js y Express
-│   ├── data/                Catálogo local de productos
-│   ├── middleware/          Registro, rutas no encontradas y errores
-│   ├── routes/              Rutas organizadas con express.Router
-│   └── tests/               Pruebas de integración con node:test y Supertest
-└── .github/workflows/       Verificación automática de calidad
+React + Vite (Netlify) ── HTTPS/JSON ──> Express API (Render) ──> MongoDB Atlas
+      │                                      │
+      ├─ AuthContext: JWT y sesión            ├─ bcrypt + JWT middleware
+      └─ CartContext: carrito local           └─ usuarios, productos y pedidos
 ```
 
-El frontend administra el carrito en `App` con `useState`, lo persiste en
-`localStorage` y pasa el contador al `Navbar` mediante props. Las vistas de catálogo y
-detalle consumen la API y muestran estados de carga, éxito y error.
+El cliente almacena la sesión y el carrito en `localStorage`. Las llamadas de escritura y consulta de pedidos incluyen `Authorization: Bearer <token>`. El servidor obtiene el usuario desde el JWT y usa el precio del producto almacenado en la base: el cliente no decide precios ni el dueño del pedido.
 
-Ejemplos locales:
+## Funcionalidades
 
-- [Catálogo completo](http://localhost:3001/api/productos)
-- [Producto con identificador 1](http://localhost:3001/api/productos/1)
+- Registro (`/registro`), login (`/login`), logout y sesión persistente.
+- Perfil protegido (`/perfil`) y lista protegida de pedidos (`/mis-pedidos`).
+- Catálogo, detalle, filtros, carrito global con React Context API y administración exclusiva para el rol `admin`.
+- Finalización de compra: `POST /api/pedidos` asociado al usuario autenticado y vaciado del carrito solo ante éxito.
 
-El backend incorpora `express.json()`, CORS, registro global de método y URL, y
-manejadores centralizados de rutas inexistentes y errores.
+## Desarrollo local
 
-## Decisiones técnicas
-
-- **Vite + React:** reemplaza Create React App para disponer de un flujo de
-  desarrollo moderno, recarga instantánea (HMR) y compilaciones optimizadas.
-- **Vitest + Testing Library:** ejecutan las pruebas del cliente en el mismo ecosistema
-  ESM de Vite.
-- **React Router 6.30.3:** gestiona las rutas del cliente (Inicio, Catálogo, Detalle,
-  Contacto y Carrito) como una Single Page Application (SPA).
-- **Catálogo en la API:** el cliente ya no mantiene productos locales; todas las vistas
-  los solicitan al backend mediante `fetch`.
-- **Despliegue:** Netlify compila `client/` y publica `client/dist`; Render expone la API conectada a MongoDB Atlas.
-
-## Pruebas y calidad
-
-Para reproducir localmente los controles obligatorios de GitHub Actions:
+Requiere Node.js 22.22.1 o posterior y una instancia de MongoDB.
 
 ```sh
-npm ci
+npm install
+cp backend/.env.example backend/.env
+cp client/.env.example client/.env
+npm run dev
+```
+
+Para desarrollo local dejá `VITE_API_URL` vacío; Vite redirige `/api` al backend local. En `backend/.env` configurá:
+
+```env
+MONGODB_URI=mongodb://127.0.0.1:27017/muebleria-hermanos-jota
+PORT=3001
+JWT_SECRET=elegir-un-secreto-unico
+FRONTEND_URL=http://localhost:3000
+```
+
+`MONGO_URI` también es aceptada como alternativa para la URI de Atlas. Nunca subir archivos `.env`, secretos ni credenciales al repositorio.
+
+## API
+
+| Método | Endpoint | Autenticación | Descripción |
+| --- | --- | --- | --- |
+| GET | `/api/productos` | No | Lista el catálogo. |
+| GET | `/api/productos/:id` | No | Devuelve un producto. |
+| POST | `/api/productos` | Admin | Crea un producto. |
+| PUT | `/api/productos/:id` | Admin | Actualiza un producto. |
+| DELETE | `/api/productos/:id` | Admin | Elimina un producto. |
+| POST | `/api/usuarios/registro` | No | Crea un usuario con contraseña hasheada. |
+| POST | `/api/usuarios/login` | No | Devuelve JWT y usuario público. |
+| GET | `/api/usuarios/perfil` | JWT | Devuelve el perfil público. |
+| POST | `/api/pedidos` | JWT | Registra un pedido a nombre del usuario del token. |
+| GET | `/api/pedidos/mis-pedidos` | JWT | Devuelve únicamente los pedidos propios. |
+
+## Pruebas
+
+```sh
+npm run test:api --workspace=backend
+npm run test:client
 npm run lint
-npm test
 npm run build
 ```
 
-La integración continua usa Node.js 22.22.1 y exige el check **ESLint and tests** antes
-de cada merge a `develop` o `main`. Además, Husky, lint-staged y commitlint controlan
-los archivos preparados y los mensajes de commit.
+Las pruebas de pedidos usan MongoMemoryServer y no modifican Atlas. Las pruebas de contrato de autenticación se ejecutan por separado con el backend levantado y una URI configurada:
 
-## Flujo de ramas
+```sh
+npm run test:auth --workspace=backend
+```
 
-- `feature`: integración continua de nuevas funcionalidades.
-- `develop`: versión integrada y validada para la siguiente entrega.
-- `bugfix`: correcciones planificadas que todavía no llegan a producción.
-- `main`: versión estable.
+## Despliegue
 
-El recorrido habitual es `feature` → `develop` → `main`, siempre mediante pull request.
-Los pushes directos, force pushes y eliminaciones están protegidos en las ramas
-principales.
+### Backend en Render
 
-## Sitio publicado
+1. Crear un Web Service desde este repositorio; Render detecta `render.yaml`.
+2. Definir `MONGODB_URI` con la URI de Atlas y `FRONTEND_URL` con la URL final de Netlify.
+3. Conservar el `JWT_SECRET` generado por Render (o definir uno seguro). No copiarlo al frontend.
 
-[muebleria-hermanosjota.netlify.app](https://muebleria-hermanosjota.netlify.app/)
+### Frontend en Netlify
+
+1. Conectar el repositorio. `netlify.toml` instala dependencias, compila con Node 22 y publica `client/dist`.
+2. Definir `VITE_API_URL` como la URL HTTPS del Web Service de Render, sin barra final.
+3. Desplegar nuevamente y agregar la URL de Netlify en `FRONTEND_URL` del backend para CORS.
 
 ## Integrantes
 
