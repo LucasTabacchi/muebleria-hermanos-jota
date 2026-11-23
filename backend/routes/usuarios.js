@@ -10,6 +10,16 @@ function datosInvalidos(res) {
     return res.status(400).json({ error: "Nombre, email y contraseña son obligatorios." });
 }
 
+function passwordSegura(password) {
+    return password.length >= 8 && /[A-Z]/.test(password) && /[^A-Za-z0-9\s]/.test(password);
+}
+
+function passwordInsegura(res) {
+    return res.status(400).json({
+        error: "La contraseña debe tener al menos 8 caracteres, una mayúscula y un carácter especial.",
+    });
+}
+
 function usuarioPublico(usuario) {
     return {
         _id: usuario._id,
@@ -31,6 +41,10 @@ router.post("/registro", async (req, res, next) => {
         !password.trim()
     ) {
         return datosInvalidos(res);
+    }
+
+    if (!passwordSegura(password)) {
+        return passwordInsegura(res);
     }
 
     try {

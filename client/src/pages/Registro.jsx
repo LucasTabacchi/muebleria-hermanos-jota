@@ -60,8 +60,14 @@ export default function Registro() {
                                 type="password"
                                 value={password}
                                 onChange={(event) => setPassword(event.target.value)}
+                                minLength={8}
+                                pattern="(?=.*[A-Z])(?=.*[^A-Za-z0-9\s]).{8,}"
+                                title="Usá al menos 8 caracteres, una mayúscula y un carácter especial."
                                 required
                             />
+                            <small>
+                                Usá al menos 8 caracteres, una mayúscula y un carácter especial.
+                            </small>
                         </div>
                         {error && (
                             <p className="error" role="alert">
