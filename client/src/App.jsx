@@ -2,11 +2,13 @@ import { useEffect, useState } from "react";
 import { Route, Routes } from "react-router-dom";
 import Footer from "./components/Footer";
 import Navbar from "./components/Navbar";
+import ProtectedRoute from "./components/ProtectedRoute";
 import ScrollToTop from "./components/ScrollToTop";
 import CartPage from "./pages/CartPage";
-import CreateProductPage from "./pages/CreateProductPage";
 import ContactPage from "./pages/ContactPage";
+import CreateProductPage from "./pages/CreateProductPage";
 import HomePage from "./pages/HomePage";
+import Login from "./pages/Login";
 import NotFoundPage from "./pages/NotFoundPage";
 import ProductPage from "./pages/ProductPage";
 import ProductsPage from "./pages/ProductsPage";
@@ -30,7 +32,7 @@ export default function App() {
     function agregar(producto) {
         setCart((actual) => [
             ...actual,
-            { id: producto.id, nombre: producto.nombre, precio: producto.precio },
+            { id: producto.id || producto._id, nombre: producto.nombre, precio: producto.precio },
         ]);
     }
 
@@ -47,7 +49,23 @@ export default function App() {
                 <Route path="/productos" element={<ProductsPage />} />
                 <Route path="/productos/:id" element={<ProductPage onAdd={agregar} />} />
                 <Route path="/contacto" element={<ContactPage />} />
-                <Route path="/admin/crear-producto" element={<CreateProductPage />} />
+                <Route path="/login" element={<Login />} />
+                <Route
+                    path="/admin/crear-producto"
+                    element={
+                        <ProtectedRoute soloAdmin>
+                            <CreateProductPage />
+                        </ProtectedRoute>
+                    }
+                />
+                <Route
+                    path="/admin/editar-producto/:id"
+                    element={
+                        <ProtectedRoute soloAdmin>
+                            <CreateProductPage />
+                        </ProtectedRoute>
+                    }
+                />
                 <Route
                     path="/carrito"
                     element={

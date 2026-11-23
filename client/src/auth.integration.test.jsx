@@ -1,0 +1,112 @@
+import { fireEvent, render, screen } from "@testing-library/react";
+import { MemoryRouter } from "react-router-dom";
+import { beforeEach, describe, expect, test, vi } from "vitest";
+import App from "./App";
+import { AuthProvider } from "./context/AuthContext";
+import { eliminarProducto } from "./services/productosApi";
+
+function respuestaJson(body, { ok = true, status = 200 } = {}) {
+    return Promise.resolve({
+        ok,
+        status,
+        json: () => Promise.resolve(body),
+    });
+}
+
+function renderApp(path) {
+    return render(
+        <MemoryRouter initialEntries={[path]}>
+            <AuthProvider>
+                <App />
+            </AuthProvider>
+        </MemoryRouter>
+    );
+}
+
+beforeEach(() => {
+    localStorage.clear();
+    global.fetch = vi.fn();
+});
+
+describe("authentication flow", () => {
+    test("redirects an anonymous user to login and returns to the requested admin page", async () => {
+        global.fetch.mockResolvedValueOnce(
+            respuestaJson({
+                token: "token-admin",
+                usuario: {
+                    _id: "admin-1",
+                    nombre: "Admin Jota",
+                    email: "admin@jota.com",
+                    rol: "admin",
+                },
+            })
+        );
+
+        renderApp("/admin/crear-producto");
+
+        expect(screen.getByRole("heading", { name: "Ingresar" })).toBeInTheDocument();
+        fireEvent.change(screen.getByLabelText("Email"), { target: { value: "admin@jota.com" } });
+        fireEvent.change(screen.getByLabelText("Contraseña"), { target: { value: "admin123" } });
+        fireEvent.click(screen.getByRole("button", { name: "Ingresar" }));
+
+        expect(
+            await screen.findByRole("heading", { name: "Alta de producto" })
+        ).toBeInTheDocument();
+        expect(global.fetch).toHaveBeenCalledWith(
+            "/api/usuarios/login",
+            expect.objectContaining({ method: "POST" })
+        );
+    });
+
+    test("shows the backend credential error and clears the stored session on logout", async () => {
+        global.fetch.mockResolvedValueOnce(
+            respuestaJson({ error: "Credenciales inválidas" }, { ok: false, status: 401 })
+        );
+
+        renderApp("/login");
+        fireEvent.change(screen.getByLabelText("Email"), { target: { value: "cliente@jota.com" } });
+        fireEvent.change(screen.getByLabelText("Contraseña"), { target: { value: "incorrecta" } });
+        fireEvent.click(screen.getByRole("button", { name: "Ingresar" }));
+
+        expect(await screen.findByRole("alert")).toHaveTextContent("Credenciales inválidas");
+
+        localStorage.setItem(
+            "sesion",
+            JSON.stringify({
+                token: "token-cliente",
+                usuario: { nombre: "Cliente Jota", rol: "cliente" },
+            })
+        );
+        renderApp("/");
+        fireEvent.click(screen.getAllByRole("button", { name: "Cerrar sesión" })[0]);
+
+        expect(screen.getAllByRole("link", { name: "Ingresar" }).length).toBeGreaterThan(0);
+        expect(localStorage.getItem("sesion")).toBeNull();
+    });
+
+    test("does not allow a customer to enter the product administration route", () => {
+        localStorage.setItem(
+            "sesion",
+            JSON.stringify({
+                token: "token-cliente",
+                usuario: { nombre: "Cliente Jota", rol: "cliente" },
+            })
+        );
+
+        renderApp("/admin/crear-producto");
+
+        expect(screen.getByRole("alert")).toHaveTextContent(
+            "Necesitás ser administrador para ver esta página."
+        );
+    });
+
+    test("sends the bearer token on delete and accepts an empty 204 response", async () => {
+        global.fetch.mockResolvedValueOnce({ ok: true, status: 204 });
+
+        await expect(eliminarProducto("producto-1", "token-admin")).resolves.toBeNull();
+        expect(global.fetch).toHaveBeenCalledWith("/api/productos/producto-1", {
+            method: "DELETE",
+            headers: { Authorization: "Bearer token-admin" },
+        });
+    });
+});
