@@ -11,6 +11,8 @@ import Login from "./pages/Login";
 import NotFoundPage from "./pages/NotFoundPage";
 import ProductPage from "./pages/ProductPage";
 import ProductsPage from "./pages/ProductsPage";
+import Perfil from "./pages/Perfil";
+import Registro from "./pages/Registro";
 
 export default function App() {
     return (
@@ -23,6 +25,15 @@ export default function App() {
                 <Route path="/productos/:id" element={<ProductPage />} />
                 <Route path="/contacto" element={<ContactPage />} />
                 <Route path="/login" element={<Login />} />
+                <Route path="/registro" element={<Registro />} />
+                <Route
+                    path="/perfil"
+                    element={
+                        <ProtectedRoute>
+                            <Perfil />
+                        </ProtectedRoute>
+                    }
+                />
                 <Route
                     path="/admin/crear-producto"
                     element={

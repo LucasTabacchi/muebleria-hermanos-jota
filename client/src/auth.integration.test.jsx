@@ -1,4 +1,4 @@
-import { fireEvent, render, screen, waitFor } from "@testing-library/react";
+import { act, fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { MemoryRouter } from "react-router-dom";
 import { beforeEach, describe, expect, test, vi } from "vitest";
 import App from "./App";
@@ -12,6 +12,14 @@ function respuestaJson(body, { ok = true, status = 200 } = {}) {
         status,
         json: () => Promise.resolve(body),
     });
+}
+
+function promesaDiferida() {
+    let resolver;
+    const promesa = new Promise((resolve) => {
+        resolver = resolve;
+    });
+    return { promesa, resolver };
 }
 
 function renderApp(path) {
@@ -32,6 +40,117 @@ beforeEach(() => {
 });
 
 describe("authentication flow", () => {
+    test("registers an account and starts its session", async () => {
+        global.fetch
+            .mockResolvedValueOnce(
+                respuestaJson(
+                    {
+                        _id: "cliente-1",
+                        nombre: "Lucía",
+                        email: "lucia@example.com",
+                        rol: "cliente",
+                    },
+                    { status: 201 }
+                )
+            )
+            .mockResolvedValueOnce(
+                respuestaJson({
+                    token: "token-cliente",
+                    usuario: {
+                        _id: "cliente-1",
+                        nombre: "Lucía",
+                        email: "lucia@example.com",
+                        rol: "cliente",
+                    },
+                })
+            );
+
+        renderApp("/registro");
+        fireEvent.change(screen.getByLabelText("Nombre"), { target: { value: "Lucía" } });
+        fireEvent.change(screen.getByLabelText("Email"), {
+            target: { value: "lucia@example.com" },
+        });
+        fireEvent.change(screen.getByLabelText("Contraseña"), { target: { value: "secreto123" } });
+        fireEvent.click(screen.getByRole("button", { name: "Crear cuenta" }));
+
+        expect(await screen.findByText("Hola, Lucía")).toBeInTheDocument();
+        expect(global.fetch).toHaveBeenNthCalledWith(
+            1,
+            "/api/usuarios/registro",
+            expect.objectContaining({ method: "POST" })
+        );
+        expect(global.fetch).toHaveBeenNthCalledWith(
+            2,
+            "/api/usuarios/login",
+            expect.objectContaining({ method: "POST" })
+        );
+    });
+
+    test("loads the protected profile with the bearer token and logs out after a 401", async () => {
+        localStorage.setItem(
+            "sesion",
+            JSON.stringify({
+                token: "token-cliente",
+                usuario: { nombre: "Cliente Jota", email: "cliente@jota.com", rol: "cliente" },
+            })
+        );
+        global.fetch.mockResolvedValueOnce(
+            respuestaJson({ nombre: "Cliente Jota", email: "cliente@jota.com", rol: "cliente" })
+        );
+
+        renderApp("/perfil");
+        expect(await screen.findByRole("heading", { name: "Mi perfil" })).toBeInTheDocument();
+        expect(global.fetch).toHaveBeenCalledWith("/api/usuarios/perfil", {
+            headers: { Authorization: "Bearer token-cliente" },
+        });
+    });
+
+    test("clears the session and returns to login when profile responds 401", async () => {
+        localStorage.setItem(
+            "sesion",
+            JSON.stringify({
+                token: "token-vencido",
+                usuario: { nombre: "Cliente Jota", email: "cliente@jota.com", rol: "cliente" },
+            })
+        );
+        global.fetch.mockResolvedValueOnce(
+            respuestaJson({ error: "No autorizado." }, { ok: false, status: 401 })
+        );
+
+        renderApp("/perfil");
+
+        expect(await screen.findByRole("heading", { name: "Ingresar" })).toBeInTheDocument();
+        expect(localStorage.getItem("sesion")).toBeNull();
+    });
+
+    test("ignores a stale profile 401 after leaving the page", async () => {
+        localStorage.setItem(
+            "sesion",
+            JSON.stringify({
+                token: "token-vencido",
+                usuario: { nombre: "Cliente Jota", email: "cliente@jota.com", rol: "cliente" },
+            })
+        );
+        const respuestaPendiente = promesaDiferida();
+        global.fetch.mockReturnValueOnce(respuestaPendiente.promesa);
+
+        const { unmount } = renderApp("/perfil");
+        unmount();
+
+        const nuevaSesion = {
+            token: "token-nuevo",
+            usuario: { nombre: "Nueva sesión", email: "nueva@jota.com", rol: "cliente" },
+        };
+        localStorage.setItem("sesion", JSON.stringify(nuevaSesion));
+        await act(async () => {
+            respuestaPendiente.resolver(
+                await respuestaJson({ error: "No autorizado." }, { ok: false, status: 401 })
+            );
+        });
+
+        expect(JSON.parse(localStorage.getItem("sesion"))).toEqual(nuevaSesion);
+    });
+
     test("redirects an anonymous user to login and returns to the requested admin page", async () => {
         global.fetch.mockResolvedValueOnce(
             respuestaJson({
