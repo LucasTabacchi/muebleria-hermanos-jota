@@ -40,7 +40,13 @@ export default function CreateProductPage() {
     const [requestError, setRequestError] = useState("");
 
     useEffect(() => {
-        if (!editando) return;
+        if (!editando) {
+            setValues(INITIAL_VALUES);
+            setErrors({});
+            setRequestError("");
+            setState("idle");
+            return undefined;
+        }
 
         let activo = true;
         obtenerProducto(id)

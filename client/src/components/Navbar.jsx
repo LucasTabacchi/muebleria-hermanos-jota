@@ -1,12 +1,14 @@
 import { NavLink } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
+import { useCart } from "../context/CartContext";
 
 function claseActiva({ isActive }) {
     return isActive ? "activo" : undefined;
 }
 
-export default function Navbar({ cartCount }) {
+export default function Navbar() {
     const { usuario, logout } = useAuth();
+    const { cantidadTotal } = useCart();
 
     return (
         <>
@@ -61,7 +63,7 @@ export default function Navbar({ cartCount }) {
                         >
                             Carrito
                             <span className="contador-carrito" aria-label="Productos en el carrito">
-                                {cartCount}
+                                {cantidadTotal}
                             </span>
                         </NavLink>
                     </nav>

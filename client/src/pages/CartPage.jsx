@@ -1,8 +1,9 @@
 import { Link } from "react-router-dom";
+import { useCart } from "../context/CartContext";
 import { formatearPrecio } from "../utils/formato";
 
-export default function CartPage({ cart, onRemove, onClear }) {
-    const total = cart.reduce((suma, producto) => suma + producto.precio, 0);
+export default function CartPage() {
+    const { carrito, eliminar, vaciar, total } = useCart();
 
     return (
         <main id="contenido">
@@ -18,7 +19,7 @@ export default function CartPage({ cart, onRemove, onClear }) {
             <section className="seccion seccion-carrito">
                 <div className="contenedor carrito-layout">
                     <div id="carrito-productos" aria-live="polite">
-                        {cart.length === 0 ? (
+                        {carrito.length === 0 ? (
                             <div className="carrito-vacio">
                                 <h2>Tu carrito está vacío</h2>
                                 <p>Todavía no agregaste ningún producto.</p>
@@ -27,7 +28,7 @@ export default function CartPage({ cart, onRemove, onClear }) {
                                 </Link>
                             </div>
                         ) : (
-                            cart.map((producto, indice) => (
+                            carrito.map((producto, indice) => (
                                 <article
                                     className="producto-carrito"
                                     key={`${producto.id}-${indice}`}
@@ -41,7 +42,7 @@ export default function CartPage({ cart, onRemove, onClear }) {
                                         className="eliminar-producto"
                                         type="button"
                                         aria-label={`Eliminar ${producto.nombre} del carrito`}
-                                        onClick={() => onRemove(indice)}
+                                        onClick={() => eliminar(indice)}
                                     >
                                         Eliminar
                                     </button>
@@ -60,7 +61,7 @@ export default function CartPage({ cart, onRemove, onClear }) {
                         <Link to="/contacto" className="boton">
                             Consultar disponibilidad
                         </Link>
-                        <button className="boton boton-terciario" type="button" onClick={onClear}>
+                        <button className="boton boton-terciario" type="button" onClick={vaciar}>
                             Vaciar carrito
                         </button>
                     </aside>

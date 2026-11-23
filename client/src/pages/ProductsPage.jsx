@@ -1,7 +1,9 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
-import ProductList from "../components/ProductList";
 import ProductFilters from "../components/ProductFilters";
+import ProductList from "../components/ProductList";
+import { useCart } from "../context/CartContext";
 import { obtenerProductos } from "../services/productosApi";
+import { categoriaTexto } from "../utils/formato";
 
 function coincideMaterial(producto, materialFiltro) {
     if (!materialFiltro) return true;
@@ -27,6 +29,7 @@ function coincideMaterial(producto, materialFiltro) {
 }
 
 export default function ProductsPage() {
+    const { agregar } = useCart();
     const [estado, setEstado] = useState({ tipo: "cargando", productos: [] });
     const [busqueda, setBusqueda] = useState("");
     const [categoria, setCategoria] = useState("todas");
@@ -46,38 +49,36 @@ export default function ProductsPage() {
         cargar();
     }, [cargar]);
 
-    const categoriasDisponibles = useMemo(() => {
-        const setCategorias = new Set(
-            estado.productos.map((producto) => producto.categoria).filter(Boolean)
-        );
-        return Array.from(setCategorias).sort();
-    }, [estado.productos]);
+    const categoriasDisponibles = useMemo(
+        () =>
+            Array.from(
+                new Set(
+                    estado.productos
+                        .map((producto) => categoriaTexto(producto.categoria))
+                        .filter(Boolean)
+                )
+            ).sort(),
+        [estado.productos]
+    );
 
     const filtrados = useMemo(() => {
         const texto = busqueda.trim().toLowerCase();
-
         let resultado = estado.productos.filter((producto) => {
-            const coincideTexto =
-                !texto ||
-                producto.nombre.toLowerCase().includes(texto) ||
-                producto.categoria.toLowerCase().includes(texto) ||
-                (producto.materiales && producto.materiales.toLowerCase().includes(texto)) ||
-                (producto.descripcion && producto.descripcion.toLowerCase().includes(texto));
-
-            const coincideCat =
-                !categoria || categoria === "todas" || producto.categoria === categoria;
-
-            const coincideMat = coincideMaterial(producto, material);
-
-            return coincideTexto && coincideCat && coincideMat;
+            const categoriaProducto = categoriaTexto(producto.categoria);
+            return (
+                (!texto ||
+                    producto.nombre.toLowerCase().includes(texto) ||
+                    categoriaProducto.toLowerCase().includes(texto) ||
+                    producto.materiales?.toLowerCase().includes(texto) ||
+                    producto.descripcion?.toLowerCase().includes(texto)) &&
+                (!categoria || categoria === "todas" || categoriaProducto === categoria) &&
+                coincideMaterial(producto, material)
+            );
         });
-
-        if (orden === "precio-menor") {
+        if (orden === "precio-menor")
             resultado = [...resultado].sort((a, b) => a.precio - b.precio);
-        } else if (orden === "precio-mayor") {
+        if (orden === "precio-mayor")
             resultado = [...resultado].sort((a, b) => b.precio - a.precio);
-        }
-
         return resultado;
     }, [busqueda, categoria, material, orden, estado.productos]);
 
@@ -86,14 +87,12 @@ export default function ProductsPage() {
         categoria !== "todas" ||
         material !== "" ||
         orden !== "destacados";
-
     const limpiarFiltros = () => {
         setBusqueda("");
         setCategoria("todas");
         setMaterial("");
         setOrden("destacados");
     };
-
     const mensajeCantidad = hayFiltrosActivos
         ? `${filtrados.length} ${filtrados.length === 1 ? "resultado" : "resultados"}`
         : `${estado.productos.length} productos disponibles`;
@@ -144,7 +143,7 @@ export default function ProductsPage() {
                     {estado.tipo === "exito" && (
                         <div id="catalogo-productos">
                             {filtrados.length > 0 ? (
-                                <ProductList productos={filtrados} />
+                                <ProductList productos={filtrados} onAdd={agregar} />
                             ) : (
                                 <div className="catalogo-vacio">
                                     <p>

@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import ProductDetail from "../components/ProductDetail";
 
-export default function ProductPage({ onAdd }) {
+export default function ProductPage() {
     return (
         <main id="contenido">
             <section className="seccion seccion-detalle">
@@ -9,7 +9,7 @@ export default function ProductPage({ onAdd }) {
                     <Link to="/productos" className="volver">
                         <span aria-hidden="true">←</span> Volver a la colección
                     </Link>
-                    <ProductDetail onAdd={onAdd} />
+                    <ProductDetail />
                 </div>
             </section>
             <section className="confianza-producto" aria-label="Beneficios de compra">
