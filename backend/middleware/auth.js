@@ -20,8 +20,12 @@ function verificarToken(req, res, next) {
     try {
         req.usuario = jwt.verify(token, process.env.JWT_SECRET);
         return next();
-    } catch {
-        return respuestaNoAutorizado(res);
+    } catch (error) {
+        if (error.name === "TokenExpiredError") {
+            return res.status(401).json({ error: "Token expirado." });
+        }
+
+        return res.status(401).json({ error: "Token inválido." });
     }
 }
 
