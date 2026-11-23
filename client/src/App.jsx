@@ -8,6 +8,7 @@ import ContactPage from "./pages/ContactPage";
 import CreateProductPage from "./pages/CreateProductPage";
 import HomePage from "./pages/HomePage";
 import Login from "./pages/Login";
+import MisPedidos from "./pages/MisPedidos";
 import NotFoundPage from "./pages/NotFoundPage";
 import ProductPage from "./pages/ProductPage";
 import ProductsPage from "./pages/ProductsPage";
@@ -31,6 +32,14 @@ export default function App() {
                     element={
                         <ProtectedRoute>
                             <Perfil />
+                        </ProtectedRoute>
+                    }
+                />
+                <Route
+                    path="/mis-pedidos"
+                    element={
+                        <ProtectedRoute>
+                            <MisPedidos />
                         </ProtectedRoute>
                     }
                 />

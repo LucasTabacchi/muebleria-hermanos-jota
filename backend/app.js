@@ -6,6 +6,7 @@ const requestLogger = require("./middleware/logger");
 const notFoundHandler = require("./middleware/notFound");
 const categoriasRouter = require("./routes/categorias");
 const productosRouter = require("./routes/productos");
+const pedidosRouter = require("./routes/pedidos");
 const usuariosRouter = require("./routes/usuarios");
 
 const allowedOrigins = new Set(
@@ -35,6 +36,7 @@ app.use(express.json());
 
 app.use("/api/categorias", categoriasRouter);
 app.use("/api/productos", productosRouter);
+app.use("/api/pedidos", pedidosRouter);
 app.use("/api/usuarios", usuariosRouter);
 
 app.use(notFoundHandler);

@@ -222,6 +222,101 @@ describe("authentication flow", () => {
         );
     });
 
+    test("redirects an anonymous customer away from order history", () => {
+        renderApp("/mis-pedidos");
+
+        expect(screen.getByRole("heading", { name: "Ingresar" })).toBeInTheDocument();
+    });
+
+    test("creates an authenticated order and clears the cart only after success", async () => {
+        localStorage.setItem(
+            "sesion",
+            JSON.stringify({
+                token: "token-cliente",
+                usuario: { nombre: "Cliente Jota", email: "cliente@jota.com", rol: "cliente" },
+            })
+        );
+        localStorage.setItem(
+            "carrito",
+            JSON.stringify([{ id: "producto-1", nombre: "Mesa", precio: 300000 }])
+        );
+        global.fetch.mockResolvedValueOnce(
+            respuestaJson({ _id: "pedido-1", total: 300000, items: [] }, { status: 201 })
+        );
+
+        renderApp("/carrito");
+        fireEvent.click(screen.getByRole("button", { name: "Finalizar compra" }));
+
+        expect(await screen.findByRole("status")).toHaveTextContent(
+            "Tu pedido fue registrado correctamente."
+        );
+        expect(global.fetch).toHaveBeenCalledWith("/api/pedidos", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: "Bearer token-cliente",
+            },
+            body: JSON.stringify({ items: [{ productoId: "producto-1" }] }),
+        });
+        expect(screen.getByRole("heading", { name: "Tu carrito está vacío" })).toBeInTheDocument();
+    });
+
+    test("keeps the cart when order creation fails", async () => {
+        localStorage.setItem(
+            "sesion",
+            JSON.stringify({
+                token: "token-cliente",
+                usuario: { nombre: "Cliente Jota", email: "cliente@jota.com", rol: "cliente" },
+            })
+        );
+        localStorage.setItem(
+            "carrito",
+            JSON.stringify([{ id: "producto-1", nombre: "Mesa", precio: 300000 }])
+        );
+        global.fetch.mockResolvedValueOnce(
+            respuestaJson({ error: "No se pudo registrar el pedido." }, { ok: false, status: 400 })
+        );
+
+        renderApp("/carrito");
+        fireEvent.click(screen.getByRole("button", { name: "Finalizar compra" }));
+
+        expect(await screen.findByRole("alert")).toHaveTextContent(
+            "No se pudo registrar el pedido."
+        );
+        expect(screen.getByRole("heading", { name: "Mesa" })).toBeInTheDocument();
+    });
+
+    test("loads the authenticated user's order history", async () => {
+        localStorage.setItem(
+            "sesion",
+            JSON.stringify({
+                token: "token-cliente",
+                usuario: { nombre: "Cliente Jota", email: "cliente@jota.com", rol: "cliente" },
+            })
+        );
+        global.fetch.mockResolvedValueOnce(
+            respuestaJson([
+                {
+                    _id: "pedido-1",
+                    createdAt: "2026-11-23T00:00:00.000Z",
+                    total: 300000,
+                    items: [{ nombre: "Mesa" }],
+                },
+            ])
+        );
+
+        renderApp("/mis-pedidos");
+
+        expect(await screen.findByRole("heading", { name: "Mis pedidos" })).toBeInTheDocument();
+        expect(screen.getByText("Mesa")).toBeInTheDocument();
+        expect(global.fetch).toHaveBeenCalledWith("/api/pedidos/mis-pedidos", {
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: "Bearer token-cliente",
+            },
+        });
+    });
+
     test("resets the form when an administrator returns from edit to create", async () => {
         localStorage.setItem(
             "sesion",
