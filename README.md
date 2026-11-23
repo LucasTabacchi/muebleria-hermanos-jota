@@ -2,10 +2,19 @@
 
 E-commerce MERN de mobiliario: catálogo, autenticación con JWT, carrito persistente y pedidos asociados al cliente autenticado.
 
-## Aplicación pública
+## Enlaces Públicos
 
-- Frontend: [muebleria-hermanosjota.netlify.app](https://muebleria-hermanosjota.netlify.app/)
-- Backend: se publica en Render desde `render.yaml`. Antes de publicar, copiá la URL pública de Render en `VITE_API_URL` de Netlify y la URL pública de Netlify en `FRONTEND_URL` de Render.
+- Frontend (Netlify): [muebleria-hermanosjota.netlify.app](https://muebleria-hermanosjota.netlify.app/)
+- Backend (Render): [muebleria-hermanos-jota-ifva.onrender.com](https://muebleria-hermanos-jota-ifva.onrender.com/)
+
+## Tecnologías Utilizadas
+
+- **Frontend:** React 19, Vite, React Router y Context API.
+- **Backend:** Node.js, Express 5 y Mongoose.
+- **Base de datos:** MongoDB Atlas.
+- **Autenticación:** bcrypt para hashing de contraseñas y JSON Web Tokens (JWT).
+- **Pruebas y calidad:** Node test, Supertest, MongoMemoryServer, Vitest, Testing Library, ESLint y Prettier.
+- **Despliegue:** Netlify para el frontend y Render para la API.
 
 ## Arquitectura
 
@@ -25,14 +34,33 @@ El cliente almacena la sesión y el carrito en `localStorage`. Las llamadas de e
 - Catálogo, detalle, filtros, carrito global con React Context API y administración exclusiva para el rol `admin`.
 - Finalización de compra: `POST /api/pedidos` asociado al usuario autenticado y vaciado del carrito solo ante éxito.
 
-## Desarrollo local
+## Instrucciones para la Instalación Local
 
 Requiere Node.js 22.22.1 o posterior y una instancia de MongoDB.
 
+1. Cloná el repositorio y entrá a la carpeta del proyecto.
+2. Instalá las dependencias de ambas aplicaciones:
+
 ```sh
+cd backend
 npm install
+cd ../client
+npm install
+cd ..
+```
+
+3. Creá los archivos de variables a partir de los ejemplos:
+
+```sh
 cp backend/.env.example backend/.env
 cp client/.env.example client/.env
+```
+
+En Windows PowerShell podés usar `Copy-Item backend/.env.example backend/.env` y `Copy-Item client/.env.example client/.env`.
+
+4. Iniciá los dos servidores desde la raíz:
+
+```sh
 npm run dev
 ```
 
@@ -91,7 +119,7 @@ npm run test:auth --workspace=backend
 2. Definir `VITE_API_URL` como la URL HTTPS del Web Service de Render, sin barra final.
 3. Desplegar nuevamente y agregar la URL de Netlify en `FRONTEND_URL` del backend para CORS.
 
-## Integrantes
+## Integrantes del Equipo
 
 - Morales Carlos Ariel
 - Tabacchi Lucas
