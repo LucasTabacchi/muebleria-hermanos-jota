@@ -42,6 +42,9 @@ export default function Navbar() {
                         {usuario ? (
                             <>
                                 <span>Hola, {usuario.nombre}</span>
+                                <NavLink to="/perfil" className={claseActiva}>
+                                    Mi perfil
+                                </NavLink>
                                 <button
                                     type="button"
                                     className="boton boton-terciario"
@@ -51,9 +54,14 @@ export default function Navbar() {
                                 </button>
                             </>
                         ) : (
-                            <NavLink to="/login" className={claseActiva}>
-                                Ingresar
-                            </NavLink>
+                            <>
+                                <NavLink to="/login" className={claseActiva}>
+                                    Ingresar
+                                </NavLink>
+                                <NavLink to="/registro" className={claseActiva}>
+                                    Crear cuenta
+                                </NavLink>
+                            </>
                         )}
                         <NavLink
                             to="/carrito"

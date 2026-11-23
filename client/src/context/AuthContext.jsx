@@ -1,4 +1,4 @@
-import { createContext, useContext, useState } from "react";
+import { createContext, useCallback, useContext, useState } from "react";
 
 const AuthContext = createContext(null);
 
@@ -14,7 +14,7 @@ function sesionInicial() {
 export function AuthProvider({ children }) {
     const [sesion, setSesion] = useState(sesionInicial);
 
-    async function login(email, password) {
+    const login = useCallback(async (email, password) => {
         const respuesta = await fetch("/api/usuarios/login", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
@@ -28,12 +28,30 @@ export function AuthProvider({ children }) {
 
         localStorage.setItem("sesion", JSON.stringify(datos));
         setSesion(datos);
-    }
+    }, []);
 
-    function logout() {
+    const registrar = useCallback(
+        async (nombre, email, password) => {
+            const respuesta = await fetch("/api/usuarios/registro", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ nombre, email, password }),
+            });
+            const datos = await respuesta.json().catch(() => null);
+
+            if (!respuesta.ok) {
+                throw new Error(datos?.error || "No se pudo crear la cuenta.");
+            }
+
+            await login(email, password);
+        },
+        [login]
+    );
+
+    const logout = useCallback(() => {
         localStorage.removeItem("sesion");
         setSesion(null);
-    }
+    }, []);
 
     return (
         <AuthContext.Provider
@@ -41,6 +59,7 @@ export function AuthProvider({ children }) {
                 usuario: sesion?.usuario ?? null,
                 token: sesion?.token ?? null,
                 login,
+                registrar,
                 logout,
             }}
         >

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 
 export default function Login() {
@@ -62,6 +62,9 @@ export default function Login() {
                         <button className="boton" type="submit" disabled={enviando}>
                             {enviando ? "Ingresando..." : "Ingresar"}
                         </button>
+                        <p>
+                            ¿Todavía no tenés cuenta? <Link to="/registro">Crear cuenta</Link>
+                        </p>
                     </form>
                 </div>
             </section>
