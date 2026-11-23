@@ -3,6 +3,7 @@ import { fireEvent, render, screen, waitFor, within } from "@testing-library/rea
 import { MemoryRouter } from "react-router-dom";
 import App from "./App";
 import { AuthProvider } from "./context/AuthContext";
+import { CartProvider } from "./context/CartContext";
 
 const productos = [
     {
@@ -42,7 +43,9 @@ function renderApp(path = "/") {
             future={{ v7_startTransition: true, v7_relativeSplatPath: true }}
         >
             <AuthProvider>
-                <App />
+                <CartProvider>
+                    <App />
+                </CartProvider>
             </AuthProvider>
         </MemoryRouter>
     );

@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
+import { useCart } from "../context/CartContext";
 import { eliminarProducto, obtenerProducto } from "../services/productosApi";
 import { categoriaTexto, formatearPrecio, rutaImagen } from "../utils/formato";
 
@@ -19,10 +20,11 @@ const CAMPOS_BASE = new Set([
     "destacado",
 ]);
 
-export default function ProductDetail({ onAdd }) {
+export default function ProductDetail() {
     const { id } = useParams();
     const navigate = useNavigate();
     const { usuario, token } = useAuth();
+    const { agregar } = useCart();
     const [estado, setEstado] = useState({ tipo: "cargando", producto: null });
     const [mensaje, setMensaje] = useState("");
     const [eliminando, setEliminando] = useState(false);
@@ -73,7 +75,7 @@ export default function ProductDetail({ onAdd }) {
     const esAdmin = usuario?.rol === "admin";
 
     function agregarAlCarrito() {
-        onAdd(producto);
+        agregar(producto);
         setMensaje(`${producto.nombre} fue añadido al carrito.`);
     }
 
