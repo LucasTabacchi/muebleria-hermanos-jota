@@ -1,10 +1,13 @@
 import { NavLink } from "react-router-dom";
+import { useAuth } from "../context/AuthContext";
 
 function claseActiva({ isActive }) {
     return isActive ? "activo" : undefined;
 }
 
 export default function Navbar({ cartCount }) {
+    const { usuario, logout } = useAuth();
+
     return (
         <>
             <a className="saltar-contenido" href="#contenido">
@@ -19,7 +22,6 @@ export default function Navbar({ cartCount }) {
                             <strong>Jota</strong>
                         </span>
                     </NavLink>
-
                     <nav className="nav" aria-label="Navegación principal">
                         <NavLink to="/" end className={claseActiva}>
                             Inicio
@@ -30,6 +32,27 @@ export default function Navbar({ cartCount }) {
                         <NavLink to="/contacto" className={claseActiva}>
                             Contacto
                         </NavLink>
+                        {usuario?.rol === "admin" && (
+                            <NavLink to="/admin/crear-producto" className={claseActiva}>
+                                Nuevo producto
+                            </NavLink>
+                        )}
+                        {usuario ? (
+                            <>
+                                <span>Hola, {usuario.nombre}</span>
+                                <button
+                                    type="button"
+                                    className="boton boton-terciario"
+                                    onClick={logout}
+                                >
+                                    Cerrar sesión
+                                </button>
+                            </>
+                        ) : (
+                            <NavLink to="/login" className={claseActiva}>
+                                Ingresar
+                            </NavLink>
+                        )}
                         <NavLink
                             to="/carrito"
                             className={({ isActive }) =>

@@ -10,3 +10,8 @@ export function rutaImagen(imagen) {
     if (!imagen) return "";
     return imagen.startsWith("/") ? imagen : `/${imagen}`;
 }
+
+export function categoriaTexto(categoria) {
+    if (!categoria) return "";
+    return typeof categoria === "string" ? categoria : categoria.nombre || "";
+}

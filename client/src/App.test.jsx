@@ -2,6 +2,7 @@ import { vi } from "vitest";
 import { fireEvent, render, screen, waitFor, within } from "@testing-library/react";
 import { MemoryRouter } from "react-router-dom";
 import App from "./App";
+import { AuthProvider } from "./context/AuthContext";
 
 const productos = [
     {
@@ -40,7 +41,9 @@ function renderApp(path = "/") {
             initialEntries={[path]}
             future={{ v7_startTransition: true, v7_relativeSplatPath: true }}
         >
-            <App />
+            <AuthProvider>
+                <App />
+            </AuthProvider>
         </MemoryRouter>
     );
 }
@@ -262,6 +265,10 @@ test("el botón Planificar mi visita redirige directamente al formulario de cont
 });
 
 test("crea un producto desde la ruta de alta y navega a su detalle", async () => {
+    localStorage.setItem(
+        "sesion",
+        JSON.stringify({ token: "token-admin", usuario: { nombre: "Admin Jota", rol: "admin" } })
+    );
     const productoCreado = {
         id: "nuevo-1",
         nombre: "Cómoda",
@@ -282,7 +289,10 @@ test("crea un producto desde la ruta de alta y navega a su detalle", async () =>
     await waitFor(() =>
         expect(global.fetch).toHaveBeenCalledWith(
             "/api/productos",
-            expect.objectContaining({ method: "POST" })
+            expect.objectContaining({
+                method: "POST",
+                headers: expect.objectContaining({ Authorization: "Bearer token-admin" }),
+            })
         )
     );
     expect(await screen.findByRole("heading", { name: "Cómoda" })).toBeInTheDocument();
