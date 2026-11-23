@@ -5,7 +5,7 @@ E-commerce MERN de mobiliario: catálogo, autenticación con JWT, carrito persis
 ## Enlaces Públicos
 
 - Frontend (Netlify): [muebleria-hermanosjota.netlify.app](https://muebleria-hermanosjota.netlify.app/)
-- Backend (Render): [muebleria-hermanos-jota-ifva.onrender.com](https://muebleria-hermanos-jota-ifva.onrender.com/)
+- Backend API (Render): [catálogo público](https://muebleria-hermanos-jota-ifva.onrender.com/api/productos)
 
 ## Tecnologías Utilizadas
 
