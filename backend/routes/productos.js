@@ -2,6 +2,7 @@ const express = require("express");
 const mongoose = require("mongoose");
 const Categoria = require("../models/Categoria");
 const Product = require("../models/Product");
+const { soloAdmin, verificarToken } = require("../middleware/auth");
 
 const router = express.Router();
 
@@ -72,7 +73,7 @@ router.get("/:id", async (req, res, next) => {
     }
 });
 
-router.post("/", async (req, res, next) => {
+router.post("/", verificarToken, soloAdmin, async (req, res, next) => {
     try {
         await ensureValidCategoria(req.body.categoria);
         const producto = await Product.create(req.body);
@@ -82,7 +83,7 @@ router.post("/", async (req, res, next) => {
     }
 });
 
-router.put("/:id", async (req, res, next) => {
+router.put("/:id", verificarToken, soloAdmin, async (req, res, next) => {
     try {
         ensureValidObjectId(req.params.id);
         await ensureValidCategoria(req.body.categoria);
@@ -99,7 +100,7 @@ router.put("/:id", async (req, res, next) => {
     }
 });
 
-router.delete("/:id", async (req, res, next) => {
+router.delete("/:id", verificarToken, soloAdmin, async (req, res, next) => {
     try {
         ensureValidObjectId(req.params.id);
         const producto = await Product.findByIdAndDelete(req.params.id);

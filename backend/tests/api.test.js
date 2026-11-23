@@ -1,14 +1,19 @@
 const assert = require("node:assert/strict");
 const { after, afterEach, before, beforeEach, describe, test } = require("node:test");
+const jwt = require("jsonwebtoken");
 const { MongoMemoryServer } = require("mongodb-memory-server");
 const request = require("supertest");
 const { connectDatabase, disconnectDatabase } = require("../config/database");
 const Categoria = require("../models/Categoria");
 const Product = require("../models/Product");
+const Usuario = require("../models/Usuario");
 const app = require("../app");
+
+process.env.JWT_SECRET = "test-auth-secret";
 
 let mongoServer;
 let categoriaId;
+let adminToken;
 const productData = {
     nombre: "Mesa Andina",
     descripcion: "Mesa de madera maciza.",
@@ -23,7 +28,17 @@ before(async () => {
 });
 beforeEach(async () => {
     const categoria = await Categoria.create({ nombre: "Mesas" });
+    const admin = await Usuario.create({
+        nombre: "Administrador de prueba",
+        email: "admin@test.local",
+        password: "hash-de-prueba",
+        rol: "admin",
+    });
+
     categoriaId = String(categoria._id);
+    adminToken = jwt.sign({ id: admin._id, rol: admin.rol }, process.env.JWT_SECRET, {
+        expiresIn: "1h",
+    });
 });
 
 after(async () => {
@@ -33,10 +48,15 @@ after(async () => {
 afterEach(async () => {
     await Product.deleteMany({});
     await Categoria.deleteMany({});
+    await Usuario.deleteMany({});
 });
 
 function productWithCategoria() {
     return { ...productData, categoria: categoriaId };
+}
+
+function comoAdmin(solicitud) {
+    return solicitud.set("Authorization", `Bearer ${adminToken}`);
 }
 
 describe("Products API", () => {
@@ -58,8 +78,7 @@ describe("Products API", () => {
     });
 
     test("POST /api/productos creates a product with status 201", async () => {
-        const response = await request(app)
-            .post("/api/productos")
+        const response = await comoAdmin(request(app).post("/api/productos"))
             .send(productWithCategoria())
             .expect(201);
         assert.equal(response.body.nombre, productData.nombre);
@@ -69,8 +88,7 @@ describe("Products API", () => {
 
     test("PUT /api/productos/:id validates, updates and returns the new product", async () => {
         const created = await Product.create(productWithCategoria());
-        const response = await request(app)
-            .put(`/api/productos/${created.id}`)
+        const response = await comoAdmin(request(app).put(`/api/productos/${created.id}`))
             .send({ precio: 275000, stock: 7 })
             .expect(200);
         assert.equal(response.body.precio, 275000);
@@ -80,14 +98,15 @@ describe("Products API", () => {
 
     test("DELETE /api/productos/:id removes a product with status 204", async () => {
         const created = await Product.create(productWithCategoria());
-        await request(app).delete(`/api/productos/${created.id}`).expect(204);
+        await comoAdmin(request(app).delete(`/api/productos/${created.id}`)).expect(204);
         assert.equal(await Product.countDocuments(), 0);
     });
 
     for (const method of ["get", "put", "delete"]) {
         test(`${method.toUpperCase()} rejects an invalid Mongo ObjectId`, async () => {
             const api = request(app);
-            const response = await api[method]("/api/productos/no-es-un-id")
+            const solicitud = api[method]("/api/productos/no-es-un-id");
+            const response = await (method === "get" ? solicitud : comoAdmin(solicitud))
                 .send(productWithCategoria())
                 .expect(400);
             assert.deepEqual(response.body, { error: "El ID del producto no es válido." });
@@ -97,7 +116,8 @@ describe("Products API", () => {
     for (const method of ["get", "put", "delete"]) {
         test(`${method.toUpperCase()} returns 404 for a valid but missing product id`, async () => {
             const api = request(app);
-            const response = await api[method]("/api/productos/507f1f77bcf86cd799439011")
+            const solicitud = api[method]("/api/productos/507f1f77bcf86cd799439011");
+            const response = await (method === "get" ? solicitud : comoAdmin(solicitud))
                 .send(productWithCategoria())
                 .expect(404);
             assert.deepEqual(response.body, { error: "Producto no encontrado." });
@@ -105,8 +125,7 @@ describe("Products API", () => {
     }
 
     test("POST /api/productos accepts the required course payload without imagenUrl", async () => {
-        const response = await request(app)
-            .post("/api/productos")
+        const response = await comoAdmin(request(app).post("/api/productos"))
             .send({ nombre: "Cómoda", precio: 300000 })
             .expect(201);
 
@@ -115,8 +134,7 @@ describe("Products API", () => {
         assert.equal(response.body.imagenUrl, undefined);
     });
     test("POST returns a safe 400 for Mongoose validation errors", async () => {
-        const response = await request(app)
-            .post("/api/productos")
+        const response = await comoAdmin(request(app).post("/api/productos"))
             .send({ nombre: "Sin precio" })
             .expect(400);
         assert.deepEqual(response.body, { error: "Los datos del producto no son válidos." });
@@ -124,8 +142,7 @@ describe("Products API", () => {
 
     test("PUT returns a safe 400 when Mongoose validation fails", async () => {
         const created = await Product.create(productWithCategoria());
-        const response = await request(app)
-            .put(`/api/productos/${created.id}`)
+        const response = await comoAdmin(request(app).put(`/api/productos/${created.id}`))
             .send({ precio: -1 })
             .expect(400);
         assert.deepEqual(response.body, { error: "Los datos del producto no son válidos." });
