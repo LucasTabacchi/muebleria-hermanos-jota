@@ -370,6 +370,8 @@ describe("authentication flow", () => {
         await screen.findByRole("heading", { name: "Mesa" });
         fireEvent.click(screen.getByRole("button", { name: "Añadir al carrito" }));
 
+        expect(screen.getByRole("status")).toHaveTextContent("Agregado al carrito");
+
         await waitFor(() => {
             expect(screen.getByLabelText("Productos en el carrito")).toHaveTextContent("1");
         });
