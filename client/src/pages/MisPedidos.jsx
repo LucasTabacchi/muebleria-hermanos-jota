@@ -68,7 +68,7 @@ export default function MisPedidos() {
                             {estado.pedidos.map((pedido) => (
                                 <article className="producto-carrito" key={pedido._id || pedido.id}>
                                     <div>
-                                        <h2>Pedido #{String(pedido._id || pedido.id).slice(-6)}</h2>
+                                        <h2>Pedido #{String(pedido._id || pedido.id)}</h2>
                                         <p>
                                             {new Date(pedido.createdAt).toLocaleDateString("es-AR")}
                                         </p>

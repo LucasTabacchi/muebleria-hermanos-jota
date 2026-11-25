@@ -312,6 +312,7 @@ describe("authentication flow", () => {
 
         expect(await screen.findByRole("heading", { name: "Mis pedidos" })).toBeInTheDocument();
         expect(screen.getByText("Mesa")).toBeInTheDocument();
+        expect(screen.getByRole("heading", { name: "Pedido #pedido-1" })).toBeInTheDocument();
         expect(global.fetch).toHaveBeenCalledWith(`${API_URL}/api/pedidos/mis-pedidos`, {
             headers: {
                 "Content-Type": "application/json",
