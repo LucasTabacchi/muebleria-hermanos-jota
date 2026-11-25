@@ -224,7 +224,8 @@ p {
     padding-bottom: 2px;
 }
 
-.nav a {
+.nav a,
+.nav-cerrar-sesion {
     position: relative;
     flex: 0 0 auto;
     padding: 8px 14px;
@@ -237,7 +238,26 @@ p {
     transition: color var(--transicion), background-color var(--transicion), transform var(--transicion);
 }
 
-.nav a:hover {
+.nav-cerrar-sesion {
+    border: 0;
+    background: transparent;
+    font-family: inherit;
+    cursor: pointer;
+}
+
+.nav-saludo {
+    max-width: min(100%, 220px);
+    overflow: hidden;
+    padding: 8px 9px;
+    color: var(--tinta-suave);
+    font-size: 0.78rem;
+    font-weight: 600;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.nav a:hover,
+.nav-cerrar-sesion:hover {
     color: var(--siena);
     background-color: rgba(160, 82, 45, 0.06);
 }
@@ -1677,10 +1697,11 @@ p {
     }
 
     .nav {
-        gap: 20px;
+        gap: 6px;
     }
 
-    .nav a {
+    .nav a,
+    .nav-cerrar-sesion {
         padding-inline: 9px;
         font-size: 0.74rem;
     }
