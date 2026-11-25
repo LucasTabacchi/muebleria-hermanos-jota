@@ -1462,6 +1462,12 @@ p {
     font-size: 1.25rem;
 }
 
+.lista-pedidos {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
 .pedido-resumen {
     align-items: flex-start;
     flex-wrap: wrap;
