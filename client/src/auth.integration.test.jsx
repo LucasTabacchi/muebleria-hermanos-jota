@@ -6,6 +6,8 @@ import { AuthProvider } from "./context/AuthContext";
 import { CartProvider } from "./context/CartContext";
 import { eliminarProducto } from "./services/productosApi";
 
+const API_URL = (import.meta.env.VITE_API_URL || "").replace(/\/$/, "");
+
 function respuestaJson(body, { ok = true, status = 200 } = {}) {
     return Promise.resolve({
         ok,
@@ -76,12 +78,12 @@ describe("authentication flow", () => {
         expect(await screen.findByText("Hola, Lucía")).toBeInTheDocument();
         expect(global.fetch).toHaveBeenNthCalledWith(
             1,
-            "/api/usuarios/registro",
+            `${API_URL}/api/usuarios/registro`,
             expect.objectContaining({ method: "POST" })
         );
         expect(global.fetch).toHaveBeenNthCalledWith(
             2,
-            "/api/usuarios/login",
+            `${API_URL}/api/usuarios/login`,
             expect.objectContaining({ method: "POST" })
         );
     });
@@ -100,7 +102,7 @@ describe("authentication flow", () => {
 
         renderApp("/perfil");
         expect(await screen.findByRole("heading", { name: "Mi perfil" })).toBeInTheDocument();
-        expect(global.fetch).toHaveBeenCalledWith("/api/usuarios/perfil", {
+        expect(global.fetch).toHaveBeenCalledWith(`${API_URL}/api/usuarios/perfil`, {
             headers: { Authorization: "Bearer token-cliente" },
         });
     });
@@ -175,7 +177,7 @@ describe("authentication flow", () => {
             await screen.findByRole("heading", { name: "Alta de producto" })
         ).toBeInTheDocument();
         expect(global.fetch).toHaveBeenCalledWith(
-            "/api/usuarios/login",
+            `${API_URL}/api/usuarios/login`,
             expect.objectContaining({ method: "POST" })
         );
     });
@@ -250,7 +252,7 @@ describe("authentication flow", () => {
         expect(await screen.findByRole("status")).toHaveTextContent(
             "Tu pedido fue registrado correctamente."
         );
-        expect(global.fetch).toHaveBeenCalledWith("/api/pedidos", {
+        expect(global.fetch).toHaveBeenCalledWith(`${API_URL}/api/pedidos`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -309,7 +311,7 @@ describe("authentication flow", () => {
 
         expect(await screen.findByRole("heading", { name: "Mis pedidos" })).toBeInTheDocument();
         expect(screen.getByText("Mesa")).toBeInTheDocument();
-        expect(global.fetch).toHaveBeenCalledWith("/api/pedidos/mis-pedidos", {
+        expect(global.fetch).toHaveBeenCalledWith(`${API_URL}/api/pedidos/mis-pedidos`, {
             headers: {
                 "Content-Type": "application/json",
                 Authorization: "Bearer token-cliente",
@@ -343,7 +345,7 @@ describe("authentication flow", () => {
         global.fetch.mockResolvedValueOnce({ ok: true, status: 204 });
 
         await expect(eliminarProducto("producto-1", "token-admin")).resolves.toBeNull();
-        expect(global.fetch).toHaveBeenCalledWith("/api/productos/producto-1", {
+        expect(global.fetch).toHaveBeenCalledWith(`${API_URL}/api/productos/producto-1`, {
             method: "DELETE",
             headers: { Authorization: "Bearer token-admin" },
         });
