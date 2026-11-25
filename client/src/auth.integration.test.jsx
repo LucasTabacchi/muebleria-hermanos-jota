@@ -303,7 +303,7 @@ describe("authentication flow", () => {
                     _id: "pedido-1",
                     createdAt: "2026-11-23T00:00:00.000Z",
                     total: 300000,
-                    items: [{ nombre: "Mesa" }],
+                    items: [{ nombre: "Mesa" }, { nombre: "Silla" }],
                 },
             ])
         );
@@ -312,6 +312,7 @@ describe("authentication flow", () => {
 
         expect(await screen.findByRole("heading", { name: "Mis pedidos" })).toBeInTheDocument();
         expect(screen.getByText("Mesa")).toBeInTheDocument();
+        expect(screen.getByText("Silla")).toBeInTheDocument();
         expect(screen.getByRole("heading", { name: "Pedido #pedido-1" })).toBeInTheDocument();
         expect(global.fetch).toHaveBeenCalledWith(`${API_URL}/api/pedidos/mis-pedidos`, {
             headers: {

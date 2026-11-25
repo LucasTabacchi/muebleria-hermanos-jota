@@ -1462,6 +1462,31 @@ p {
     font-size: 1.25rem;
 }
 
+.pedido-resumen {
+    align-items: flex-start;
+    flex-wrap: wrap;
+    gap: 16px;
+}
+
+.pedido-datos {
+    min-width: 0;
+    overflow-wrap: anywhere;
+}
+
+.pedido-datos h2 {
+    margin-bottom: 8px;
+}
+
+.pedido-productos {
+    margin: 12px 0 0;
+    padding-left: 20px;
+    color: var(--tinta-suave);
+}
+
+.pedido-productos li + li {
+    margin-top: 6px;
+}
+
 .producto-carrito p {
     color: var(--siena);
     font-weight: 600;

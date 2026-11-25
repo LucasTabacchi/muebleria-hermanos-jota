@@ -66,13 +66,28 @@ export default function MisPedidos() {
                     ) : (
                         <div className="lista-productos">
                             {estado.pedidos.map((pedido) => (
-                                <article className="producto-carrito" key={pedido._id || pedido.id}>
-                                    <div>
+                                <article
+                                    className="producto-carrito pedido-resumen"
+                                    key={pedido._id || pedido.id}
+                                >
+                                    <div className="pedido-datos">
                                         <h2>Pedido #{String(pedido._id || pedido.id)}</h2>
                                         <p>
                                             {new Date(pedido.createdAt).toLocaleDateString("es-AR")}
                                         </p>
-                                        <p>{pedido.items.map((item) => item.nombre).join(", ")}</p>
+                                        <ul
+                                            className="pedido-productos"
+                                            aria-label="Productos del pedido"
+                                        >
+                                            {pedido.items.map((item, indice) => (
+                                                <li
+                                                    key={`${item.producto || item.nombre}-${indice}`}
+                                                >
+                                                    {item.nombre}
+                                                    {item.cantidad > 1 ? ` × ${item.cantidad}` : ""}
+                                                </li>
+                                            ))}
+                                        </ul>
                                     </div>
                                     <strong>{formatearPrecio(pedido.total)}</strong>
                                 </article>
