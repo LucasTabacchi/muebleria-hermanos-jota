@@ -571,6 +571,24 @@ p {
     transform: translateY(-8px);
 }
 
+.producto-feedback:not(:empty) {
+    display: block;
+    margin-top: 8px;
+    color: var(--siena-oscuro);
+    font-size: 0.8rem;
+    font-weight: 600;
+    animation: producto-confirmacion 250ms ease-out;
+}
+
+@keyframes producto-confirmacion {
+    from { opacity: 0; transform: translateY(4px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .producto-feedback:not(:empty) { animation: none; }
+}
+
 .producto-imagen {
     width: 100%;
     aspect-ratio: 4 / 3;
