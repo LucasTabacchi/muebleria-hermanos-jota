@@ -64,7 +64,7 @@ export default function MisPedidos() {
                             </Link>
                         </div>
                     ) : (
-                        <div className="lista-productos">
+                        <div className="lista-productos lista-pedidos">
                             {estado.pedidos.map((pedido) => (
                                 <article
                                     className="producto-carrito pedido-resumen"
