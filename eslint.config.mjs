@@ -1,9 +1,10 @@
 import eslint from "@eslint/js";
+import react from "eslint-plugin-react";
 import globals from "globals";
 
 export default [
     {
-        ignores: ["node_modules/**", "coverage/**", "dist/**"],
+        ignores: ["node_modules/**", "coverage/**", "dist/**", "client/build/**"],
     },
     {
         files: ["*.mjs"],
@@ -29,7 +30,10 @@ export default [
         languageOptions: {
             ecmaVersion: "latest",
             sourceType: "script",
-            globals: globals.browser,
+            globals: {
+                ...globals.browser,
+                ...globals.es2021,
+            },
         },
     },
     {
@@ -100,6 +104,49 @@ export default [
             ecmaVersion: "latest",
             sourceType: "commonjs",
             globals: globals.node,
+        },
+    },
+    {
+        files: ["backend/**/*.js"],
+        ...eslint.configs.recommended,
+        languageOptions: {
+            ecmaVersion: "latest",
+            sourceType: "commonjs",
+            globals: globals.node,
+        },
+    },
+    {
+        files: ["client/src/**/*.js"],
+        ...eslint.configs.recommended,
+        languageOptions: {
+            ecmaVersion: "latest",
+            sourceType: "module",
+            parserOptions: {
+                ecmaFeatures: {
+                    jsx: true,
+                },
+            },
+            globals: {
+                ...globals.browser,
+                ...globals.es2021,
+                process: "readonly",
+            },
+        },
+        plugins: {
+            react,
+        },
+        rules: {
+            ...eslint.configs.recommended.rules,
+            "react/jsx-uses-vars": "error",
+        },
+    },
+    {
+        files: ["client/src/**/*.test.js", "client/src/setupTests.js"],
+        languageOptions: {
+            globals: {
+                ...globals.jest,
+                global: "readonly",
+            },
         },
     },
 ];

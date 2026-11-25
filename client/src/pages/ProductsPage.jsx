@@ -1,0 +1,168 @@
+import { useCallback, useEffect, useMemo, useState } from "react";
+import ProductFilters from "../components/ProductFilters";
+import ProductList from "../components/ProductList";
+import { useCart } from "../context/CartContext";
+import { obtenerProductos } from "../services/productosApi";
+import { categoriaTexto } from "../utils/formato";
+
+function coincideMaterial(producto, materialFiltro) {
+    if (!materialFiltro) return true;
+    const textoCompleto =
+        `${producto.materiales || ""} ${producto.estructura || ""} ${producto.tapizado || ""} ${producto.descripcion || ""}`.toLowerCase();
+
+    switch (materialFiltro) {
+        case "madera":
+            return /madera|nogal|roble|caldén|calden|algarrobo|guatambú|guatambu|quebracho|eucalipto|bambú|bambu/.test(
+                textoCompleto
+            );
+        case "cuero":
+            return /cuero/.test(textoCompleto);
+        case "tapizado":
+            return /tapizado|textil|lino|bouclé|boucle|malla|tela/.test(textoCompleto);
+        case "metal":
+            return /acero|latón|laton|metal/.test(textoCompleto);
+        case "marmol":
+            return /mármol|marmol/.test(textoCompleto);
+        default:
+            return textoCompleto.includes(materialFiltro.toLowerCase());
+    }
+}
+
+export default function ProductsPage() {
+    const { agregar } = useCart();
+    const [estado, setEstado] = useState({ tipo: "cargando", productos: [] });
+    const [busqueda, setBusqueda] = useState("");
+    const [categoria, setCategoria] = useState("todas");
+    const [material, setMaterial] = useState("");
+    const [orden, setOrden] = useState("destacados");
+
+    const cargar = useCallback(async () => {
+        setEstado({ tipo: "cargando", productos: [] });
+        try {
+            setEstado({ tipo: "exito", productos: await obtenerProductos() });
+        } catch {
+            setEstado({ tipo: "error", productos: [] });
+        }
+    }, []);
+
+    useEffect(() => {
+        cargar();
+    }, [cargar]);
+
+    const categoriasDisponibles = useMemo(
+        () =>
+            Array.from(
+                new Set(
+                    estado.productos
+                        .map((producto) => categoriaTexto(producto.categoria))
+                        .filter(Boolean)
+                )
+            ).sort(),
+        [estado.productos]
+    );
+
+    const filtrados = useMemo(() => {
+        const texto = busqueda.trim().toLowerCase();
+        let resultado = estado.productos.filter((producto) => {
+            const categoriaProducto = categoriaTexto(producto.categoria);
+            return (
+                (!texto ||
+                    producto.nombre.toLowerCase().includes(texto) ||
+                    categoriaProducto.toLowerCase().includes(texto) ||
+                    producto.materiales?.toLowerCase().includes(texto) ||
+                    producto.descripcion?.toLowerCase().includes(texto)) &&
+                (!categoria || categoria === "todas" || categoriaProducto === categoria) &&
+                coincideMaterial(producto, material)
+            );
+        });
+        if (orden === "precio-menor")
+            resultado = [...resultado].sort((a, b) => a.precio - b.precio);
+        if (orden === "precio-mayor")
+            resultado = [...resultado].sort((a, b) => b.precio - a.precio);
+        return resultado;
+    }, [busqueda, categoria, material, orden, estado.productos]);
+
+    const hayFiltrosActivos =
+        busqueda.trim() !== "" ||
+        categoria !== "todas" ||
+        material !== "" ||
+        orden !== "destacados";
+    const limpiarFiltros = () => {
+        setBusqueda("");
+        setCategoria("todas");
+        setMaterial("");
+        setOrden("destacados");
+    };
+    const mensajeCantidad = hayFiltrosActivos
+        ? `${filtrados.length} ${filtrados.length === 1 ? "resultado" : "resultados"}`
+        : `${estado.productos.length} productos disponibles`;
+
+    return (
+        <main id="contenido">
+            <section className="encabezado-pagina encabezado-catalogo">
+                <div className="contenedor encabezado-pagina-contenido">
+                    <div>
+                        <p>Nuestra colección</p>
+                        <h1>Objetos para habitar mejor.</h1>
+                    </div>
+                    <span>
+                        Cada pieza reúne oficio, funcionalidad y materiales elegidos para durar.
+                    </span>
+                </div>
+            </section>
+            <section className="seccion seccion-catalogo" aria-label="Catálogo de productos">
+                <div className="contenedor">
+                    <ProductFilters
+                        busqueda={busqueda}
+                        categoria={categoria}
+                        material={material}
+                        orden={orden}
+                        categoriasDisponibles={categoriasDisponibles}
+                        hayFiltrosActivos={hayFiltrosActivos}
+                        isLoaded={estado.tipo === "exito"}
+                        mensajeCantidad={mensajeCantidad}
+                        onBusquedaChange={setBusqueda}
+                        onCategoriaChange={setCategoria}
+                        onMaterialChange={setMaterial}
+                        onOrdenChange={setOrden}
+                        onClearFilters={limpiarFiltros}
+                    />
+                    {estado.tipo === "cargando" && (
+                        <div className="estado-carga" role="status">
+                            Cargando catálogo...
+                        </div>
+                    )}
+                    {estado.tipo === "error" && (
+                        <div className="estado-carga" role="alert">
+                            <p>No se pudo cargar el catálogo.</p>
+                            <button type="button" className="boton" onClick={cargar}>
+                                Reintentar
+                            </button>
+                        </div>
+                    )}
+                    {estado.tipo === "exito" && (
+                        <div id="catalogo-productos">
+                            {filtrados.length > 0 ? (
+                                <ProductList productos={filtrados} onAdd={agregar} />
+                            ) : (
+                                <div className="catalogo-vacio">
+                                    <p>
+                                        No encontramos productos que coincidan con los filtros
+                                        seleccionados.
+                                    </p>
+                                    <button
+                                        type="button"
+                                        className="boton"
+                                        onClick={limpiarFiltros}
+                                    >
+                                        Restablecer filtros
+                                    </button>
+                                </div>
+                            )}
+                        </div>
+                    )}
+                </div>
+            </section>
+        </main>
+    );
+}

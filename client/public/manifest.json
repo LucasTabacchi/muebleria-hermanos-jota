@@ -1,0 +1,15 @@
+{
+  "short_name": "Hermanos Jota",
+  "name": "Mueblería Hermanos Jota",
+  "icons": [
+    {
+      "src": "logo.png",
+      "type": "image/png",
+      "sizes": "242x243"
+    }
+  ],
+  "start_url": ".",
+  "display": "standalone",
+  "theme_color": "#F5E6D3",
+  "background_color": "#F5E6D3"
+}
