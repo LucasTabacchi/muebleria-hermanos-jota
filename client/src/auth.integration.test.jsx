@@ -334,6 +334,7 @@ describe("authentication flow", () => {
 
         renderApp("/admin/editar-producto/mesa-1");
         expect(await screen.findByDisplayValue("Mesa editada")).toBeInTheDocument();
+        expect(screen.getByRole("button", { name: "Guardar cambios" })).toBeInTheDocument();
         fireEvent.click(screen.getByRole("link", { name: "Nuevo producto" }));
 
         expect(
