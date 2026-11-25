@@ -215,6 +215,13 @@ p {
     color: var(--tinta);
 }
 
+.header-navegacion {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    min-width: 0;
+}
+
 .nav {
     display: flex;
     flex-wrap: wrap;
@@ -1697,7 +1704,7 @@ p {
     }
 
     .nav {
-        gap: 6px;
+        gap: 20px;
     }
 
     .nav a,
