@@ -127,7 +127,7 @@ export default function ProductDetail() {
                                 Editar producto
                             </Link>
                             <button
-                                className="boton boton-terciario"
+                                className="boton boton-secundario detalle-eliminar"
                                 type="button"
                                 onClick={handleDelete}
                                 disabled={eliminando}
