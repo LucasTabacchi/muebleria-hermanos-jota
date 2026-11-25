@@ -41,7 +41,7 @@ export default function Navbar() {
                         )}
                         {usuario ? (
                             <>
-                                <span>Hola, {usuario.nombre}</span>
+                                <span className="nav-saludo">Hola, {usuario.nombre}</span>
                                 <NavLink to="/perfil" className={claseActiva}>
                                     Mi perfil
                                 </NavLink>
@@ -50,7 +50,7 @@ export default function Navbar() {
                                 </NavLink>
                                 <button
                                     type="button"
-                                    className="boton boton-terciario"
+                                    className="nav-cerrar-sesion"
                                     onClick={logout}
                                 >
                                     Cerrar sesión
