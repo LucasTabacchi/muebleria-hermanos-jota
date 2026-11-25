@@ -336,6 +336,24 @@ p {
     color: var(--blanco);
 }
 
+.detalle-acciones {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 16px;
+}
+
+.detalle-eliminar {
+    border-color: #9b3d32;
+    color: #9b3d32;
+}
+
+.detalle-eliminar:hover:not(:disabled) {
+    background: #9b3d32;
+    border-color: #9b3d32;
+    color: #fff;
+}
+
 .boton-terciario {
     min-height: auto;
     padding: 6px;
