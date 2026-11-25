@@ -4,7 +4,7 @@ E-commerce MERN de mobiliario: catálogo, autenticación con JWT, carrito persis
 
 ## Enlaces Públicos
 
-- Frontend (Netlify): [muebleria-hermanosjota.netlify.app](https://muebleria-hermanosjota.netlify.app/)
+- Frontend (Vercel): [muebleria-hermanos-jota-gules.vercel.app](https://muebleria-hermanos-jota-gules.vercel.app/)
 - Backend API (Render): [catálogo público](https://muebleria-hermanos-jota-ifva.onrender.com/api/productos)
 
 ## Tecnologías Utilizadas
@@ -14,12 +14,12 @@ E-commerce MERN de mobiliario: catálogo, autenticación con JWT, carrito persis
 - **Base de datos:** MongoDB Atlas.
 - **Autenticación:** bcrypt para hashing de contraseñas y JSON Web Tokens (JWT).
 - **Pruebas y calidad:** Node test, Supertest, MongoMemoryServer, Vitest, Testing Library, ESLint y Prettier.
-- **Despliegue:** Netlify para el frontend y Render para la API.
+- **Despliegue:** Vercel para el frontend y Render para la API.
 
 ## Arquitectura
 
 ```text
-React + Vite (Netlify) ── HTTPS/JSON ──> Express API (Render) ──> MongoDB Atlas
+React + Vite (Vercel) ── HTTPS/JSON ──> Express API (Render) ──> MongoDB Atlas
       │                                      │
       ├─ AuthContext: JWT y sesión            ├─ bcrypt + JWT middleware
       └─ CartContext: carrito local           └─ usuarios, productos y pedidos
@@ -110,14 +110,14 @@ npm run test:auth --workspace=backend
 ### Backend en Render
 
 1. Crear un Web Service desde este repositorio; Render detecta `render.yaml`.
-2. Definir `MONGODB_URI` con la URI de Atlas y `FRONTEND_URL` con la URL final de Netlify.
+2. Definir `MONGODB_URI` con la URI de Atlas y `FRONTEND_URL` con la URL final de Vercel, sin barra final.
 3. Conservar el `JWT_SECRET` generado por Render (o definir uno seguro). No copiarlo al frontend.
 
-### Frontend en Netlify
+### Frontend en Vercel
 
-1. Conectar el repositorio. `netlify.toml` instala dependencias, compila con Node 22 y publica `client/dist`.
+1. Conectar el repositorio, seleccionar `develop` como rama de producción y `client` como directorio raíz. Vercel compila con Vite y publica `dist`.
 2. Definir `VITE_API_URL` como la URL HTTPS del Web Service de Render, sin barra final.
-3. Desplegar nuevamente y agregar la URL de Netlify en `FRONTEND_URL` del backend para CORS.
+3. Desplegar nuevamente y agregar la URL de Vercel en `FRONTEND_URL` del backend para CORS. `client/vercel.json` permite acceder directamente a las rutas de React.
 
 ## Integrantes del Equipo
 
