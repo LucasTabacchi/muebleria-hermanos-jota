@@ -75,7 +75,8 @@ describe("authentication flow", () => {
         fireEvent.change(screen.getByLabelText("Contraseña"), { target: { value: "secreto123" } });
         fireEvent.click(screen.getByRole("button", { name: "Crear cuenta" }));
 
-        expect(await screen.findByText("Hola, Lucía")).toBeInTheDocument();
+        expect(await screen.findByRole("link", { name: "Mi perfil" })).toBeInTheDocument();
+        expect(screen.queryByText("Hola, Lucía")).not.toBeInTheDocument();
         expect(global.fetch).toHaveBeenNthCalledWith(
             1,
             `${API_URL}/api/usuarios/registro`,
