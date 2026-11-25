@@ -24,65 +24,59 @@ export default function Navbar() {
                             <strong>Jota</strong>
                         </span>
                     </NavLink>
-                    <div className="header-navegacion">
-                        {usuario && <span className="nav-saludo">Hola, {usuario.nombre}</span>}
-                        <nav className="nav" aria-label="Navegación principal">
-                            <NavLink to="/" end className={claseActiva}>
-                                Inicio
+                    <nav className="nav" aria-label="Navegación principal">
+                        <NavLink to="/" end className={claseActiva}>
+                            Inicio
+                        </NavLink>
+                        <NavLink to="/productos" className={claseActiva}>
+                            Productos
+                        </NavLink>
+                        <NavLink to="/contacto" className={claseActiva}>
+                            Contacto
+                        </NavLink>
+                        {usuario?.rol === "admin" && (
+                            <NavLink to="/admin/crear-producto" className={claseActiva}>
+                                Nuevo producto
                             </NavLink>
-                            <NavLink to="/productos" className={claseActiva}>
-                                Productos
-                            </NavLink>
-                            <NavLink to="/contacto" className={claseActiva}>
-                                Contacto
-                            </NavLink>
-                            {usuario?.rol === "admin" && (
-                                <NavLink to="/admin/crear-producto" className={claseActiva}>
-                                    Nuevo producto
+                        )}
+                        {usuario ? (
+                            <>
+                                <NavLink to="/perfil" className={claseActiva}>
+                                    Mi perfil
                                 </NavLink>
-                            )}
-                            {usuario ? (
-                                <>
-                                    <NavLink to="/perfil" className={claseActiva}>
-                                        Mi perfil
-                                    </NavLink>
-                                    <NavLink to="/mis-pedidos" className={claseActiva}>
-                                        Mis pedidos
-                                    </NavLink>
-                                    <button
-                                        type="button"
-                                        className="nav-cerrar-sesion"
-                                        onClick={logout}
-                                    >
-                                        Cerrar sesión
-                                    </button>
-                                </>
-                            ) : (
-                                <>
-                                    <NavLink to="/login" className={claseActiva}>
-                                        Ingresar
-                                    </NavLink>
-                                    <NavLink to="/registro" className={claseActiva}>
-                                        Crear cuenta
-                                    </NavLink>
-                                </>
-                            )}
-                            <NavLink
-                                to="/carrito"
-                                className={({ isActive }) =>
-                                    `carrito-header${isActive ? " activo" : ""}`
-                                }
-                            >
-                                Carrito
-                                <span
-                                    className="contador-carrito"
-                                    aria-label="Productos en el carrito"
+                                <NavLink to="/mis-pedidos" className={claseActiva}>
+                                    Mis pedidos
+                                </NavLink>
+                                <button
+                                    type="button"
+                                    className="nav-cerrar-sesion"
+                                    onClick={logout}
                                 >
-                                    {cantidadTotal}
-                                </span>
-                            </NavLink>
-                        </nav>
-                    </div>
+                                    Cerrar sesión
+                                </button>
+                            </>
+                        ) : (
+                            <>
+                                <NavLink to="/login" className={claseActiva}>
+                                    Ingresar
+                                </NavLink>
+                                <NavLink to="/registro" className={claseActiva}>
+                                    Crear cuenta
+                                </NavLink>
+                            </>
+                        )}
+                        <NavLink
+                            to="/carrito"
+                            className={({ isActive }) =>
+                                `carrito-header${isActive ? " activo" : ""}`
+                            }
+                        >
+                            Carrito
+                            <span className="contador-carrito" aria-label="Productos en el carrito">
+                                {cantidadTotal}
+                            </span>
+                        </NavLink>
+                    </nav>
                 </div>
             </header>
         </>
