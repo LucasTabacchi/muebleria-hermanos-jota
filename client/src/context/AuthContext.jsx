@@ -1,4 +1,5 @@
 import { createContext, useCallback, useContext, useState } from "react";
+const API_URL = (import.meta.env.VITE_API_URL || "").replace(/\/$/, "");
 
 const AuthContext = createContext(null);
 
@@ -15,7 +16,7 @@ export function AuthProvider({ children }) {
     const [sesion, setSesion] = useState(sesionInicial);
 
     const login = useCallback(async (email, password) => {
-        const respuesta = await fetch("/api/usuarios/login", {
+        const respuesta = await fetch(`${API_URL}/api/usuarios/login`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ email, password }),
@@ -32,7 +33,7 @@ export function AuthProvider({ children }) {
 
     const registrar = useCallback(
         async (nombre, email, password) => {
-            const respuesta = await fetch("/api/usuarios/registro", {
+            const respuesta = await fetch(`${API_URL}/api/usuarios/registro`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ nombre, email, password }),
