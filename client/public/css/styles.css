@@ -1240,6 +1240,16 @@ p {
     justify-content: center;
 }
 
+.detalle-imagen-placeholder {
+    display: grid;
+    place-items: center;
+    width: 100%;
+    aspect-ratio: 1;
+    padding: 16px;
+    color: var(--tinta-suave);
+    text-align: center;
+}
+
 .detalle-info h1 {
     max-width: 620px;
     overflow-wrap: anywhere;

@@ -28,6 +28,7 @@ export default function ProductDetail() {
     const [estado, setEstado] = useState({ tipo: "cargando", producto: null });
     const [mensaje, setMensaje] = useState("");
     const [eliminando, setEliminando] = useState(false);
+    const [imagenFallida, setImagenFallida] = useState(false);
 
     const cargar = useCallback(async () => {
         setEstado({ tipo: "cargando", producto: null });
@@ -39,6 +40,7 @@ export default function ProductDetail() {
     }, [id]);
 
     useEffect(() => {
+        setImagenFallida(false);
         cargar();
     }, [cargar]);
 
@@ -96,11 +98,25 @@ export default function ProductDetail() {
         <>
             <article className="detalle-producto">
                 <div className="detalle-imagen">
-                    <img
-                        src={rutaImagen(producto.imagen || producto.imagenUrl)}
-                        alt={producto.nombre}
-                        decoding="async"
-                    />
+                    {producto.imagen || producto.imagenUrl
+                        ? !imagenFallida && (
+                              <img
+                                  src={rutaImagen(producto.imagen || producto.imagenUrl)}
+                                  alt={producto.nombre}
+                                  decoding="async"
+                                  onError={() => setImagenFallida(true)}
+                              />
+                          )
+                        : null}
+                    {((!producto.imagen && !producto.imagenUrl) || imagenFallida) && (
+                        <div
+                            className="detalle-imagen-placeholder"
+                            role="img"
+                            aria-label="Imagen no disponible"
+                        >
+                            Imagen no disponible
+                        </div>
+                    )}
                 </div>
                 <div className="detalle-info">
                     <p className="producto-categoria">{categoriaTexto(producto.categoria)}</p>
