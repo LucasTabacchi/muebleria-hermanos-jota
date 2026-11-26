@@ -633,6 +633,7 @@ p {
     display: -webkit-box;
     margin-bottom: 20px;
     overflow: hidden;
+    overflow-wrap: anywhere;
     color: var(--tinta-suave);
     font-size: 0.91rem;
     line-height: 1.6;
