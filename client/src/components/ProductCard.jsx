@@ -4,8 +4,11 @@ import { categoriaTexto, formatearPrecio, rutaImagen } from "../utils/formato";
 
 export default function ProductCard({ producto, linkText = "Ver detalle →", onAdd }) {
     const [agregado, setAgregado] = useState(false);
+    const [imagenFallida, setImagenFallida] = useState(false);
+    const imagen = rutaImagen(producto.imagen || producto.imagenUrl);
     const timer = useRef(null);
     useEffect(() => () => clearTimeout(timer.current), []);
+    useEffect(() => setImagenFallida(false), [imagen]);
 
     function agregar() {
         onAdd(producto);
@@ -17,13 +20,24 @@ export default function ProductCard({ producto, linkText = "Ver detalle →", on
 
     return (
         <article className="producto-card">
-            <img
-                className="producto-imagen"
-                src={rutaImagen(producto.imagen || producto.imagenUrl)}
-                alt={producto.nombre}
-                loading="lazy"
-                decoding="async"
-            />
+            {imagen && !imagenFallida ? (
+                <img
+                    className="producto-imagen"
+                    src={imagen}
+                    alt={producto.nombre}
+                    loading="lazy"
+                    decoding="async"
+                    onError={() => setImagenFallida(true)}
+                />
+            ) : (
+                <div
+                    className="producto-imagen producto-imagen-placeholder"
+                    role="img"
+                    aria-label="Imagen no disponible"
+                >
+                    Imagen no disponible
+                </div>
+            )}
             <div className="producto-info">
                 <p className="producto-categoria">{categoriaTexto(producto.categoria)}</p>
                 <h3>{producto.nombre}</h3>
