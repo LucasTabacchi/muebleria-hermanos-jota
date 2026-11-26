@@ -599,7 +599,16 @@ p {
     will-change: transform;
 }
 
-.producto-card:hover .producto-imagen {
+.producto-imagen-placeholder {
+    display: grid;
+    place-items: center;
+    padding: 16px;
+    color: var(--tinta-suave);
+    font-size: 0.9rem;
+    text-align: center;
+}
+
+.producto-card:hover img.producto-imagen {
     transform: scale(1.06);
 }
 
