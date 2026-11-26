@@ -123,4 +123,3 @@ npm run test:auth --workspace=backend
 
 - Morales Carlos Ariel
 - Tabacchi Lucas
-- Kegalj Emiliano
