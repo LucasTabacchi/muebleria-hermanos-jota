@@ -189,6 +189,13 @@ test("carga un detalle, agrega el producto al carrito y persiste el estado", asy
     ]);
 });
 
+test("muestra un reemplazo cuando falla la imagen del detalle", async () => {
+    global.fetch.mockReturnValueOnce(respuestaJson(productos[0]));
+    renderApp("/productos/1");
+    fireEvent.error(await screen.findByRole("img", { name: "Aparador Uspallata" }));
+    expect(screen.getByRole("img", { name: "Imagen no disponible" })).toBeInTheDocument();
+});
+
 test("muestra producto no encontrado cuando la API responde 404", async () => {
     global.fetch.mockReturnValueOnce(
         respuestaJson({ error: "Producto no encontrado" }, { ok: false, status: 404 })
