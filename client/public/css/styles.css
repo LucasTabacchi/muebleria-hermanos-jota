@@ -1239,6 +1239,7 @@ p {
 
 .detalle-descripcion {
     max-width: 650px;
+    overflow-wrap: anywhere;
     margin-bottom: 28px;
     color: var(--tinta-suave);
     font-size: 1rem;
