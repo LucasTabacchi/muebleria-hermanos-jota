@@ -197,8 +197,12 @@ export default function CreateProductPage() {
                                 disabled={state === "submitting"}
                             >
                                 {state === "submitting"
-                                    ? `${accion}ndo producto...`
-                                    : `${accion} producto`}
+                                    ? editando
+                                        ? "Guardando cambios..."
+                                        : "Creando producto..."
+                                    : editando
+                                      ? "Guardar cambios"
+                                      : "Crear producto"}
                             </button>
                         </form>
                     )}

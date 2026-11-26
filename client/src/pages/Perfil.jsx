@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 
+const API_URL = (import.meta.env.VITE_API_URL || "").replace(/\/$/, "");
+
 export default function Perfil() {
     const { token, logout } = useAuth();
     const navigate = useNavigate();
@@ -12,7 +14,7 @@ export default function Perfil() {
 
         async function cargarPerfil() {
             try {
-                const respuesta = await fetch("/api/usuarios/perfil", {
+                const respuesta = await fetch(`${API_URL}/api/usuarios/perfil`, {
                     headers: { Authorization: `Bearer ${token}` },
                 });
                 const datos = await respuesta.json().catch(() => null);

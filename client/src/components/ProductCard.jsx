@@ -1,7 +1,18 @@
+import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { categoriaTexto, formatearPrecio, rutaImagen } from "../utils/formato";
 
 export default function ProductCard({ producto, linkText = "Ver detalle →", onAdd }) {
+    const [agregado, setAgregado] = useState(false);
+    const timer = useRef(null);
+    useEffect(() => () => clearTimeout(timer.current), []);
+
+    function agregar() {
+        onAdd(producto);
+        setAgregado(true);
+        clearTimeout(timer.current);
+        timer.current = setTimeout(() => setAgregado(false), 2000);
+    }
     const id = producto.id || producto._id;
 
     return (
@@ -22,13 +33,14 @@ export default function ProductCard({ producto, linkText = "Ver detalle →", on
                     {linkText}
                 </Link>
                 {onAdd && (
-                    <button
-                        className="boton boton-terciario"
-                        type="button"
-                        onClick={() => onAdd(producto)}
-                    >
+                    <button className="boton boton-terciario" type="button" onClick={agregar}>
                         Añadir al carrito
                     </button>
+                )}
+                {onAdd && (
+                    <span className="producto-feedback" role="status">
+                        {agregado ? "✓ Agregado al carrito" : ""}
+                    </span>
                 )}
             </div>
         </article>

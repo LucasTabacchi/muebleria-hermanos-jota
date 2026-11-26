@@ -6,6 +6,8 @@ import { AuthProvider } from "./context/AuthContext";
 import { CartProvider } from "./context/CartContext";
 import { eliminarProducto } from "./services/productosApi";
 
+const API_URL = (import.meta.env.VITE_API_URL || "").replace(/\/$/, "");
+
 function respuestaJson(body, { ok = true, status = 200 } = {}) {
     return Promise.resolve({
         ok,
@@ -73,15 +75,16 @@ describe("authentication flow", () => {
         fireEvent.change(screen.getByLabelText("Contraseña"), { target: { value: "secreto123" } });
         fireEvent.click(screen.getByRole("button", { name: "Crear cuenta" }));
 
-        expect(await screen.findByText("Hola, Lucía")).toBeInTheDocument();
+        expect(await screen.findByRole("link", { name: "Mi perfil" })).toBeInTheDocument();
+        expect(screen.queryByText("Hola, Lucía")).not.toBeInTheDocument();
         expect(global.fetch).toHaveBeenNthCalledWith(
             1,
-            "/api/usuarios/registro",
+            `${API_URL}/api/usuarios/registro`,
             expect.objectContaining({ method: "POST" })
         );
         expect(global.fetch).toHaveBeenNthCalledWith(
             2,
-            "/api/usuarios/login",
+            `${API_URL}/api/usuarios/login`,
             expect.objectContaining({ method: "POST" })
         );
     });
@@ -100,7 +103,7 @@ describe("authentication flow", () => {
 
         renderApp("/perfil");
         expect(await screen.findByRole("heading", { name: "Mi perfil" })).toBeInTheDocument();
-        expect(global.fetch).toHaveBeenCalledWith("/api/usuarios/perfil", {
+        expect(global.fetch).toHaveBeenCalledWith(`${API_URL}/api/usuarios/perfil`, {
             headers: { Authorization: "Bearer token-cliente" },
         });
     });
@@ -175,7 +178,7 @@ describe("authentication flow", () => {
             await screen.findByRole("heading", { name: "Alta de producto" })
         ).toBeInTheDocument();
         expect(global.fetch).toHaveBeenCalledWith(
-            "/api/usuarios/login",
+            `${API_URL}/api/usuarios/login`,
             expect.objectContaining({ method: "POST" })
         );
     });
@@ -250,7 +253,7 @@ describe("authentication flow", () => {
         expect(await screen.findByRole("status")).toHaveTextContent(
             "Tu pedido fue registrado correctamente."
         );
-        expect(global.fetch).toHaveBeenCalledWith("/api/pedidos", {
+        expect(global.fetch).toHaveBeenCalledWith(`${API_URL}/api/pedidos`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -300,7 +303,7 @@ describe("authentication flow", () => {
                     _id: "pedido-1",
                     createdAt: "2026-11-23T00:00:00.000Z",
                     total: 300000,
-                    items: [{ nombre: "Mesa" }],
+                    items: [{ nombre: "Mesa" }, { nombre: "Silla" }],
                 },
             ])
         );
@@ -309,7 +312,9 @@ describe("authentication flow", () => {
 
         expect(await screen.findByRole("heading", { name: "Mis pedidos" })).toBeInTheDocument();
         expect(screen.getByText("Mesa")).toBeInTheDocument();
-        expect(global.fetch).toHaveBeenCalledWith("/api/pedidos/mis-pedidos", {
+        expect(screen.getByText("Silla")).toBeInTheDocument();
+        expect(screen.getByRole("heading", { name: "Pedido #pedido-1" })).toBeInTheDocument();
+        expect(global.fetch).toHaveBeenCalledWith(`${API_URL}/api/pedidos/mis-pedidos`, {
             headers: {
                 "Content-Type": "application/json",
                 Authorization: "Bearer token-cliente",
@@ -331,6 +336,7 @@ describe("authentication flow", () => {
 
         renderApp("/admin/editar-producto/mesa-1");
         expect(await screen.findByDisplayValue("Mesa editada")).toBeInTheDocument();
+        expect(screen.getByRole("button", { name: "Guardar cambios" })).toBeInTheDocument();
         fireEvent.click(screen.getByRole("link", { name: "Nuevo producto" }));
 
         expect(
@@ -343,7 +349,7 @@ describe("authentication flow", () => {
         global.fetch.mockResolvedValueOnce({ ok: true, status: 204 });
 
         await expect(eliminarProducto("producto-1", "token-admin")).resolves.toBeNull();
-        expect(global.fetch).toHaveBeenCalledWith("/api/productos/producto-1", {
+        expect(global.fetch).toHaveBeenCalledWith(`${API_URL}/api/productos/producto-1`, {
             method: "DELETE",
             headers: { Authorization: "Bearer token-admin" },
         });
@@ -364,6 +370,8 @@ describe("authentication flow", () => {
         renderApp("/productos");
         await screen.findByRole("heading", { name: "Mesa" });
         fireEvent.click(screen.getByRole("button", { name: "Añadir al carrito" }));
+
+        expect(screen.getByRole("status")).toHaveTextContent("Agregado al carrito");
 
         await waitFor(() => {
             expect(screen.getByLabelText("Productos en el carrito")).toHaveTextContent("1");
